@@ -1,0 +1,40 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: API-GATEWAY-SERVICE
+  cloud:
+    gateway:
+      default-filters:
+        - name: AddResponseHeader
+          args:
+            name: Access-Control-Allow-Origin
+            value: "*"
+        - name: AddResponseHeader
+          args:
+            name: Access-Control-Allow-Methods
+            value: "GET, POST, PUT, DELETE, OPTIONS"
+      routes:
+        - id: DEMO1
+          uri: http://localhost:9090
+          predicates:
+            - Path=/demo1/**
+          filters:
+            - StripPrefix=1
+        - id: DEMO2
+          uri: http://localhost:9091
+          predicates:
+            - Path=/demo2/**
+          filters:
+            - StripPrefix=1
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/  # URL của Eureka Server
+    fetch-registry: true
+    register-with-eureka: true
+# Cấu hình về log level (tuỳ chọn)
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.springframework.cloud.gateway: TRACE

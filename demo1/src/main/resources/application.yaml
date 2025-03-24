@@ -1,0 +1,16 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: DEMO1
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/  # Địa chỉ của Eureka Server
+    register-with-eureka: true  # Đăng ký dịch vụ này với Eureka Server
+    fetch-registry: true        # Lấy danh sách các dịch vụ từ Eureka Server
+
+# Optional: Thời gian giữa các lần gửi tín hiệu gia hạn cho Eureka Server
+  instance:
+    lease-renewal-interval-in-seconds: 10    # Số giây giữa các lần gia hạn (mặc định là 30)
+    lease-expiration-duration-in-seconds: 30 # Thời gian cho phép không nhận được tín hiệu gia hạn trước khi bị xóa (mặc định là 90)
