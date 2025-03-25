@@ -6,7 +6,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8000/eureka/  # Địa chỉ của Eureka Server
+      defaultZone: http://localhost:8761/eureka/  # Địa chỉ của Eureka Server
     register-with-eureka: true  # Đăng ký dịch vụ này với Eureka Server
     fetch-registry: true        # Lấy danh sách các dịch vụ từ Eureka Server
 
