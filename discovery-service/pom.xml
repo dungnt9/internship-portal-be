@@ -8,11 +8,11 @@
 		<version>1.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<groupId>com.nhp</groupId>
+	<groupId>com.dungnguyen</groupId>
 	<artifactId>discovery-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>discovery-service</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Graduation Project</description>
 	<url/>
 	<licenses>
 		<license/>

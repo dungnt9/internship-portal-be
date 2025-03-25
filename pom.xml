@@ -15,7 +15,9 @@
     <modules>
         <module>discovery-service</module>
         <module>cloudgateway</module>
-        <module>demo1</module>
-        <module>demo2</module>
+        <module>user-service</module>
+        <module>auth-service</module>
+        <module>evaluation-service</module>
+        <module>registration-service</module>
     </modules>
 </project>
