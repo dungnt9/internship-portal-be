@@ -8,6 +8,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="auth-service" />
         <module name="cloudgateway" />
+        <module name="evaluation-service" />
+        <module name="registration-service" />
         <module name="user-service" />
         <module name="demo2 (1)" />
         <module name="discovery-service" />
@@ -20,6 +22,8 @@
       <module name="cloudgateway" options="-parameters" />
       <module name="demo2 (1)" options="-parameters" />
       <module name="discovery-service" options="-parameters" />
+      <module name="evaluation-service" options="-parameters" />
+      <module name="registration-service" options="-parameters" />
       <module name="user-service" options="-parameters" />
     </option>
   </component>
