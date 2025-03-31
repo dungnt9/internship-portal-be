@@ -9,23 +9,59 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: auth_service
       MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      MYSQL_PASSWORD: 123456
     ports:
       - "3307:3306"
+    volumes:
+      - ./auth-service/database:/docker-entrypoint-initdb.d
     networks:
       - microservices-network
 
-  mysql-internship:
+  mysql-user:
     image: mysql:8.0
-    container_name: mysql-internship
+    container_name: mysql-user
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: internship_service
+      MYSQL_DATABASE: user_service
       MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      MYSQL_PASSWORD: 123456
     ports:
       - "3308:3306"
+    volumes:
+      - ./user-service/database:/docker-entrypoint-initdb.d
+    networks:
+      - microservices-network
+
+  mysql-registration:
+    image: mysql:8.0
+    container_name: mysql-registration
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: registration_service
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 123456
+    ports:
+      - "3309:3306"
+    volumes:
+      - ./registration-service/database:/docker-entrypoint-initdb.d
+    networks:
+      - microservices-network
+
+  mysql-evaluation:
+    image: mysql:8.0
+    container_name: mysql-evaluation
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: evaluation_service
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 123456
+    ports:
+      - "3310:3306"
+    volumes:
+      - ./evaluation-service/database:/docker-entrypoint-initdb.d
     networks:
       - microservices-network
 
