@@ -1,4 +1,5 @@
-CREATE DATABASE auth_service;
+-- CREATE DATABASE auth_service;
+SET NAMES 'utf8mb4';
 USE auth_service;
 
 CREATE TABLE roles (

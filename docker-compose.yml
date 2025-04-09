@@ -12,8 +12,6 @@ services:
       MYSQL_PASSWORD: 123456
     ports:
       - "3307:3306"
-    volumes:
-      - ./auth-service/database:/docker-entrypoint-initdb.d
     networks:
       - microservices-network
 
@@ -28,8 +26,6 @@ services:
       MYSQL_PASSWORD: 123456
     ports:
       - "3308:3306"
-    volumes:
-      - ./user-service/database:/docker-entrypoint-initdb.d
     networks:
       - microservices-network
 
@@ -44,8 +40,6 @@ services:
       MYSQL_PASSWORD: 123456
     ports:
       - "3309:3306"
-    volumes:
-      - ./registration-service/database:/docker-entrypoint-initdb.d
     networks:
       - microservices-network
 
@@ -60,8 +54,6 @@ services:
       MYSQL_PASSWORD: 123456
     ports:
       - "3310:3306"
-    volumes:
-      - ./evaluation-service/database:/docker-entrypoint-initdb.d
     networks:
       - microservices-network
 

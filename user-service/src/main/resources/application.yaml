@@ -1,14 +1,29 @@
 server:
-  port: 8004
+  port: 8002
+
 spring:
   application:
     name: USER-SERVICE
+  datasource:
+    url: jdbc:mysql://localhost:3308/user_service   # java db connectivity
+    username: user
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver     # được cài dependency ở pom.xml
+  jpa:   # java persistence API
+    hibernate:
+      ddl-auto: update     # data definition language: kiểm tra db có đúng với entity không
+    show-sql: true       # hiển thị câu SQL ra console khi chạy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect   # giúp Hibernate hiểu và tạo SQL phù hợp do Mỗi DBMS: MySQL, PostgreSQL... có cú pháp khác nhau
+        format_sql: true
+
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/  # Địa chỉ của Eureka Server
-    register-with-eureka: true  # Đăng ký dịch vụ này với Eureka Server
-    fetch-registry: true        # Lấy danh sách các dịch vụ từ Eureka Server
+    register-with-eureka: true  # Đăng ký service này với Eureka Server
+    fetch-registry: true        # Lấy danh sách các service từ Eureka Server
 
 # Optional: Thời gian giữa các lần gửi tín hiệu gia hạn cho Eureka Server
   instance:

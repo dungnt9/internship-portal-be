@@ -1,4 +1,4 @@
-package com.dungnguyen.evaluation_service;
+package com.dungnguyen.auth_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

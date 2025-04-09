@@ -1,4 +1,4 @@
-package com.nhp.cloudgateway.config;
+package com.dungnguyen.cloudgateway.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,8 +1,22 @@
 server:
-  port: 8003
+  port: 8001
 spring:
   application:
     name: AUTH-SERVICE
+  datasource:
+    url: jdbc:mysql://localhost:3307/auth_service   # java db connectivity
+    username: user
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver     # được cài dependency ở pom.xml
+  jpa:   # java persistence API
+    hibernate:
+      ddl-auto: update     # data definition language: kiểm tra db có đúng với entity không
+    show-sql: true       # hiển thị câu SQL ra console khi chạy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect   # giúp Hibernate hiểu và tạo SQL phù hợp do Mỗi DBMS: MySQL, PostgreSQL... có cú pháp khác nhau
+        format_sql: true
+
 eureka:
   client:
     service-url:

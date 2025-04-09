@@ -1,4 +1,4 @@
-package com.dungnguyen.evaluation_service.controller;
+package com.dungnguyen.auth_service.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

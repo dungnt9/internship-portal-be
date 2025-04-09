@@ -1,5 +1,5 @@
-CREATE DATABASE register_service;
-USE register_service;
+-- CREATE DATABASE registration_service;
+USE registration_service;
 
 -- Reference tables to link to other services
 CREATE TABLE student_references (

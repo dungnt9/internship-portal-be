@@ -1,4 +1,6 @@
-CREATE DATABASE user_service;
+-- CREATE DATABASE user_service;
+-- Lệnh create gây lỗi vì được tạo rồi bởi
+-- services.mysql-user.environment.MYSQL_DATABASE
 USE user_service;
 
 -- Reference to user IDs in auth service

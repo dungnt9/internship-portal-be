@@ -7,7 +7,7 @@
         <version>3.3.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.parent</groupId>
+    <groupId>com.dungnguyen</groupId>
     <artifactId>internship-portal-be</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>

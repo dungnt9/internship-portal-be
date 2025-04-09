@@ -1,5 +1,5 @@
-CREATE DATABASE evaluate_service;
-USE evaluate_service;
+-- CREATE DATABASE evaluation_service;
+USE evaluation_service;
 
 -- Reference tables to link to other services
 CREATE TABLE progress_references (
