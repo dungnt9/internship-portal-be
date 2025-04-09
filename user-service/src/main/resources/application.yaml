@@ -1,6 +1,5 @@
 server:
   port: 8002
-
 spring:
   application:
     name: USER-SERVICE
@@ -11,12 +10,17 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver     # được cài dependency ở pom.xml
   jpa:   # java persistence API
     hibernate:
-      ddl-auto: update     # data definition language: kiểm tra db có đúng với entity không
+      ddl-auto: create-drop     # data definition language: kiểm tra db có đúng với entity không
     show-sql: true       # hiển thị câu SQL ra console khi chạy
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect   # giúp Hibernate hiểu và tạo SQL phù hợp do Mỗi DBMS: MySQL, PostgreSQL... có cú pháp khác nhau
         format_sql: true
+    defer-datasource-initialization: true  # đảm bảo Spring Boot tải SQL sau khi tạo schema
+  sql:
+    init:
+      mode: always             # Luôn thực thi SQL scripts
+      data-locations: classpath:data.sql  # Vị trí của file SQL
 
 eureka:
   client:
