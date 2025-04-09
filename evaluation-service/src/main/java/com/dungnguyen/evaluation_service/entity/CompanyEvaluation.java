@@ -29,6 +29,7 @@ public class CompanyEvaluation {
     @Column(name = "overall_score", precision = 4, scale = 2)
     private BigDecimal overallScore;
 
+    @Column(columnDefinition = "TEXT")
     private String comments;
 
     @OneToMany(mappedBy = "evaluation", cascade = CascadeType.ALL)

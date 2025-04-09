@@ -37,7 +37,7 @@ public class InternshipPeriod {
     private LocalDate registrationEndDate;
 
     @Enumerated(EnumType.STRING)
-    private Status status = Status.CHUA_BAT_DAU;
+    private Status status = Status.UPCOMING;
 
     private String description;
 
@@ -62,9 +62,9 @@ public class InternshipPeriod {
     private List<InternshipProgress> progressList;
 
     public enum Status {
-        CHUA_BAT_DAU("Chưa bắt đầu"),
-        DANG_DIEN_RA("Đang diễn ra"),
-        KET_THUC("Kết thúc");
+        UPCOMING("Chưa bắt đầu"),
+        ACTIVE("Đang diễn ra"),
+        END("Kết thúc");
 
         private String value;
 

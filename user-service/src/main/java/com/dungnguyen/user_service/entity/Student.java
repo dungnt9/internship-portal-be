@@ -61,9 +61,6 @@ public class Student {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-    private List<CvFile> cvFiles;
-
     public enum Gender {
         Nam, Nữ, Khác
     }

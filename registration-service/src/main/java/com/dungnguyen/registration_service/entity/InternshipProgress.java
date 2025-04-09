@@ -50,7 +50,7 @@ public class InternshipProgress {
     private ExternalInternship external;
 
     @Enumerated(EnumType.STRING)
-    private Status status = Status.ASSIGNED;
+    private Status status = Status.IN_PROGRESS;
 
     @Column(name = "supervisor_name", length = 100)
     private String supervisorName;
@@ -79,6 +79,6 @@ public class InternshipProgress {
     private LocalDateTime updatedAt;
 
     public enum Status {
-        ASSIGNED, IN_PROGRESS, COMPLETED, CANCELLED
+        IN_PROGRESS, COMPLETED, CANCELLED
     }
 }

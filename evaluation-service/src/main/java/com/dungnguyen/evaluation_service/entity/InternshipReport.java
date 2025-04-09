@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
+import org.w3c.dom.Text;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -24,6 +26,7 @@ public class InternshipReport {
     @Column(nullable = false, length = 255)
     private String title;
 
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     @Column(name = "file_path", length = 255)

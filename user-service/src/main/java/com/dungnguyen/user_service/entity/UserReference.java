@@ -21,16 +21,4 @@ public class UserReference {
 
     @Column(name = "role_name", nullable = false, length = 50)
     private String roleName;
-
-    @OneToOne(mappedBy = "userRef", cascade = CascadeType.ALL)
-    private Student student;
-
-    @OneToOne(mappedBy = "userRef", cascade = CascadeType.ALL)
-    private Company company;
-
-    @OneToOne(mappedBy = "userRef", cascade = CascadeType.ALL)
-    private Teacher teacher;
-
-    @OneToOne(mappedBy = "userRef", cascade = CascadeType.ALL)
-    private Admin admin;
 }
