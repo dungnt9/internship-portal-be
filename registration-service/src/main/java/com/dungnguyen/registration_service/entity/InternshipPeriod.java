@@ -9,7 +9,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "internship_periods")
@@ -48,18 +47,6 @@ public class InternshipPeriod {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "period", cascade = CascadeType.ALL)
-    private List<InternshipPosition> positions;
-
-    @OneToMany(mappedBy = "period", cascade = CascadeType.ALL)
-    private List<InternshipApplication> applications;
-
-    @OneToMany(mappedBy = "period", cascade = CascadeType.ALL)
-    private List<ExternalInternship> externalInternships;
-
-    @OneToMany(mappedBy = "period", cascade = CascadeType.ALL)
-    private List<InternshipProgress> progressList;
 
     public enum Status {
         UPCOMING("Chưa bắt đầu"),

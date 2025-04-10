@@ -32,7 +32,4 @@ public class EvaluationCriteria {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "criteria", cascade = CascadeType.ALL)
-    private List<CompanyEvaluationDetail> evaluationDetails;
 }

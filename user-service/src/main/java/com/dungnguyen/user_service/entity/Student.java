@@ -10,7 +10,6 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "students")
@@ -62,6 +61,6 @@ public class Student {
     private LocalDateTime updatedAt;
 
     public enum Gender {
-        Nam, Nữ, Khác
+        Male, Female, Other
     }
 }

@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "cv_references")
@@ -30,7 +29,4 @@ public class CvReference {
 
     @Column(name = "upload_date")
     private LocalDateTime uploadDate;
-
-    @OneToMany(mappedBy = "cvRef")
-    private List<InternshipApplication> applications;
 }

@@ -7,7 +7,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "progress_references")
@@ -37,10 +36,4 @@ public class ProgressReference {
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
-
-    @OneToMany(mappedBy = "progressRef", cascade = CascadeType.ALL)
-    private List<InternshipReport> reports;
-
-    @OneToOne(mappedBy = "progressRef", cascade = CascadeType.ALL)
-    private CompanyEvaluation companyEvaluation;
 }

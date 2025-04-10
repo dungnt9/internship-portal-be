@@ -57,12 +57,6 @@ public class InternshipPosition {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "position", cascade = CascadeType.ALL)
-    private List<InternshipApplication> applications;
-
-    @OneToMany(mappedBy = "position", cascade = CascadeType.ALL)
-    private List<InternshipProgress> progressList;
-
     public enum WorkType {
         FULL_TIME("Full-time"),
         PART_TIME("Part-time");

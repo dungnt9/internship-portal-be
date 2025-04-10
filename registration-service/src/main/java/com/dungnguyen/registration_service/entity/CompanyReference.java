@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "company_references")
@@ -22,7 +21,4 @@ public class CompanyReference {
 
     @Column(nullable = false, length = 100)
     private String name;
-
-    @OneToMany(mappedBy = "companyRef", cascade = CascadeType.ALL)
-    private List<InternshipPosition> positions;
 }

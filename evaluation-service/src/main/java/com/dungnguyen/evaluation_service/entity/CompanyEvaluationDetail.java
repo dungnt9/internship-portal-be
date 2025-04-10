@@ -25,8 +25,6 @@ public class CompanyEvaluationDetail {
     @JoinColumn(name = "criteria_id", nullable = false)
     private EvaluationCriteria criteria;
 
-    @Column(precision = 4, scale = 2)
-    private BigDecimal score;
-
+    @Column(columnDefinition = "TEXT")
     private String comments;
 }

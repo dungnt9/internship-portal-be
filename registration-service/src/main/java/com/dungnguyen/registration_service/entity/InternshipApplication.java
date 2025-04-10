@@ -45,6 +45,7 @@ public class InternshipApplication {
     @JoinColumn(name = "cv_ref_id")
     private CvReference cvRef;
 
+    @Column(columnDefinition = "TEXT")
     private String note;
 
     @UpdateTimestamp
