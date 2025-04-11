@@ -9,7 +9,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "internship_positions")
@@ -32,8 +31,13 @@ public class InternshipPosition {
     @Column(nullable = false, length = 100)
     private String title;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
+
+    @Column(columnDefinition = "TEXT")
     private String requirements;
+
+    @Column(columnDefinition = "TEXT")
     private String benefits;
 
     @Column(name = "available_slots", nullable = false)

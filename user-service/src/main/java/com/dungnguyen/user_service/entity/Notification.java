@@ -25,7 +25,7 @@ public class Notification {
     @Column(nullable = false, length = 255)
     private String title;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
     @Column(name = "is_read")

@@ -23,6 +23,7 @@ public class EvaluationCriteria {
     @Column(nullable = false, length = 100)
     private String name;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @CreationTimestamp

@@ -55,7 +55,7 @@ public class ExternalInternship {
     @Column(name = "end_date", nullable = false)
     private LocalDate endDate;
 
-    @Column(name = "work_schedule")
+    @Column(name = "work_schedule", columnDefinition = "TEXT")
     private String workSchedule;
 
     @Column(name = "confirmation_file_path", length = 255)

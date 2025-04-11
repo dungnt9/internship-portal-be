@@ -45,11 +45,13 @@ public class Student {
     @Column(length = 255)
     private String address;
 
+    @Column(precision = 3, scale = 2)
     private BigDecimal cpa;
 
     @Column(name = "english_level", length = 100)
     private String englishLevel;
 
+    @Column(columnDefinition = "TEXT")
     private String skills;
 
     @CreationTimestamp

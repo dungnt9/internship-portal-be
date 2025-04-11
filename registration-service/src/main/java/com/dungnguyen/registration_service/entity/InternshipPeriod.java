@@ -38,6 +38,7 @@ public class InternshipPeriod {
     @Enumerated(EnumType.STRING)
     private Status status = Status.UPCOMING;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @CreationTimestamp

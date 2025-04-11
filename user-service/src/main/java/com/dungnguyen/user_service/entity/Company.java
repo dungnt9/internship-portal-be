@@ -42,6 +42,7 @@ public class Company {
     @Column(name = "business_type", length = 100)
     private String businessType;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "founding_year")
@@ -50,6 +51,7 @@ public class Company {
     @Column(name = "employee_count")
     private Integer employeeCount;
 
+    @Column(name = "capital", precision = 20, scale = 2)
     private BigDecimal capital;
 
     @Column(name = "logo_path", length = 255)
