@@ -2,7 +2,6 @@ package com.dungnguyen.cloudgateway.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -30,14 +29,13 @@ public class SecurityConfig {
 //     * @param http
 //     * @return
 //     */
-//    @Bean
-//    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
-//        http
-//                .authorizeExchange(exchanges -> exchanges
-//                        .anyExchange().authenticated())
-//                .httpBasic();  // Sử dụng HTTP Basic Auth hoặc các phương pháp xác thực khác nếu cần
-//        return http.build();
-//    }
-
-
+    @Bean
+    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity httpSecurity) {
+        return httpSecurity
+                .csrf(ServerHttpSecurity.CsrfSpec::disable)
+                .authorizeExchange(exchange -> exchange
+                        .anyExchange().permitAll()
+                )
+                .build();
+    }
 }
