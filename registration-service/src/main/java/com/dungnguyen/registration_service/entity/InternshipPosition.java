@@ -20,9 +20,8 @@ public class InternshipPosition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "company_ref_id", nullable = false)
-    private CompanyReference companyRef;
+    @Column(name = "company_id", nullable = false)
+    private Integer companyId;
 
     @ManyToOne
     @JoinColumn(name = "period_id", nullable = false)

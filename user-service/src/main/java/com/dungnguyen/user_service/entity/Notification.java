@@ -18,9 +18,8 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_ref_id", nullable = false)
-    private UserReference userRef;
+    @Column(name = "auth_user_id", nullable = false)
+    private Integer authUserId;
 
     @Column(nullable = false, length = 255)
     private String title;

@@ -19,9 +19,8 @@ public class InternshipApplication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "student_ref_id", nullable = false)
-    private StudentReference studentRef;
+    @Column(name = "student_id", nullable = false)
+    private Integer studentId;
 
     @ManyToOne
     @JoinColumn(name = "position_id", nullable = false)
@@ -41,9 +40,8 @@ public class InternshipApplication {
     @Column(name = "applied_date", updatable = false)
     private LocalDateTime appliedDate;
 
-    @ManyToOne
-    @JoinColumn(name = "cv_ref_id")
-    private CvReference cvRef;
+    @Column(name = "cv_id")
+    private Integer cvId;
 
     @Column(columnDefinition = "TEXT")
     private String note;

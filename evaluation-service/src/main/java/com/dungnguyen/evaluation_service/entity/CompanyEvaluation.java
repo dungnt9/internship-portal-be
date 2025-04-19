@@ -18,9 +18,8 @@ public class CompanyEvaluation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
-    @JoinColumn(name = "progress_ref_id", nullable = false, unique = true)
-    private ProgressReference progressRef;
+    @Column(name = "progress_id", nullable = false, unique = true)
+    private Integer progressId;
 
     @Column(name = "evaluation_date")
     private LocalDateTime evaluationDate;

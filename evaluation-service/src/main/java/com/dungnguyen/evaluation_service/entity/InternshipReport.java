@@ -18,9 +18,8 @@ public class InternshipReport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "progress_ref_id", nullable = false)
-    private ProgressReference progressRef;
+    @Column(name = "progress_id", nullable = false)
+    private Integer progressId;
 
     @Column(nullable = false, length = 255)
     private String title;

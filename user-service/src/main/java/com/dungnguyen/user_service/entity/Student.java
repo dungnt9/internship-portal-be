@@ -21,9 +21,8 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
-    @JoinColumn(name = "user_ref_id", nullable = false, unique = true)
-    private UserReference userRef;
+    @Column(name = "auth_user_id", nullable = false, unique = true)
+    private Integer authUserId;
 
     @Column(name = "student_code", nullable = false, unique = true, length = 20)
     private String studentCode;

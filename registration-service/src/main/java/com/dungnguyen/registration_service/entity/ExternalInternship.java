@@ -20,9 +20,8 @@ public class ExternalInternship {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "student_ref_id", nullable = false)
-    private StudentReference studentRef;
+    @Column(name = "student_id", nullable = false)
+    private Integer studentId;
 
     @ManyToOne
     @JoinColumn(name = "period_id", nullable = false)
