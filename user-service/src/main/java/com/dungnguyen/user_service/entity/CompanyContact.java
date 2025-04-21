@@ -19,6 +19,9 @@ public class CompanyContact {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "auth_user_id", unique = true)
+    private Integer authUserId;
+
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;

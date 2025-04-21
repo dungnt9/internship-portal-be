@@ -30,14 +30,14 @@ INSERT INTO companies (id, auth_user_id, name, display_name, tax_code, website, 
                                                                                                                                                                                                                             (5, 25, 'CMC Global', 'Công ty Cổ phần CMC Global', '0107267567', 'https://cmcglobal.com.vn', 'Tòa nhà CMC, Duy Tân, Cầu Giấy, Hà Nội', 'Công nghệ thông tin', 'CMC Global là đơn vị thành viên của Tập đoàn Công nghệ CMC, chuyên cung cấp dịch vụ phát triển phần mềm chất lượng cao.', 2017, 1500, 40000000000, '/uploads/logos/cmc_global.png', true, true, NOW(), NOW());
 
 -- Insert Company Contacts
-INSERT INTO company_contacts (id, company_id, name, position, email, phone, created_at, updated_at) VALUES
-                                                                                                        (1, 1, 'Nguyễn Thị Hương', 'HR Manager', 'huong.nt@fpt.com.vn', '0912345678', NOW(), NOW()),
-                                                                                                        (2, 1, 'Phạm Văn Nam', 'Talent Acquisition', 'nam.pv@fpt.com.vn', '0912345679', NOW(), NOW()),
-                                                                                                        (3, 2, 'Trần Văn Hùng', 'HR Director', 'hung.tv@viettel.com.vn', '0912345680', NOW(), NOW()),
-                                                                                                        (4, 2, 'Lê Thị Mai', 'Recruiter', 'mai.lt@viettel.com.vn', '0912345681', NOW(), NOW()),
-                                                                                                        (5, 3, 'Nguyễn Văn Thắng', 'HR Manager', 'thang.nv@vnpt.com.vn', '0912345682', NOW(), NOW()),
-                                                                                                        (6, 4, 'Phạm Thị Hà', 'HR Specialist', 'ha.pt@misa.com.vn', '0912345683', NOW(), NOW()),
-                                                                                                        (7, 5, 'Vũ Minh Đức', 'Talent Acquisition Lead', 'duc.vm@cmcglobal.vn', '0912345684', NOW(), NOW());
+INSERT INTO company_contacts (id, company_id, name, position, email, phone, auth_user_id, created_at, updated_at) VALUES
+                                                                                                                      (1, 1, 'Nguyễn Thị Hương', 'HR Manager', 'huong.nt@fpt.com.vn', '0912345678', 201, NOW(), NOW()),
+                                                                                                                      (2, 1, 'Phạm Văn Nam', 'Talent Acquisition', 'nam.pv@fpt.com.vn', '0912345679', 202, NOW(), NOW()),
+                                                                                                                      (3, 2, 'Trần Văn Hùng', 'HR Director', 'hung.tv@viettel.com.vn', '0912345680', 203, NOW(), NOW()),
+                                                                                                                      (4, 2, 'Lê Thị Mai', 'Recruiter', 'mai.lt@viettel.com.vn', '0912345681', 204, NOW(), NOW()),
+                                                                                                                      (5, 3, 'Nguyễn Văn Thắng', 'HR Manager', 'thang.nv@vnpt.com.vn', '0912345682', 205, NOW(), NOW()),
+                                                                                                                      (6, 4, 'Phạm Thị Hà', 'HR Specialist', 'ha.pt@misa.com.vn', '0912345683', 206, NOW(), NOW()),
+                                                                                                                      (7, 5, 'Vũ Minh Đức', 'Talent Acquisition Lead', 'duc.vm@cmcglobal.vn', '0912345684', 207, NOW(), NOW());
 
 -- Insert Teachers
 INSERT INTO teachers (id, auth_user_id, full_name, department, position, created_at, updated_at) VALUES

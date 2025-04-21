@@ -102,8 +102,21 @@ public class DatabaseInitializer implements CommandLineRunner {
             );
             userRepository.saveAll(studentUsers);
 
+            // Company Contact users - THÊM MỚI
+            List<User> companyContactUsers = List.of(
+                    createUser(201, "huong_fpt", "huong.nt@fpt.com.vn", encodedPassword, "0912345678", companyRole),
+                    createUser(202, "nam_fpt", "nam.pv@fpt.com.vn", encodedPassword, "0912345679", companyRole),
+                    createUser(203, "hung_viettel", "hung.tv@viettel.com.vn", encodedPassword, "0912345680", companyRole),
+                    createUser(204, "mai_viettel", "mai.lt@viettel.com.vn", encodedPassword, "0912345681", companyRole),
+                    createUser(205, "thang_vnpt", "thang.nv@vnpt.com.vn", encodedPassword, "0912345682", companyRole),
+                    createUser(206, "ha_misa", "ha.pt@misa.com.vn", encodedPassword, "0912345683", companyRole),
+                    createUser(207, "duc_cmc", "duc.vm@cmcglobal.vn", encodedPassword, "0912345684", companyRole)
+            );
+            userRepository.saveAll(companyContactUsers);
+
             log.info("Users initialized with {} entries",
-                    adminUsers.size() + teacherUsers.size() + companyUsers.size() + studentUsers.size());
+                    adminUsers.size() + teacherUsers.size() + companyUsers.size() + studentUsers.size()
+                            + companyContactUsers.size()); // Cập nhật log
         }
     }
 
