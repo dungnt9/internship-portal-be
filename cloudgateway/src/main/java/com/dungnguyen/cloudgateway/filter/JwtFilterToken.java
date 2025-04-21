@@ -2,37 +2,52 @@ package com.dungnguyen.cloudgateway.filter;
 
 import com.dungnguyen.cloudgateway.model.dto.AuthorizationResponseDTO;
 import com.dungnguyen.cloudgateway.response.ApiResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Component
 @Slf4j
 @RequiredArgsConstructor
 public class JwtFilterToken implements WebFilter {
     private final WebClient.Builder webClientBuilder;
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    // Paths that don't require authentication
+    private final Set<String> PUBLIC_PATHS = Set.of(
+            "/auth/login",
+            "/auth/register"
+    );
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+        String path = exchange.getRequest().getURI().getPath();
+
+        // Check if the path is public and should bypass token check
+        if (isPublicPath(path)) {
+            return chain.filter(exchange);
+        }
+
         String authorization = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
 
-        // Bypass token kiểm tra các URL cần bỏ qua
-//        if (isBypassToken(exchange)) {
-//            return chain.filter(exchange);
-//        }
-
         if (authorization == null || !authorization.startsWith("Bearer ")) {
-            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-            return exchange.getResponse().setComplete();
+            return handleError(exchange, HttpStatus.UNAUTHORIZED, "Authorization header is missing or invalid");
         }
 
         String token = authorization.substring(7);
@@ -40,51 +55,77 @@ public class JwtFilterToken implements WebFilter {
         return validateToken(token)
                 .flatMap(apiResponse -> {
                     if (apiResponse != null && apiResponse.getData() != null) {
-                        // Add a custom header to the request
+                        // Add user info to request attributes for potential use in downstream services
+                        AuthorizationResponseDTO userData = apiResponse.getData();
+                        exchange.getAttributes().put("username", userData.getUsername());
+                        exchange.getAttributes().put("email", userData.getEmail());
 
+                        // Token is valid, proceed with the request
                         return chain.filter(exchange);
                     } else {
-                        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                        return exchange.getResponse().setComplete();
+                        // Token validation failed but we got a response
+                        return handleError(exchange, HttpStatus.UNAUTHORIZED,
+                                apiResponse != null ? apiResponse.getMessage() : "Token validation failed");
                     }
                 })
                 .onErrorResume(e -> {
                     log.error("Token validation error: {}", e.getMessage());
-                    exchange.getResponse().setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
-                    return exchange.getResponse().setComplete();
+                    String errorMessage = "An unexpected error occurred during authentication";
+
+                    if (e instanceof WebClientResponseException) {
+                        WebClientResponseException wcre = (WebClientResponseException) e;
+                        HttpStatus status = HttpStatus.valueOf(wcre.getStatusCode().value());
+
+                        try {
+                            // Try to parse error response from auth service
+                            ApiResponse<?> apiResponse = objectMapper.readValue(
+                                    wcre.getResponseBodyAsString(),
+                                    new com.fasterxml.jackson.core.type.TypeReference<ApiResponse<?>>() {});
+
+                            errorMessage = apiResponse.getMessage();
+                            return handleError(exchange, status, errorMessage);
+                        } catch (JsonProcessingException ex) {
+                            // If parsing fails, use the status text
+                            errorMessage = wcre.getStatusText();
+                        }
+
+                        return handleError(exchange, status, errorMessage);
+                    }
+
+                    return handleError(exchange, HttpStatus.INTERNAL_SERVER_ERROR, errorMessage);
                 });
     }
 
     private Mono<ApiResponse<AuthorizationResponseDTO>> validateToken(String token) {
-        WebClient webClient = webClientBuilder.baseUrl("localhost").build();
-
-        return webClient.post()
-                .uri("/auth")
+        return webClientBuilder.build()
+                .post()
+                .uri("http://localhost:8001")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<ApiResponse<AuthorizationResponseDTO>>() {})
-                .onErrorResume(e -> {
-                    log.error("Error during token validation: {}", e.getMessage());
-                    return Mono.empty();
-                });
+                .bodyToMono(new ParameterizedTypeReference<ApiResponse<AuthorizationResponseDTO>>() {});
     }
 
-    private boolean isBypassToken(ServerWebExchange exchange) {
-        String requestPath = exchange.getRequest().getURI().getPath();
-        String requestMethod = exchange.getRequest().getMethod().name();
+    private boolean isPublicPath(String path) {
+        return PUBLIC_PATHS.stream().anyMatch(path::startsWith);
+    }
 
-        // Các route cần bypass
-        if (
-                requestPath.startsWith("/api/")
-        ) {
-            return true;
+    private Mono<Void> handleError(ServerWebExchange exchange, HttpStatus status, String message) {
+        exchange.getResponse().setStatusCode(status);
+        exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
+
+        ApiResponse<Object> errorResponse = ApiResponse.builder()
+                .status(status.value())
+                .message(message)
+                .data(null)
+                .build();
+
+        try {
+            byte[] bytes = objectMapper.writeValueAsBytes(errorResponse);
+            DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
+            return exchange.getResponse().writeWith(Mono.just(buffer));
+        } catch (JsonProcessingException e) {
+            log.error("Error writing error response", e);
+            return exchange.getResponse().setComplete();
         }
-
-        Map<String, List<String>> bypassTokens = Map.of(
-                String.format("%s/setting", "/api/cms"), List.of("GET")
-        );
-
-        return bypassTokens.entrySet().stream()
-                .anyMatch(entry -> requestPath.contains(entry.getKey()) && entry.getValue().contains(requestMethod));
     }
 }

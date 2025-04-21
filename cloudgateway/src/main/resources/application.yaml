@@ -16,7 +16,7 @@ spring:
 #            value: "GET, POST, PUT, DELETE, OPTIONS"
       routes:
         - id: AUTH-SERVICE
-          uri: lb://AUTH-SERVICE
+          uri: http://localhost:8001
           predicates:
             - Path=/auth/**
           filters:
@@ -45,8 +45,11 @@ eureka:
       defaultZone: http://localhost:8761/eureka/  # URL của Eureka Server
     fetch-registry: true
     register-with-eureka: true
-# Cấu hình về log level (tuỳ chọn)
+
+# Logging configuration for better debugging
 logging:
   level:
     org.springframework.web: DEBUG
-    org.springframework.cloud.gateway: TRACE
+    org.springframework.cloud.gateway: DEBUG
+    com.dungnguyen.cloudgateway: DEBUG
+    reactor.netty.http.client: INFO
