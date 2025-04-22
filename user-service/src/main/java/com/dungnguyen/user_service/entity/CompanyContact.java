@@ -32,12 +32,6 @@ public class CompanyContact {
     @Column(length = 100)
     private String position;
 
-    @Column(nullable = false, length = 100)
-    private String email;
-
-    @Column(length = 20)
-    private String phone;
-
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
