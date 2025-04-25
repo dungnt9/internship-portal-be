@@ -26,7 +26,7 @@ public class RequestValidator {
         }
 
         if (request.getIdentifier() == null || request.getIdentifier().trim().isEmpty()) {
-            errors.put("identifier", "Identifier (username, email, or phone) is required");
+            errors.put("identifier", "Identifier (email or phone) is required");
         }
 
         if (request.getPassword() == null || request.getPassword().trim().isEmpty()) {

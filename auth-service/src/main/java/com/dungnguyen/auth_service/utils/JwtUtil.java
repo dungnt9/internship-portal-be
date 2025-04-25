@@ -17,7 +17,6 @@ import java.util.function.Function;
 @Slf4j
 public class JwtUtil {
 
-    // Secret key should be at least 256 bits for HS256 algorithm
     @Value("${jwt.secret:defaultSecretKeyWithAtLeast256BitsLengthForHS256Algorithm}")
     private String secret;
 
@@ -26,34 +25,30 @@ public class JwtUtil {
 
     /**
      * Generate token for user
-     * @param username Username
-     * @param email User email
-     * @param phone User phone number
+     * @param userId User ID
      * @param role User role
      * @return JWT token
      */
-    public String generateToken(String username, String email, String phone, String role) {
+    public String generateToken(Integer userId, String role) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", role);
-        if (email != null) claims.put("email", email);
-        if (phone != null) claims.put("phone", phone);
-        return createToken(claims, username);
+        return createToken(claims, userId.toString());
     }
 
     /**
      * Validate token
      * @param token JWT token
-     * @param username Username to validate
+     * @param userId User ID to validate
      * @return true if token is valid
      * @throws ExpiredJwtException if token is expired
      * @throws SignatureException if token signature is invalid
      * @throws MalformedJwtException if token is malformed
      */
-    public Boolean validateToken(String token, String username) {
-        final String extractedUsername = extractUsername(token);
+    public Boolean validateToken(String token, String userId) {
+        final String extractedUserId = extractUserId(token);
 
-        if (!extractedUsername.equals(username)) {
-            log.warn("Token contains username {} but expected {}", extractedUsername, username);
+        if (!extractedUserId.equals(userId)) {
+            log.warn("Token contains user ID {} but expected {}", extractedUserId, userId);
             return false;
         }
 
@@ -66,30 +61,12 @@ public class JwtUtil {
     }
 
     /**
-     * Extract username from token
+     * Extract user ID from token
      * @param token JWT token
-     * @return Username
+     * @return User ID
      */
-    public String extractUsername(String token) {
+    public String extractUserId(String token) {
         return extractClaim(token, Claims::getSubject);
-    }
-
-    /**
-     * Extract email from token
-     * @param token JWT token
-     * @return Email or null if not present
-     */
-    public String extractEmail(String token) {
-        return (String) extractAllClaims(token).get("email");
-    }
-
-    /**
-     * Extract phone from token
-     * @param token JWT token
-     * @return Phone number or null if not present
-     */
-    public String extractPhone(String token) {
-        return (String) extractAllClaims(token).get("phone");
     }
 
     /**
@@ -183,7 +160,7 @@ public class JwtUtil {
     /**
      * Create token
      * @param claims Claims to include in token
-     * @param subject Subject (username)
+     * @param subject Subject (user ID)
      * @return JWT token
      */
     private String createToken(Map<String, Object> claims, String subject) {

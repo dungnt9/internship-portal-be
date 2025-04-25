@@ -18,8 +18,6 @@ import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @Component
@@ -57,7 +55,7 @@ public class JwtFilterToken implements WebFilter {
                     if (apiResponse != null && apiResponse.getData() != null) {
                         // Add user info to request attributes for potential use in downstream services
                         AuthorizationResponseDTO userData = apiResponse.getData();
-                        exchange.getAttributes().put("username", userData.getUsername());
+                        exchange.getAttributes().put("userId", userData.getUserId());
                         exchange.getAttributes().put("email", userData.getEmail());
 
                         // Token is valid, proceed with the request

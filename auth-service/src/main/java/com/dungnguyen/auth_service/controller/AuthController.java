@@ -65,7 +65,7 @@ public class AuthController {
         try {
             log.info("Login attempt with identifier: {}", authRequest.getIdentifier());
 
-            // Find user by identifier (username, email, or phone)
+            // Find user by identifier (email or phone)
             Optional<User> userOptional = authService.findByIdentifier(authRequest.getIdentifier());
 
             if (userOptional.isEmpty()) {
@@ -80,32 +80,30 @@ public class AuthController {
             }
 
             User user = userOptional.get();
-            log.info("User found: {}", user.getUsername());
+            log.info("User found with email: {}", user.getEmail());
 
             // Authenticate user
             try {
                 // This is where Spring Security checks the password
                 Authentication authentication = authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(
-                                user.getUsername(),
+                                user.getId().toString(), // Using user ID instead of username
                                 authRequest.getPassword()
                         )
                 );
 
-                log.info("Authentication successful for user: {}", user.getUsername());
+                log.info("Authentication successful for user ID: {}", user.getId());
 
-                // Generate JWT token
+                // Generate JWT token with user ID and role
                 String token = jwtUtil.generateToken(
-                        user.getUsername(),
-                        user.getEmail(),
-                        user.getPhone(),
+                        user.getId(),
                         user.getRole().getName()
                 );
 
                 // Create response
                 AuthorizationResponseDTO authResponse = new AuthorizationResponseDTO(
                         token,
-                        user.getUsername(),
+                        user.getId().toString(),
                         user.getEmail(),
                         user.getPhone(),
                         new Date() // Current date as creation timestamp
@@ -113,7 +111,7 @@ public class AuthController {
 
                 return ResponseEntity.ok(ApiResponse.success(authResponse, "Authentication successful"));
             } catch (BadCredentialsException e) {
-                log.error("Bad credentials for user {}: {}", user.getUsername(), e.getMessage());
+                log.error("Bad credentials for user {}: {}", user.getEmail(), e.getMessage());
                 return ResponseEntity
                         .status(HttpStatus.UNAUTHORIZED)
                         .body(ApiResponse.<AuthorizationResponseDTO>builder()
@@ -171,14 +169,13 @@ public class AuthController {
         String token = authHeader.substring(7);
 
         try {
-            // Extract user information from token
-            String username = jwtUtil.extractUsername(token);
-            String email = jwtUtil.extractEmail(token);
-            String phone = jwtUtil.extractPhone(token);
+            // Extract user ID from token
+            String userId = jwtUtil.extractUserId(token);
+            String role = jwtUtil.extractRole(token);
             Date createdAt = jwtUtil.extractCreationDate(token);
 
             // Check if token is valid
-            User user = authService.findByUsername(username);
+            User user = authService.findById(Integer.parseInt(userId));
             if (user == null) {
                 return ResponseEntity
                         .status(HttpStatus.UNAUTHORIZED)
@@ -199,12 +196,12 @@ public class AuthController {
                                 .build());
             }
 
-            if (jwtUtil.validateToken(token, username)) {
+            if (jwtUtil.validateToken(token, userId)) {
                 AuthorizationResponseDTO authResponse = new AuthorizationResponseDTO(
                         token,
-                        username,
-                        email,
-                        phone,
+                        userId,
+                        user.getEmail(),
+                        user.getPhone(),
                         createdAt
                 );
 
