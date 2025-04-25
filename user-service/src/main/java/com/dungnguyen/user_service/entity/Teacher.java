@@ -22,8 +22,8 @@ public class Teacher {
     @Column(name = "auth_user_id", nullable = false, unique = true)
     private Integer authUserId;
 
-    @Column(name = "full_name", nullable = false, length = 100)
-    private String fullName;
+    @Column(name = "name", nullable = false, length = 100)
+    private String name;
 
     @Column(length = 100)
     private String department;

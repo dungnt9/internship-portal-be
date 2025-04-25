@@ -1,5 +1,5 @@
 -- Insert Students
-INSERT INTO students (id, auth_user_id, student_code, full_name, class_name, major, gender, birthday, address, cpa, english_level, skills, created_at, updated_at) VALUES
+INSERT INTO students (id, auth_user_id, student_code, name, class_name, major, gender, birthday, address, cpa, english_level, skills, created_at, updated_at) VALUES
 (1, 10, '20216805', 'Nguyễn Tiến Dũng', 'KHMT03-K66', 'Khoa học máy tính', 'Male', '2003-05-15', 'Hà Nội', 3.6, 'Intermediate', 'Java, Spring Boot, Vue.js, Docker', NOW(), NOW()),
 (2, 11, '20216123', 'Lê Thị Anh', 'KHMT01-K66', 'Khoa học máy tính', 'Female', '2003-03-21', 'Hải Phòng', 3.8, 'Upper Intermediate', 'Java, ReactJS, Python, SQL', NOW(), NOW()),
 (3, 12, '20216456', 'Nguyễn Thị Trang', 'KHMT02-K66', 'Khoa học máy tính', 'Female', '2003-08-10', 'Nam Định', 3.5, 'Intermediate', 'C/C++, Java, HTML/CSS, Node.js', NOW(), NOW()),
@@ -44,14 +44,14 @@ INSERT INTO company_contacts (id, company_id, name, position, auth_user_id, crea
 (9, 7, 'Phạm Thị Linh', 'Talent Acquisition Manager', 13, NOW(), NOW());
 
 -- Insert Teachers
-INSERT INTO teachers (id, auth_user_id, full_name, department, position, created_at, updated_at) VALUES
+INSERT INTO teachers (id, auth_user_id, name, department, position, created_at, updated_at) VALUES
 (1, 3, 'TS. Vũ Thành Nam', 'Khoa Toán - Tin học', 'Giảng viên', NOW(), NOW()),
 (2, 4, 'TS. Nguyễn Trung Hoàng', 'Khoa Toán - Tin học', 'Giảng viên', NOW(), NOW()),
 (3, 5, 'PGS.TS. Lê Đình Hưng', 'Khoa Toán - Tin học', 'Phó Trưởng khoa', NOW(), NOW()),
 (4, 6, 'ThS. Phạm Văn Cường', 'Khoa Toán - Tin học', 'Giảng viên', NOW(), NOW());
 
 -- Insert Admins
-INSERT INTO admins (id, auth_user_id, full_name, department, position, created_at, updated_at) VALUES
+INSERT INTO admins (id, auth_user_id, name, department, position, created_at, updated_at) VALUES
 (1, 1, 'Nguyễn Văn Quyết', 'Phòng Đào tạo', 'Trưởng phòng', NOW(), NOW()),
 (2, 2, 'Trần Thị Minh', 'Phòng Công tác Sinh viên', 'Chuyên viên', NOW(), NOW());
 
