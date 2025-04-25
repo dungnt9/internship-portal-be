@@ -64,52 +64,56 @@ public class DatabaseInitializer implements CommandLineRunner {
 
             // Admin users
             List<User> adminUsers = List.of(
-                    createUser("admin01", "admin01@hust.edu.vn", encodedPassword, "0987654321", adminRole),
-                    createUser("admin02", "admin02@hust.edu.vn", encodedPassword, "0987654322", adminRole)
+                    createUser("admin01", "admin01@hust.edu.vn", encodedPassword, "0987654321", adminRole, "/images/avatars/default-admin.png"),
+                    createUser("admin02", "admin02@hust.edu.vn", encodedPassword, "0987654322", adminRole, "/images/avatars/default-admin.png")
             );
             userRepository.saveAll(adminUsers);
 
             // Teacher users
             List<User> teacherUsers = List.of(
-                    createUser("nampv", "nam.vt@hust.edu.vn", encodedPassword, "0312345678", teacherRole),
-                    createUser("hoangnt", "hoang.nt@hust.edu.vn", encodedPassword, "0312345679", teacherRole),
-                    createUser("hungld", "hung.ld@hust.edu.vn", encodedPassword, "0312345680", teacherRole),
-                    createUser("cuongpv", "cuong.pv@hust.edu.vn", encodedPassword, "0312345681", teacherRole)
+                    createUser("nampv", "nam.vt@hust.edu.vn", encodedPassword, "0312345678", teacherRole, "/images/avatars/default-teacher.png"),
+                    createUser("hoangnt", "hoang.nt@hust.edu.vn", encodedPassword, "0312345679", teacherRole, "/images/avatars/default-teacher.png"),
+                    createUser("hungld", "hung.ld@hust.edu.vn", encodedPassword, "0312345680", teacherRole, "/images/avatars/default-teacher.png"),
+                    createUser("cuongpv", "cuong.pv@hust.edu.vn", encodedPassword, "0312345681", teacherRole, "/images/avatars/default-teacher.png")
             );
             userRepository.saveAll(teacherUsers);
 
             // Company users
             List<User> companyUsers = List.of(
-                    createUser("fpt_software", "hr@fpt-software.com", encodedPassword, "0983456789", companyRole),
-                    createUser("viettel", "hr@viettel.com.vn", encodedPassword, "0983456790", companyRole),
-                    createUser("vnpt", "hr@vnpt.vn", encodedPassword, "0983456791", companyRole),
-                    createUser("misa", "hr@misa.com.vn", encodedPassword, "0983456792", companyRole),
-                    createUser("cmc_global", "hr@cmcglobal.vn", encodedPassword, "0983456793", companyRole)
+                    createUser("fpt_software", "hr@fpt-software.com", encodedPassword, "0983456789", companyRole, "/images/avatars/companies/fpt.png"),
+                    createUser("viettel", "hr@viettel.com.vn", encodedPassword, "0983456790", companyRole, "/images/avatars/companies/viettel.png"),
+                    createUser("vnpt", "hr@vnpt.vn", encodedPassword, "0983456791", companyRole, "/images/avatars/companies/vnpt.png"),
+                    createUser("misa", "hr@misa.com.vn", encodedPassword, "0983456792", companyRole, "/images/avatars/companies/misa.png"),
+                    createUser("cmc_global", "hr@cmcglobal.vn", encodedPassword, "0983456793", companyRole, "/images/avatars/companies/cmc.png"),
+                    createUser("microsoft_vietnam", "hr@microsoft.com.vn", encodedPassword, "0983456794", companyRole, "/images/avatars/companies/microsoft.png"),
+                    createUser("google_vietnam", "hr@google.com.vn", encodedPassword, "0983456795", companyRole, "/images/avatars/companies/google.png")
             );
             userRepository.saveAll(companyUsers);
 
             // Student users
             List<User> studentUsers = List.of(
-                    createUser("dungnt216805", "dung.nt216805@sis.hust.edu.vn", encodedPassword, "0912876543", studentRole),
-                    createUser("anhlt216123", "anh.lt216123@sis.hust.edu.vn", encodedPassword, "0912876544", studentRole),
-                    createUser("trangnt216456", "trang.nt216456@sis.hust.edu.vn", encodedPassword, "0912876545", studentRole),
-                    createUser("minhvq216789", "minh.vq216789@sis.hust.edu.vn", encodedPassword, "0912876546", studentRole),
-                    createUser("sonnh216012", "son.nh216012@sis.hust.edu.vn", encodedPassword, "0912876547", studentRole),
-                    createUser("hiennv216345", "hien.nv216345@sis.hust.edu.vn", encodedPassword, "0912876548", studentRole),
-                    createUser("thanhnv216678", "thanh.nv216678@sis.hust.edu.vn", encodedPassword, "0912876549", studentRole),
-                    createUser("lamnt216901", "lam.nt216901@sis.hust.edu.vn", encodedPassword, "0912876550", studentRole)
+                    createUser("dungnt216805", "dung.nt216805@sis.hust.edu.vn", encodedPassword, "0912876543", studentRole, "/images/avatars/default-student.png"),
+                    createUser("anhlt216123", "anh.lt216123@sis.hust.edu.vn", encodedPassword, "0912876544", studentRole, "/images/avatars/default-student.png"),
+                    createUser("trangnt216456", "trang.nt216456@sis.hust.edu.vn", encodedPassword, "0912876545", studentRole, "/images/avatars/default-student.png"),
+                    createUser("minhvq216789", "minh.vq216789@sis.hust.edu.vn", encodedPassword, "0912876546", studentRole, "/images/avatars/default-student.png"),
+                    createUser("sonnh216012", "son.nh216012@sis.hust.edu.vn", encodedPassword, "0912876547", studentRole, "/images/avatars/default-student.png"),
+                    createUser("hiennv216345", "hien.nv216345@sis.hust.edu.vn", encodedPassword, "0912876548", studentRole, "/images/avatars/default-student.png"),
+                    createUser("thanhnv216678", "thanh.nv216678@sis.hust.edu.vn", encodedPassword, "0912876549", studentRole, "/images/avatars/default-student.png"),
+                    createUser("lamnt216901", "lam.nt216901@sis.hust.edu.vn", encodedPassword, "0912876550", studentRole, "/images/avatars/default-student.png")
             );
             userRepository.saveAll(studentUsers);
 
             // Company Contact users
             List<User> companyContactUsers = List.of(
-                    createUser("huong_fpt", "huong.nt@fpt.com.vn", encodedPassword, "0912345678", companyRole),
-                    createUser("nam_fpt", "nam.pv@fpt.com.vn", encodedPassword, "0912345679", companyRole),
-                    createUser("hung_viettel", "hung.tv@viettel.com.vn", encodedPassword, "0912345680", companyRole),
-                    createUser("mai_viettel", "mai.lt@viettel.com.vn", encodedPassword, "0912345681", companyRole),
-                    createUser("thang_vnpt", "thang.nv@vnpt.com.vn", encodedPassword, "0912345682", companyRole),
-                    createUser("ha_misa", "ha.pt@misa.com.vn", encodedPassword, "0912345683", companyRole),
-                    createUser("duc_cmc", "duc.vm@cmcglobal.vn", encodedPassword, "0912345684", companyRole)
+                    createUser("huong_fpt", "huong.nt@fpt.com.vn", encodedPassword, "0912345678", companyRole, "/images/avatars/companies/fpt-contact.png"),
+                    createUser("nam_fpt", "nam.pv@fpt.com.vn", encodedPassword, "0912345679", companyRole, "/images/avatars/companies/fpt-contact.png"),
+                    createUser("hung_viettel", "hung.tv@viettel.com.vn", encodedPassword, "0912345680", companyRole, "/images/avatars/companies/viettel-contact.png"),
+                    createUser("mai_viettel", "mai.lt@viettel.com.vn", encodedPassword, "0912345681", companyRole, "/images/avatars/companies/viettel-contact.png"),
+                    createUser("thang_vnpt", "thang.nv@vnpt.com.vn", encodedPassword, "0912345682", companyRole, "/images/avatars/companies/vnpt-contact.png"),
+                    createUser("ha_misa", "ha.pt@misa.com.vn", encodedPassword, "0912345683", companyRole, "/images/avatars/companies/misa-contact.png"),
+                    createUser("duc_cmc", "duc.vm@cmcglobal.vn", encodedPassword, "0912345684", companyRole, "/images/avatars/companies/cmc-contact.png"),
+                    createUser("toan_microsoft", "toan.nv@microsoft.com", encodedPassword, "0912345685", companyRole, "/images/avatars/companies/microsoft-contact.png"),
+                    createUser("linh_google", "linh.pt@google.com", encodedPassword, "0912345686", companyRole, "/images/avatars/companies/google-contact.png")
             );
             userRepository.saveAll(companyContactUsers);
 
@@ -119,7 +123,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         }
     }
 
-    private User createUser(String username, String email, String password, String phone, Role role) {
+    private User createUser(String username, String email, String password, String phone, Role role, String imagePath) {
         User user = new User();
         // Remove the ID setting to let the database handle auto-increment
         user.setUsername(username);
@@ -128,6 +132,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         user.setPhone(phone);
         user.setRole(role);
         user.setIsActive(true);
+        user.setImagePath(imagePath);
         return user;
     }
 }

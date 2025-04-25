@@ -35,6 +35,9 @@ public class User {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
+    @Column(name = "image_path", length = 255)
+    private String imagePath;
+
     @Column(name = "is_active")
     private Boolean isActive = true;
 

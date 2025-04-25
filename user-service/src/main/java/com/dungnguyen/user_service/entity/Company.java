@@ -29,6 +29,9 @@ public class Company {
     @Column(name = "display_name", length = 150)
     private String displayName;
 
+    @Column(name = "is_foreign_company")
+    private Boolean isForeignCompany = false;
+
     @Column(name = "tax_code", length = 20)
     private String taxCode;
 
