@@ -10,7 +10,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Initializes database with sample data on application startup
@@ -78,17 +81,26 @@ public class DatabaseInitializer implements CommandLineRunner {
             );
             userRepository.saveAll(teacherUsers);
 
-            // Company users
-            List<User> companyUsers = List.of(
-                    createUser("fpt_software", "hr@fpt-software.com", encodedPassword, "0983456789", companyRole, "/images/avatars/companies/fpt.png"),
-                    createUser("viettel", "hr@viettel.com.vn", encodedPassword, "0983456790", companyRole, "/images/avatars/companies/viettel.png"),
-                    createUser("vnpt", "hr@vnpt.vn", encodedPassword, "0983456791", companyRole, "/images/avatars/companies/vnpt.png"),
-                    createUser("misa", "hr@misa.com.vn", encodedPassword, "0983456792", companyRole, "/images/avatars/companies/misa.png"),
-                    createUser("cmc_global", "hr@cmcglobal.vn", encodedPassword, "0983456793", companyRole, "/images/avatars/companies/cmc.png"),
-                    createUser("microsoft_vietnam", "hr@microsoft.com.vn", encodedPassword, "0983456794", companyRole, "/images/avatars/companies/microsoft.png"),
-                    createUser("google_vietnam", "hr@google.com.vn", encodedPassword, "0983456795", companyRole, "/images/avatars/companies/google.png")
+            // Company Contact users - all company representatives/contacts use ROLE_COMPANY
+            List<User> companyContactUsers = List.of(
+                    // FPT Software contacts
+                    createUser("huong_fpt", "huong.nt@fpt.com.vn", encodedPassword, "0912345678", companyRole, "/images/avatars/companies/fpt-contact.png"),
+                    createUser("nam_fpt", "nam.pv@fpt.com.vn", encodedPassword, "0912345679", companyRole, "/images/avatars/companies/fpt-contact.png"),
+                    // Viettel contacts
+                    createUser("hung_viettel", "hung.tv@viettel.com.vn", encodedPassword, "0912345680", companyRole, "/images/avatars/companies/viettel-contact.png"),
+                    createUser("mai_viettel", "mai.lt@viettel.com.vn", encodedPassword, "0912345681", companyRole, "/images/avatars/companies/viettel-contact.png"),
+                    // VNPT contacts
+                    createUser("thang_vnpt", "thang.nv@vnpt.com.vn", encodedPassword, "0912345682", companyRole, "/images/avatars/companies/vnpt-contact.png"),
+                    // MISA contacts
+                    createUser("ha_misa", "ha.pt@misa.com.vn", encodedPassword, "0912345683", companyRole, "/images/avatars/companies/misa-contact.png"),
+                    // CMC contacts
+                    createUser("duc_cmc", "duc.vm@cmcglobal.vn", encodedPassword, "0912345684", companyRole, "/images/avatars/companies/cmc-contact.png"),
+                    // Microsoft contacts
+                    createUser("toan_microsoft", "toan.nv@microsoft.com", encodedPassword, "0912345685", companyRole, "/images/avatars/companies/microsoft-contact.png"),
+                    // Google contacts
+                    createUser("linh_google", "linh.pt@google.com", encodedPassword, "0912345686", companyRole, "/images/avatars/companies/google-contact.png")
             );
-            userRepository.saveAll(companyUsers);
+            userRepository.saveAll(companyContactUsers);
 
             // Student users
             List<User> studentUsers = List.of(
@@ -103,29 +115,13 @@ public class DatabaseInitializer implements CommandLineRunner {
             );
             userRepository.saveAll(studentUsers);
 
-            // Company Contact users
-            List<User> companyContactUsers = List.of(
-                    createUser("huong_fpt", "huong.nt@fpt.com.vn", encodedPassword, "0912345678", companyRole, "/images/avatars/companies/fpt-contact.png"),
-                    createUser("nam_fpt", "nam.pv@fpt.com.vn", encodedPassword, "0912345679", companyRole, "/images/avatars/companies/fpt-contact.png"),
-                    createUser("hung_viettel", "hung.tv@viettel.com.vn", encodedPassword, "0912345680", companyRole, "/images/avatars/companies/viettel-contact.png"),
-                    createUser("mai_viettel", "mai.lt@viettel.com.vn", encodedPassword, "0912345681", companyRole, "/images/avatars/companies/viettel-contact.png"),
-                    createUser("thang_vnpt", "thang.nv@vnpt.com.vn", encodedPassword, "0912345682", companyRole, "/images/avatars/companies/vnpt-contact.png"),
-                    createUser("ha_misa", "ha.pt@misa.com.vn", encodedPassword, "0912345683", companyRole, "/images/avatars/companies/misa-contact.png"),
-                    createUser("duc_cmc", "duc.vm@cmcglobal.vn", encodedPassword, "0912345684", companyRole, "/images/avatars/companies/cmc-contact.png"),
-                    createUser("toan_microsoft", "toan.nv@microsoft.com", encodedPassword, "0912345685", companyRole, "/images/avatars/companies/microsoft-contact.png"),
-                    createUser("linh_google", "linh.pt@google.com", encodedPassword, "0912345686", companyRole, "/images/avatars/companies/google-contact.png")
-            );
-            userRepository.saveAll(companyContactUsers);
-
             log.info("Users initialized with {} entries",
-                    adminUsers.size() + teacherUsers.size() + companyUsers.size() + studentUsers.size()
-                            + companyContactUsers.size());
+                    adminUsers.size() + teacherUsers.size() + companyContactUsers.size() + studentUsers.size());
         }
     }
 
     private User createUser(String username, String email, String password, String phone, Role role, String imagePath) {
         User user = new User();
-        // Remove the ID setting to let the database handle auto-increment
         user.setUsername(username);
         user.setEmail(email);
         user.setPassword(password);

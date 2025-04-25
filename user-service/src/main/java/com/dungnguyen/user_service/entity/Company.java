@@ -20,14 +20,11 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "auth_user_id", nullable = false, unique = true)
-    private Integer authUserId;
-
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(name = "display_name", length = 150)
-    private String displayName;
+    @Column(name = "short_name", length = 150)
+    private String shortName;
 
     @Column(name = "is_foreign_company")
     private Boolean isForeignCompany = false;
