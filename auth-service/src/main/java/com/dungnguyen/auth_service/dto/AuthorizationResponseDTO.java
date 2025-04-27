@@ -15,6 +15,7 @@ public class AuthorizationResponseDTO {
     private String userId;
     private String email;
     private String phone;
+    private String role; // Added role field
 
     private Date createdAt;
 }

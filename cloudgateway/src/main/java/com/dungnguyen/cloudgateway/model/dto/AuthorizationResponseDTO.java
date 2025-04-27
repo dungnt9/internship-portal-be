@@ -11,11 +11,9 @@ import java.util.Date;
 @NoArgsConstructor
 public class AuthorizationResponseDTO {
     private String accessToken;
-    private String refreshToken;
     private String userId;
     private String email;
     private String phone;
-
+    private String role;  // Added role field
     private Date createdAt;
-    private Date lastLogin;
 }

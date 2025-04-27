@@ -106,6 +106,7 @@ public class AuthController {
                         user.getId().toString(),
                         user.getEmail(),
                         user.getPhone(),
+                        user.getRole().getName(), // Include role in the response
                         new Date() // Current date as creation timestamp
                 );
 
@@ -202,6 +203,7 @@ public class AuthController {
                         userId,
                         user.getEmail(),
                         user.getPhone(),
+                        role, // Include role in the response
                         createdAt
                 );
 

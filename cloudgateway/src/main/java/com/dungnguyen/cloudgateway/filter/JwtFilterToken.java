@@ -1,5 +1,6 @@
 package com.dungnguyen.cloudgateway.filter;
 
+import com.dungnguyen.cloudgateway.config.RouteRoleConfig;
 import com.dungnguyen.cloudgateway.model.dto.AuthorizationResponseDTO;
 import com.dungnguyen.cloudgateway.response.ApiResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -17,28 +18,28 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
-import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import java.util.Set;
 
 @Component
 @Slf4j
-@RequiredArgsConstructor
 public class JwtFilterToken implements WebFilter {
     private final WebClient.Builder webClientBuilder;
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final Map<String, Set<String>> routeRoles;
 
-    // Paths that don't require authentication
-    private final Set<String> PUBLIC_PATHS = Set.of(
-            "/auth/login",
-            "/auth/register"
-    );
+    // Constructor with explicit injection of routeRoles bean
+    public JwtFilterToken(WebClient.Builder webClientBuilder, Map<String, Set<String>> routeRoles) {
+        this.webClientBuilder = webClientBuilder;
+        this.routeRoles = routeRoles;
+    }
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         String path = exchange.getRequest().getURI().getPath();
 
         // Check if the path is public and should bypass token check
-        if (isPublicPath(path)) {
+        if (RouteRoleConfig.isPublicRoute(path, routeRoles)) {
             return chain.filter(exchange);
         }
 
@@ -53,12 +54,21 @@ public class JwtFilterToken implements WebFilter {
         return validateToken(token)
                 .flatMap(apiResponse -> {
                     if (apiResponse != null && apiResponse.getData() != null) {
-                        // Add user info to request attributes for potential use in downstream services
+                        // Extract user data and role from the token
                         AuthorizationResponseDTO userData = apiResponse.getData();
                         exchange.getAttributes().put("userId", userData.getUserId());
                         exchange.getAttributes().put("email", userData.getEmail());
 
-                        // Token is valid, proceed with the request
+                        // Extract role from the token validation response
+                        String userRole = apiResponse.getData().getRole();
+
+                        // Check if user has access to the requested resource
+                        if (!RouteRoleConfig.isRouteAccessibleByRole(path, userRole, routeRoles)) {
+                            return handleError(exchange, HttpStatus.FORBIDDEN,
+                                    "Access denied. Your role does not have permission to access this resource.");
+                        }
+
+                        // Token is valid and user has access, proceed with the request
                         return chain.filter(exchange);
                     } else {
                         // Token validation failed but we got a response
@@ -101,10 +111,6 @@ public class JwtFilterToken implements WebFilter {
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<ApiResponse<AuthorizationResponseDTO>>() {});
-    }
-
-    private boolean isPublicPath(String path) {
-        return PUBLIC_PATHS.stream().anyMatch(path::startsWith);
     }
 
     private Mono<Void> handleError(ServerWebExchange exchange, HttpStatus status, String message) {
