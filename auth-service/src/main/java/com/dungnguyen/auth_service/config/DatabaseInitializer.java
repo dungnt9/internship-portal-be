@@ -128,6 +128,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         user.setRole(role);
         user.setIsActive(true);
         user.setImagePath(imagePath);
+        user.setDeletedAt(null); // Explicitly setting deletedAt to null for active users
         return user;
     }
 }

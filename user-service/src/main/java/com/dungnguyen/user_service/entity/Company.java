@@ -59,8 +59,17 @@ public class Company {
     @Column(name = "is_verified")
     private Boolean isVerified = false;
 
+    @Column(name = "verification_date")
+    private LocalDateTime verificationDate;
+
+    @Column(name = "rejection_reason", columnDefinition = "TEXT")
+    private String rejectionReason;
+
     @Column(name = "is_linked")
     private Boolean isLinked = false;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

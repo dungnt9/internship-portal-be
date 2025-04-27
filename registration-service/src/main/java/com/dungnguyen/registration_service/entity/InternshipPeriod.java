@@ -17,11 +17,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class InternshipPeriod {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @Column(nullable = false, length = 100)
-    private String name;
+    @Column(length = 10)
+    private String id; // Format: YYYY.S (e.g., 2024.1, 2024.2)
 
     @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
@@ -40,6 +37,9 @@ public class InternshipPeriod {
 
     @Column(columnDefinition = "TEXT")
     private String description;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

@@ -1,4 +1,4 @@
-package com.dungnguyen.auth_service.entity;
+package com.dungnguyen.user_service.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,33 +10,26 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "users")
+@Table(name = "news")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class News {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, unique = true, length = 100)
-    private String email;
+    @Column(name = "admin_id", nullable = false)
+    private Integer adminId;
 
     @Column(nullable = false, length = 255)
-    private String password;
+    private String title;
 
-    @Column(unique = true, length = 20)
-    private String phone;
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String content;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
-    private Role role;
-
-    @Column(name = "image_path", length = 255)
-    private String imagePath;
-
-    @Column(name = "is_active")
-    private Boolean isActive = true;
+    @Column(name = "is_published")
+    private Boolean isPublished = false;
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;

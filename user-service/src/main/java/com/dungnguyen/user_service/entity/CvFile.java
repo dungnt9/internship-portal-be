@@ -3,6 +3,8 @@ package com.dungnguyen.user_service.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
@@ -32,4 +34,15 @@ public class CvFile {
 
     @Column(name = "upload_date")
     private LocalDateTime uploadDate;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }

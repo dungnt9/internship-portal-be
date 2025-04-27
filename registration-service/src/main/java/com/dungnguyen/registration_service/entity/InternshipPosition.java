@@ -52,6 +52,9 @@ public class InternshipPosition {
     @Column(name = "due_date")
     private LocalDate dueDate;
 
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

@@ -36,15 +36,18 @@ public class InternshipApplication {
     @Enumerated(EnumType.STRING)
     private Status status = Status.PENDING;
 
-    @CreationTimestamp
-    @Column(name = "applied_date", updatable = false)
-    private LocalDateTime appliedDate;
-
     @Column(name = "cv_id")
     private Integer cvId;
 
     @Column(columnDefinition = "TEXT")
     private String note;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at")

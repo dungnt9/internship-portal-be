@@ -31,6 +31,9 @@ public class Admin {
     @Column(length = 100)
     private String position;
 
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

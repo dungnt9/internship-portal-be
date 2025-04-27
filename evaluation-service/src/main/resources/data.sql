@@ -1,26 +1,38 @@
--- Insert Evaluation Criteria
 INSERT INTO evaluation_criteria (id, name, description, created_at, updated_at) VALUES
-                                                                                    (1, 'Về Chuyên môn, nghiệp vụ:', 'Đánh giá về Chuyên môn, nghiệp vụ của sinh viên', NOW(), NOW()),
-                                                                                    (2, 'Về Kỹ năng (Testing/ Nghiên cứu/ Viết báo cáo/ Thuyết trình, ...):', 'Đánh giá về Kỹ năng (Testing/ Nghiên cứu/ Viết báo cáo/ Thuyết trình, ...) của sinh viên', NOW(), NOW()),
-                                                                                    (3, 'Về Ứng xử doanh nghiệp', 'Đánh giá về Ứng xử doanh nghiệp của sinh viên', NOW(), NOW());
+(1, 'Kiến thức chuyên môn', 'Đánh giá kiến thức chuyên môn và khả năng áp dụng lý thuyết vào thực tiễn', NOW(), NOW()),
+(2, 'Kỹ năng lập trình', 'Đánh giá khả năng viết mã nguồn, giải quyết vấn đề và tư duy thuật toán', NOW(), NOW()),
+(3, 'Khả năng làm việc nhóm', 'Đánh giá mức độ hợp tác, giao tiếp và làm việc với các thành viên khác trong nhóm', NOW(), NOW()),
+(4, 'Thái độ làm việc', 'Đánh giá tính cẩn thận, trách nhiệm và tính chuyên nghiệp trong công việc', NOW(), NOW()),
+(5, 'Khả năng tự học', 'Đánh giá khả năng tự nghiên cứu, học hỏi công nghệ mới', NOW(), NOW()),
+(6, 'Khả năng quản lý thời gian', 'Đánh giá khả năng sắp xếp công việc, đảm bảo tiến độ và hoàn thành đúng hạn', NOW(), NOW());
 
--- Insert Internship Reports
--- Sử dụng ID tiến độ thực tập trực tiếp
-INSERT INTO internship_reports (id, progress_id, title, content, file_path, submission_date) VALUES
-                                                                                                 (1, 1, 'Báo cáo thực tập - Lê Thị Anh', 'Trong hai tháng thực tập tại Viettel, tôi đã được tham gia vào dự án phát triển ứng dụng di động cho khách hàng doanh nghiệp. Dự án sử dụng Android Studio với ngôn ngữ Java và Kotlin. Tôi đã học được quy trình phát triển phần mềm chuyên nghiệp từ việc lấy yêu cầu, thiết kế, phát triển, kiểm thử đến triển khai. Tôi đã phát triển một số tính năng như quản lý thông tin người dùng, thống kê báo cáo và tích hợp thanh toán. Qua quá trình thực tập, tôi đã cải thiện kỹ năng lập trình, làm việc nhóm và giao tiếp chuyên nghiệp. Tôi cũng học hỏi được cách làm việc trong môi trường doanh nghiệp lớn với các quy trình và tiêu chuẩn chất lượng cao.', '/uploads/reports/LeThiAnh_Final_Report.pdf', DATE_SUB(NOW(), INTERVAL 5 DAY)),
-                                                                                                 (2, 2, 'Báo cáo thực tập - Nguyễn Thị Trang', 'Trong thời gian thực tập tại FPT Software, tôi đã được tham gia vào dự án phát triển ứng dụng web cho một khách hàng quốc tế trong lĩnh vực tài chính. Dự án sử dụng ReactJS, Redux và các thư viện UI hiện đại. Tôi được giao nhiệm vụ phát triển các component UI và tích hợp API. Tôi đã học được cách làm việc trong một dự án thực tế với các yêu cầu nghiêm ngặt về bảo mật và hiệu năng. Quá trình thực tập đã giúp tôi cải thiện đáng kể kỹ năng lập trình frontend, hiểu sâu hơn về các best practices trong phát triển web, và học hỏi cách làm việc hiệu quả trong một team đa quốc gia. Tôi cũng đã có cơ hội tham gia các buổi đào tạo nội bộ về các công nghệ mới và soft skills.', '/uploads/reports/NguyenThiTrang_Final_Report.pdf', DATE_SUB(NOW(), INTERVAL 5 DAY));
-
--- Insert Company Evaluations
--- Sử dụng ID tiến độ thực tập trực tiếp
 INSERT INTO company_evaluations (id, progress_id, evaluation_date, score, comments) VALUES
-                                                                                        (1, 1, DATE_SUB(NOW(), INTERVAL 3 DAY), 8.5, 'Lê Thị Anh là một thực tập sinh có năng lực và tinh thần học hỏi tốt. Em đã hoàn thành tốt các nhiệm vụ được giao trong dự án phát triển ứng dụng di động và thể hiện khả năng làm việc nhóm tốt. Em có kiến thức vững về Java và Kotlin, nhanh chóng tiếp thu các kỹ thuật mới trong phát triển ứng dụng di động. Trong quá trình thực tập, em đã đóng góp vào các tính năng quản lý người dùng và tích hợp thanh toán. Kỹ năng debug và phân tích vấn đề của em cần được cải thiện thêm, nhưng nhìn chung em đã thể hiện tiềm năng tốt và đạt được sự tiến bộ đáng kể trong thời gian thực tập.'),
-                                                                                        (2, 2, DATE_SUB(NOW(), INTERVAL 3 DAY), 9.0, 'Nguyễn Thị Trang là một thực tập sinh xuất sắc. Em có kiến thức tốt về ReactJS và các thư viện UI hiện đại. Em nhanh chóng hòa nhập với team và làm việc hiệu quả trong môi trường đa quốc gia. Các component do em phát triển đều đáp ứng yêu cầu về UI/UX và performance. Em chủ động trong việc tìm hiểu, học hỏi và đề xuất giải pháp cải thiện. Kỹ năng giao tiếp và làm việc nhóm của em rất tốt. Em hoàn thành tất cả các nhiệm vụ được giao đúng hạn và chất lượng cao. Chúng tôi đánh giá cao tinh thần làm việc của em và sẵn sàng xem xét tuyển dụng chính thức sau khi em tốt nghiệp.');
+(1, 1, DATE_SUB(NOW(), INTERVAL 2 DAY), 8.5, 'Sinh viên có năng lực tốt, nhanh nhẹn và có khả năng học hỏi nhanh. Đã hoàn thành tốt các nhiệm vụ được giao và đóng góp tích cực vào dự án.'),
+(2, 2, DATE_SUB(NOW(), INTERVAL 3 DAY), 8.0, 'Sinh viên làm việc chăm chỉ, có kiến thức nền tảng vững và có khả năng làm việc nhóm tốt. Cần cải thiện thêm về kỹ năng giao tiếp.'),
+(3, 3, DATE_SUB(NOW(), INTERVAL 4 DAY), 7.5, 'Sinh viên có thái độ làm việc tốt, chịu khó học hỏi. Cần phát triển thêm về khả năng giải quyết vấn đề và tư duy phản biện.');
 
--- Insert Company Evaluation Details
 INSERT INTO company_evaluation_details (id, evaluation_id, criteria_id, comments) VALUES
-                                                                                      (1, 1, 1, 'Kiến thức tốt về Android development sử dụng Java và Kotlin. Có khả năng áp dụng các mẫu thiết kế (design patterns) vào các vấn đề thực tế. Hiểu và áp dụng được nguyên tắc clean code vào dự án.'),
-                                                                                      (2, 1, 2, 'Khả năng học hỏi nhanh, chủ động tìm hiểu công nghệ mới và áp dụng vào công việc. Tích cực tham gia các buổi chia sẻ kiến thức nội bộ và đặt câu hỏi sâu sắc.'),
-                                                                                      (3, 1, 3, 'Làm việc tốt với các thành viên trong team, tham gia tích cực vào các cuộc họp và đóng góp ý kiến xây dựng. Sẵn sàng hỗ trợ đồng nghiệp khi cần thiết.'),
-                                                                                      (4, 2, 1, 'Kiến thức vững về ReactJS, Redux và các công nghệ frontend hiện đại. Có khả năng tối ưu hiệu năng của ứng dụng web và áp dụng các best practices trong phát triển frontend.'),
-                                                                                      (5, 2, 2, 'Khả năng học hỏi nhanh, tiếp thu nhanh các công nghệ và thư viện mới. Chủ động nghiên cứu và đề xuất giải pháp cải tiến cho dự án.'),
-                                                                                      (6, 2, 3, 'Làm việc nhóm xuất sắc, phối hợp tốt với các thành viên khác trong team đa quốc gia. Chủ động chia sẻ kiến thức và hỗ trợ đồng nghiệp.');
+(1, 1, 1, 'Sinh viên có kiến thức cơ bản về Java Spring vững, hiểu rõ về RESTful API và JPA.'),
+(2, 1, 2, 'Có khả năng viết mã nguồn tốt, phong cách code rõ ràng, dễ đọc.'),
+(3, 1, 3, 'Hòa đồng, biết lắng nghe và đóng góp ý kiến cho nhóm.'),
+(4, 1, 4, 'Nghiêm túc, có trách nhiệm với công việc được giao.'),
+(5, 1, 5, 'Tự tìm hiểu tốt về các công nghệ mới khi được yêu cầu.'),
+(6, 1, 6, 'Quản lý thời gian tốt, hoàn thành công việc đúng hạn.'),
+(7, 2, 1, 'Có kiến thức khá tốt về phát triển phần mềm, hiểu về quy trình phát triển.'),
+(8, 2, 2, 'Kỹ năng lập trình tốt, có khả năng debug và giải quyết vấn đề.'),
+(9, 2, 3, 'Làm việc nhóm tốt, chủ động đề xuất giải pháp.'),
+(10, 2, 4, 'Có tinh thần trách nhiệm cao, luôn hoàn thành công việc được giao.'),
+(11, 2, 5, 'Khả năng tự học tốt, chủ động tìm hiểu các công nghệ mới.'),
+(12, 2, 6, 'Đôi khi quản lý thời gian chưa tốt, cần cải thiện.'),
+(13, 3, 1, 'Kiến thức về mạng máy tính khá tốt, hiểu biết về TCP/IP.'),
+(14, 3, 2, 'Kỹ năng thao tác với thiết bị mạng tốt, hiểu về cấu hình cơ bản.'),
+(15, 3, 3, 'Làm việc nhóm còn hạn chế, cần cải thiện về giao tiếp.'),
+(16, 3, 4, 'Thái độ làm việc tốt, cẩn thận và tỉ mỉ.'),
+(17, 3, 5, 'Khả năng tự học khá, nhưng cần chủ động hơn.'),
+(18, 3, 6, 'Quản lý thời gian chưa tốt, đôi khi không hoàn thành đúng hạn.');
+
+INSERT INTO internship_reports (id, progress_id, title, content, file_path, submission_date) VALUES
+(1, 1, 'Báo cáo thực tập tại FPT Software - Tuần 1', 'Trong tuần đầu tiên, em đã làm quen với môi trường làm việc tại FPT Software, được giới thiệu về quy trình phát triển phần mềm của công ty và bắt đầu tìm hiểu về dự án sẽ tham gia.', '/uploads/reports/20216805/report_week1.pdf', DATE_SUB(NOW(), INTERVAL 20 DAY)),
+(2, 1, 'Báo cáo thực tập tại FPT Software - Tuần 2', 'Trong tuần thứ hai, em đã được phân công nhiệm vụ đầu tiên là phát triển một API đơn giản. Em đã học được cách sử dụng Spring Boot để tạo RESTful API và tích hợp với cơ sở dữ liệu MySQL.', '/uploads/reports/20216805/report_week2.pdf', DATE_SUB(NOW(), INTERVAL 13 DAY)),
+(3, 2, 'Báo cáo thực tập tại Viettel - Tuần 1', 'Trong tuần đầu tiên tại Viettel, em đã được giới thiệu về văn hóa công ty và quy trình làm việc. Em cũng đã được tham gia vào các buổi họp nhóm để hiểu rõ hơn về dự án.', '/uploads/reports/20216123/report_week1.pdf', DATE_SUB(NOW(), INTERVAL 19 DAY)),
+(4, 3, 'Báo cáo thực tập tại VNPT - Tuần 1', 'Trong tuần đầu tiên tại VNPT, em đã được hướng dẫn về hệ thống mạng của công ty và các công nghệ đang được sử dụng. Em cũng đã được tham gia vào quá trình kiểm tra và bảo trì thiết bị mạng.', '/uploads/reports/20216456/report_week1.pdf', DATE_SUB(NOW(), INTERVAL 18 DAY));
