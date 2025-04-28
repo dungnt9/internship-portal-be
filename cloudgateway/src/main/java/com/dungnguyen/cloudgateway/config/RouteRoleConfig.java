@@ -26,6 +26,11 @@ public class RouteRoleConfig {
         routeRoles.put("/auth/login", Collections.emptySet());
         routeRoles.put("/auth/register", Collections.emptySet());
 
+        routeRoles.put("/auth/forgot-password", Collections.emptySet());
+        routeRoles.put("/auth/verify-otp", Collections.emptySet());
+        routeRoles.put("/auth/reset-password", Collections.emptySet());
+
+
         // Admin routes
         routeRoles.put("/user/admin/**", Set.of("ROLE_ADMIN"));
 

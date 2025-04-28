@@ -20,6 +20,21 @@ spring:
   sql:
     init:
       mode: never             # Luôn thực thi SQL scripts
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: dung9102003hp@gmail.com
+    password: yota mokx ufot gfgk
+    properties:
+        mail.smtp.auth: true
+        mail.smtp.starttls.enable: true
+
+# Password reset token expiry time in minutes
+password:
+  reset:
+    token:
+      expiry: 15
+
 
 eureka:
   client:

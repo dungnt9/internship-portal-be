@@ -29,6 +29,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/forgot-password").permitAll() // Allow password reset requests
+                        .requestMatchers("/verify-otp").permitAll()       // Allow OTP verification
+                        .requestMatchers("/reset-password").permitAll()   // Allow password reset
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
