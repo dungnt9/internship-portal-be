@@ -31,7 +31,7 @@ public class PasswordResetService {
     @Value("${password.reset.token.expiry:15}") // 15 minutes by default
     private int tokenExpiryMinutes;
 
-    @Value("${spring.mail.username:noreply@hust.edu.vn}")
+    @Value("${spring.mail.username:dung9102003hp@gmail.com}")
     private String mailFrom;
 
     /**
@@ -51,17 +51,16 @@ public class PasswordResetService {
             // Trong môi trường phát triển, chỉ in OTP ra log
             log.info("======= OTP FOR {} IS: {} =======", email, otp);
 
-        /* Tạm thời bỏ qua việc gửi email thực tế
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(mailFrom);
-        message.setTo(email);
-        message.setSubject("Mã xác nhận đặt lại mật khẩu");
-        message.setText("Mã xác nhận của bạn là: " + otp + "\n\n" +
-                "Mã này có hiệu lực trong " + tokenExpiryMinutes + " phút.\n\n" +
-                "Nếu bạn không yêu cầu đặt lại mật khẩu, vui lòng bỏ qua email này.");
+//            Tạm thời bỏ qua việc gửi email thực tế
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom(mailFrom);
+            message.setTo(email);
+            message.setSubject("Mã xác nhận đặt lại mật khẩu");
+            message.setText("Mã xác nhận của bạn là: " + otp + "\n\n" +
+                    "Mã này có hiệu lực trong " + tokenExpiryMinutes + " phút.\n\n" +
+                    "Nếu bạn không yêu cầu đặt lại mật khẩu, vui lòng bỏ qua email này.");
 
-        mailSender.send(message);
-        */
+            mailSender.send(message);
 
             log.info("Giả lập gửi OTP thành công đến: {}", email);
         } catch (Exception e) {
@@ -122,11 +121,7 @@ public class PasswordResetService {
         PasswordResetToken token = tokenOpt.get();
 
         // Check if token is expired
-        if (token.isExpired()) {
-            return false;
-        }
-
-        return true;
+        return !token.isExpired();
     }
 
     /**
