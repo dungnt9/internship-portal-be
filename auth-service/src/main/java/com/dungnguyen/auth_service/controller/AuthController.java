@@ -151,7 +151,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/validate-token")
     public ResponseEntity<ApiResponse<AuthorizationResponseDTO>> validateToken(
             @RequestHeader("Authorization") String authHeader) {
 

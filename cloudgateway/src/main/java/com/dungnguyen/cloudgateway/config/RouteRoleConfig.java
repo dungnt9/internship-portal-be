@@ -47,6 +47,7 @@ public class RouteRoleConfig {
 
         // Default route permissions (accessible by all authenticated users)
         routeRoles.put("/**", Set.of("ROLE_ADMIN", "ROLE_TEACHER", "ROLE_COMPANY", "ROLE_STUDENT"));
+        routeRoles.put("/auth/change-password", Set.of("ROLE_ADMIN", "ROLE_TEACHER", "ROLE_COMPANY", "ROLE_STUDENT"));
 
         return routeRoles;
     }

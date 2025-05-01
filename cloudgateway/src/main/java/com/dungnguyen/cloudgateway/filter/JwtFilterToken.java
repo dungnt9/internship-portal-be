@@ -107,7 +107,7 @@ public class JwtFilterToken implements WebFilter {
     private Mono<ApiResponse<AuthorizationResponseDTO>> validateToken(String token) {
         return webClientBuilder.build()
                 .post()
-                .uri("http://localhost:8001")
+                .uri("http://localhost:8001/validate-token")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<ApiResponse<AuthorizationResponseDTO>>() {});

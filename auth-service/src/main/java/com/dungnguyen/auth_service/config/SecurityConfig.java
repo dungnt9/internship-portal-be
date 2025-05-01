@@ -32,6 +32,8 @@ public class SecurityConfig {
                         .requestMatchers("/forgot-password").permitAll() // Allow password reset requests
                         .requestMatchers("/verify-otp").permitAll()       // Allow OTP verification
                         .requestMatchers("/reset-password").permitAll()   // Allow password reset
+                        .requestMatchers("/validate-token").permitAll()
+                        .requestMatchers("/change-password").permitAll() // Require authentication for changing password
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
