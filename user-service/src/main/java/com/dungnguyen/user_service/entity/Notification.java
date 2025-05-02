@@ -28,9 +28,6 @@ public class Notification {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column(name = "is_read")
-    private Boolean isRead = false;
-
     @Column(length = 50)
     private String type;
 

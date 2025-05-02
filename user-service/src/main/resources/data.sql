@@ -49,14 +49,14 @@ INSERT INTO admins (id, auth_user_id, name, department, position, created_at, up
 (1, 3, 'Nguyễn Văn Quyết', 'Phòng Đào tạo', 'Trưởng phòng', NOW(), NOW()),
 (2, 4, 'Trần Thị Minh', 'Phòng Công tác Sinh viên', 'Chuyên viên', NOW(), NOW());
 
-INSERT INTO notifications (id, auth_user_id, title, content, is_read, type, reference_id, reference_type, created_at, updated_at) VALUES
-(1, 18, 'Đăng ký thực tập thành công', 'Bạn đã đăng ký thực tập tại FPT Software thành công', false, 'registration', 1, 'internship', NOW(), NOW()),
-(2, 18, 'Thông báo phỏng vấn', 'FPT Software mời bạn tham gia phỏng vấn vào ngày 20/05/2025', false, 'interview', 1, 'company', DATE_SUB(NOW(), INTERVAL 2 DAY), NOW()),
-(3, 19, 'Đăng ký thực tập thành công', 'Bạn đã đăng ký thực tập tại Viettel thành công', true, 'registration', 2, 'internship', NOW(), NOW()),
-(4, 20, 'Đăng ký thực tập thành công', 'Bạn đã đăng ký thực tập tại VNPT thành công', false, 'registration', 3, 'internship', NOW(), NOW()),
-(5, 21, 'Thông báo phỏng vấn', 'MISA mời bạn tham gia phỏng vấn vào ngày 21/05/2025', false, 'interview', 4, 'company', DATE_SUB(NOW(), INTERVAL 1 DAY), NOW()),
-(6, 5, 'Sinh viên đăng ký thực tập', 'Có 5 sinh viên mới đã đăng ký thực tập cần được phê duyệt', false, 'approval', 1, 'batch', NOW(), NOW()),
-(7, 9, 'Ứng viên mới', 'Có 3 sinh viên mới đã ứng tuyển vào vị trí thực tập tại công ty', false, 'application', 1, 'company', NOW(), NOW());
+INSERT INTO notifications (id, auth_user_id, title, content, type, reference_id, reference_type, created_at, updated_at) VALUES
+(1, 18, 'Đăng ký thực tập thành công', 'Bạn đã đăng ký thực tập tại FPT Software thành công', 'registration', 1, 'internship', NOW(), NOW()),
+(2, 18, 'Thông báo phỏng vấn', 'FPT Software mời bạn tham gia phỏng vấn vào ngày 20/05/2025', 'interview', 1, 'company', DATE_SUB(NOW(), INTERVAL 2 DAY), NOW()),
+(3, 19, 'Đăng ký thực tập thành công', 'Bạn đã đăng ký thực tập tại Viettel thành công', 'registration', 2, 'internship', NOW(), NOW()),
+(4, 20, 'Đăng ký thực tập thành công', 'Bạn đã đăng ký thực tập tại VNPT thành công', 'registration', 3, 'internship', NOW(), NOW()),
+(5, 21, 'Thông báo phỏng vấn', 'MISA mời bạn tham gia phỏng vấn vào ngày 21/05/2025', 'interview', 4, 'company', DATE_SUB(NOW(), INTERVAL 1 DAY), NOW()),
+(6, 5, 'Sinh viên đăng ký thực tập', 'Có 5 sinh viên mới đã đăng ký thực tập cần được phê duyệt', 'approval', 1, 'batch', NOW(), NOW()),
+(7, 9, 'Ứng viên mới', 'Có 3 sinh viên mới đã ứng tuyển vào vị trí thực tập tại công ty', 'application', 1, 'company', NOW(), NOW());
 
 INSERT INTO news (id, admin_id, title, content, is_published, created_at, updated_at, deleted_at) VALUES
 (1, 1, 'Thông báo về kỳ thực tập năm học 2024-2025', 'Kính gửi các bạn sinh viên,\n\nNhà trường thông báo về kỳ thực tập học kỳ 2 năm học 2024-2025 sẽ diễn ra từ ngày 01/05/2025 đến ngày 15/07/2025. Sinh viên cần đăng ký thực tập trước ngày 15/04/2025.', true, DATE_SUB(NOW(), INTERVAL 10 DAY), DATE_SUB(NOW(), INTERVAL 10 DAY), NULL),
