@@ -22,19 +22,19 @@ spring:
           filters:
             - StripPrefix=1
         - id: USER-SERVICE
-          uri: lb://USER-SERVICE
+          uri: http://localhost:8002
           predicates:
             - Path=/user/**
           filters:
             - StripPrefix=1
         - id: REGISTRATION-SERVICE
-          uri: lb://REGISTRATION-SERVICE
+          uri: http://localhost:8003
           predicates:
             - Path=/registration/**
           filters:
             - StripPrefix=1
         - id: EVALUATION-SERVICE
-          uri: lb://EVALUATION-SERVICE
+          uri: http://localhost:8004
           predicates:
             - Path=/evaluation/**
           filters:
