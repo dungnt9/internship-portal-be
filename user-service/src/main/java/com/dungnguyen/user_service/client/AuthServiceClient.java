@@ -2,7 +2,7 @@ package com.dungnguyen.user_service.client;
 
 import com.dungnguyen.user_service.dto.auth.AuthorizationResponseDTO;
 import com.dungnguyen.user_service.dto.auth.UserResponseDTO;
-import com.dungnguyen.user_service.dto.auth.ApiResponse;
+import com.dungnguyen.user_service.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
