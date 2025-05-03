@@ -22,6 +22,10 @@ spring:
       mode: always             # Luôn thực thi SQL scripts
       data-locations: classpath:data.sql  # Vị trí của file SQL
 
+services:
+  auth:
+    url: http://localhost:8001
+
 eureka:
   client:
     service-url:
