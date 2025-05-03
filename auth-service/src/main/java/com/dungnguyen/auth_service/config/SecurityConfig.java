@@ -28,13 +28,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login").permitAll()
-                        .requestMatchers("/forgot-password").permitAll() // Allow password reset requests
-                        .requestMatchers("/verify-otp").permitAll()       // Allow OTP verification
-                        .requestMatchers("/reset-password").permitAll()   // Allow password reset
-                        .requestMatchers("/validate-token").permitAll()
-                        .requestMatchers("/change-password").permitAll() // Require authentication for changing password
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()  // Cho phép tất cả các request không cần xác thực
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
