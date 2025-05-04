@@ -33,8 +33,7 @@ public class UserController {
                     user.getEmail(),
                     user.getPhone(),
                     user.getRole().getName(),
-                    user.getIsActive(),
-                    user.getImagePath()
+                    user.getIsActive()
             );
 
             return ResponseEntity.ok(ApiResponse.success(userResponse, "User found successfully"));

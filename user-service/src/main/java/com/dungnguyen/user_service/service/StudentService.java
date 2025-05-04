@@ -31,7 +31,6 @@ public class StudentService {
         if (userResponse != null) {
             studentDTO.setEmail(userResponse.getEmail());
             studentDTO.setPhone(userResponse.getPhone());
-            studentDTO.setImagePath(userResponse.getImagePath());
         }
 
         return studentDTO;

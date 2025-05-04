@@ -31,6 +31,9 @@ public class Admin {
     @Column(length = 100)
     private String position;
 
+    @Column(name = "image_path", length = 255)
+    private String imagePath;
+
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 

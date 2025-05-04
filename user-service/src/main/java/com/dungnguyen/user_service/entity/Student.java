@@ -53,6 +53,9 @@ public class Student {
     @Column(columnDefinition = "TEXT")
     private String skills;
 
+    @Column(name = "image_path", length = 255)
+    private String imagePath;
+
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 

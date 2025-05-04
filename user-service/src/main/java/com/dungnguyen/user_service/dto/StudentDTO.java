@@ -24,11 +24,11 @@ public class StudentDTO {
     private BigDecimal cpa;
     private String englishLevel;
     private String skills;
+    private String imagePath;
 
     // Auth service information
     private String email;
     private String phone;
-    private String imagePath;
 
     // Constructor to convert from entity
     public StudentDTO(Student student) {
@@ -44,5 +44,6 @@ public class StudentDTO {
         this.cpa = student.getCpa();
         this.englishLevel = student.getEnglishLevel();
         this.skills = student.getSkills();
+        this.imagePath = student.getImagePath();
     }
 }
