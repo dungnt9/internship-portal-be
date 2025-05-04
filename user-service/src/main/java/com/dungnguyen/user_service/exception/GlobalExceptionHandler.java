@@ -35,6 +35,13 @@ public class GlobalExceptionHandler {
         return createErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
+    @ExceptionHandler(AdminNotFoundException.class)
+    public ResponseEntity<ApiResponse<Object>> handleAdminNotFoundException(AdminNotFoundException ex) {
+        log.error("Admin not found: {}", ex.getMessage());
+        return createErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+
     @ExceptionHandler(HttpClientErrorException.class)
     public ResponseEntity<ApiResponse<Object>> handleHttpClientErrorException(HttpClientErrorException ex) {
         log.error("HTTP client error: {}", ex.getMessage());
