@@ -23,6 +23,12 @@ public class GlobalExceptionHandler {
         return createErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
+    @ExceptionHandler(TeacherNotFoundException.class)
+    public ResponseEntity<ApiResponse<Object>> handleTeacherNotFoundException(TeacherNotFoundException ex) {
+        log.error("Teacher not found: {}", ex.getMessage());
+        return createErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
     @ExceptionHandler(HttpClientErrorException.class)
     public ResponseEntity<ApiResponse<Object>> handleHttpClientErrorException(HttpClientErrorException ex) {
         log.error("HTTP client error: {}", ex.getMessage());
