@@ -28,7 +28,6 @@ public class JwtFilterToken implements WebFilter {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final Map<String, Set<String>> routeRoles;
 
-    // Constructor with explicit injection of routeRoles bean
     public JwtFilterToken(WebClient.Builder webClientBuilder, Map<String, Set<String>> routeRoles) {
         this.webClientBuilder = webClientBuilder;
         this.routeRoles = routeRoles;
@@ -37,6 +36,7 @@ public class JwtFilterToken implements WebFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         String path = exchange.getRequest().getURI().getPath();
+        String httpMethod = exchange.getRequest().getMethod().toString();
 
         // Check if the path is public and should bypass token check
         if (RouteRoleConfig.isPublicRoute(path, routeRoles)) {
@@ -62,10 +62,10 @@ public class JwtFilterToken implements WebFilter {
                         // Extract role from the token validation response
                         String userRole = apiResponse.getData().getRole();
 
-                        // Check if user has access to the requested resource
-                        if (!RouteRoleConfig.isRouteAccessibleByRole(path, userRole, routeRoles)) {
+                        // Check if user has access to the requested resource with specific HTTP method
+                        if (!RouteRoleConfig.isRouteAccessibleByRole(path, userRole, httpMethod, routeRoles)) {
                             return handleError(exchange, HttpStatus.FORBIDDEN,
-                                    "Access denied. Your role does not have permission to access this resource.");
+                                    "Access denied. Your role does not have permission to " + httpMethod + " this resource.");
                         }
 
                         // Token is valid and user has access, proceed with the request
