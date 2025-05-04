@@ -29,6 +29,12 @@ public class GlobalExceptionHandler {
         return createErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
+    @ExceptionHandler(CompanyContactNotFoundException.class)
+    public ResponseEntity<ApiResponse<Object>> handleCompanyContactNotFoundException(CompanyContactNotFoundException ex) {
+        log.error("Company contact not found: {}", ex.getMessage());
+        return createErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
     @ExceptionHandler(HttpClientErrorException.class)
     public ResponseEntity<ApiResponse<Object>> handleHttpClientErrorException(HttpClientErrorException ex) {
         log.error("HTTP client error: {}", ex.getMessage());
