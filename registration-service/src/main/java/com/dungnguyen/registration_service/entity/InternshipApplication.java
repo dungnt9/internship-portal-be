@@ -36,8 +36,8 @@ public class InternshipApplication {
     @Enumerated(EnumType.STRING)
     private Status status = Status.PENDING;
 
-    @Column(name = "cv_id")
-    private Integer cvId;
+    @Column(name = "cv_file_path", length = 255)
+    private String cvFilePath;
 
     @Column(columnDefinition = "TEXT")
     private String note;

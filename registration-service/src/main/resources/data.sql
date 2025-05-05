@@ -13,13 +13,13 @@ INSERT INTO internship_positions (id, company_id, period_id, title, description,
 (7, 6, '2024.2', 'Cloud Engineer Intern', 'Hỗ trợ đội ngũ kỹ thuật trong việc triển khai và quản lý các dịch vụ đám mây', 'Sinh viên năm cuối ngành CNTT, có kiến thức về cloud computing, hiểu biết cơ bản về AWS hoặc Azure', 'Được làm việc với các công nghệ đám mây hiện đại, được đào tạo về các dịch vụ Microsoft, trợ cấp 6 triệu/tháng', 2, 0, 'FULL_TIME', '2024-04-25', NOW(), NOW(), NULL),
 (8, 7, '2024.2', 'Machine Learning Intern', 'Tham gia vào các dự án ứng dụng machine learning trong các sản phẩm của Google', 'Sinh viên năm cuối ngành CNTT hoặc Toán Tin, có kiến thức về machine learning, Python, và TensorFlow', 'Được làm việc với các kỹ sư hàng đầu, tiếp xúc với dữ liệu thực tế quy mô lớn, trợ cấp 7 triệu/tháng', 1, 0, 'FULL_TIME', '2024-04-20', NOW(), NOW(), NULL);
 
-INSERT INTO internship_applications (id, student_id, position_id, period_id, preference_order, status, cv_id, note, updated_at, deleted_at, created_at) VALUES
-(1, 1, 1, '2024.2', 1, 'APPROVED', 2, 'Em rất mong muốn được thực tập tại FPT Software để phát triển kỹ năng lập trình Java', NOW(), NULL, DATE_SUB(NOW(), INTERVAL 15 DAY)),
-(2, 1, 2, '2024.2', 2, 'CANCELLED', 2, 'Em cũng quan tâm đến vị trí Frontend Developer', NOW(), NULL, DATE_SUB(NOW(), INTERVAL 15 DAY)),
-(3, 2, 3, '2024.2', 1, 'APPROVED', 3, 'Em mong muốn được thực tập tại Viettel để học hỏi thêm về phát triển phần mềm trong môi trường doanh nghiệp lớn', NOW(), NULL, DATE_SUB(NOW(), INTERVAL 13 DAY)),
-(4, 3, 4, '2024.2', 1, 'APPROVED', 4, 'Em quan tâm đến lĩnh vực mạng và muốn được thực tập tại VNPT', NOW(), NULL, DATE_SUB(NOW(), INTERVAL 12 DAY)),
-(5, 4, 5, '2024.2', 1, 'PENDING', 5, 'Em mong muốn được thực tập tại MISA để học hỏi về quy trình kiểm thử chuyên nghiệp', NOW(), NULL, DATE_SUB(NOW(), INTERVAL 10 DAY)),
-(6, 5, 1, '2024.2', 1, 'PENDING', 6, 'Em có kinh nghiệm với Java và Spring Boot qua các dự án ở trường đại học', NOW(), NULL, DATE_SUB(NOW(), INTERVAL 8 DAY));
+INSERT INTO internship_applications (id, student_id, position_id, period_id, preference_order, status, cv_file_path, note, updated_at, deleted_at, created_at) VALUES
+(1, 1, 1, '2024.2', 1, 'APPROVED', '/uploads/cv/20216805/CV_NguyenTienDung_2024_v2.pdf', 'Em rất mong muốn được thực tập tại FPT Software để phát triển kỹ năng lập trình Java', NOW(), NULL, DATE_SUB(NOW(), INTERVAL 15 DAY)),
+(2, 1, 2, '2024.2', 2, 'CANCELLED', '/uploads/cv/20216805/CV_NguyenTienDung_2024_v2.pdf', 'Em cũng quan tâm đến vị trí Frontend Developer', NOW(), NULL, DATE_SUB(NOW(), INTERVAL 15 DAY)),
+(3, 2, 3, '2024.2', 1, 'APPROVED', '/uploads/cv/20216123/CV_Dungntelcom_2024.pdf', 'Em mong muốn được thực tập tại Viettel để học hỏi thêm về phát triển phần mềm trong môi trường doanh nghiệp lớn', NOW(), NULL, DATE_SUB(NOW(), INTERVAL 13 DAY)),
+(4, 3, 4, '2024.2', 1, 'APPROVED', '/uploads/cv/20216456/CV_NguyenThiTrang_2024.pdf', 'Em quan tâm đến lĩnh vực mạng và muốn được thực tập tại VNPT', NOW(), NULL, DATE_SUB(NOW(), INTERVAL 12 DAY)),
+(5, 4, 5, '2024.2', 1, 'PENDING', '/uploads/cv/20216789/CV_VuQuangMinh_2024.pdf', 'Em mong muốn được thực tập tại MISA để học hỏi về quy trình kiểm thử chuyên nghiệp', NOW(), NULL, DATE_SUB(NOW(), INTERVAL 10 DAY)),
+(6, 5, 1, '2024.2', 1, 'PENDING', '/uploads/cv/20216012/CV_NguyenHoangSon_2024.pdf', 'Em có kinh nghiệm với Java và Spring Boot qua các dự án ở trường đại học', NOW(), NULL, DATE_SUB(NOW(), INTERVAL 8 DAY));
 
 INSERT INTO external_internships (id, student_id, period_id, confirmation_file_path, status, created_at, updated_at) VALUES
 (1, 6, '2024.2', '/uploads/confirmations/20216345/confirmation_letter.pdf', 'APPROVED', DATE_SUB(NOW(), INTERVAL 10 DAY), NOW()),

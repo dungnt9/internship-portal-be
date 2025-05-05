@@ -43,18 +43,6 @@ INSERT INTO students (id, auth_user_id, student_code, name, class_name, major, g
                                                                                                                                                                               (7, 22, '20216678', 'Nguyễn Văn Thành', 'HTTT02-K66', 'Hệ thống thông tin', 'Male', '2003-01-30', 'Hưng Yên', 3.2, 'Upper Intermediate', 'Java, Python, ReactJS, PostgreSQL', '/images/avatars/default-student.png', NOW(), NOW()),
                                                                                                                                                                               (8, 23, '20216901', 'Nguyễn Thị Lam', 'KTPM01-K66', 'Kỹ thuật phần mềm', 'Female', '2003-04-17', 'Hà Nội', 3.6, 'Advanced', 'Java, .NET, Angular, Oracle', '/images/avatars/default-student.png', NOW(), NOW());
 
--- Insert CV files for students
-INSERT INTO cv_files (id, student_id, file_name, file_path, file_size, upload_date, created_at, updated_at) VALUES
-                                                                                                                (1, 1, 'CV_NguyenTienDung_2024.pdf', '/uploads/cv/20216805/CV_NguyenTienDung_2024.pdf', 512, DATE_SUB(NOW(), INTERVAL 30 DAY), NOW(), NOW()),
-                                                                                                                (2, 1, 'CV_NguyenTienDung_2024_v2.pdf', '/uploads/cv/20216805/CV_NguyenTienDung_2024_v2.pdf', 530, DATE_SUB(NOW(), INTERVAL 15 DAY), NOW(), NOW()),
-                                                                                                                (3, 2, 'CV_Dungntelcom_2024.pdf', '/uploads/cv/20216123/CV_Dungntelcom_2024.pdf', 498, DATE_SUB(NOW(), INTERVAL 25 DAY), NOW(), NOW()),
-                                                                                                                (4, 3, 'CV_NguyenThiTrang_2024.pdf', '/uploads/cv/20216456/CV_NguyenThiTrang_2024.pdf', 505, DATE_SUB(NOW(), INTERVAL 20 DAY), NOW(), NOW()),
-                                                                                                                (5, 4, 'CV_VuQuangMinh_2024.pdf', '/uploads/cv/20216789/CV_VuQuangMinh_2024.pdf', 487, DATE_SUB(NOW(), INTERVAL 22 DAY), NOW(), NOW()),
-                                                                                                                (6, 5, 'CV_NguyenHoangSon_2024.pdf', '/uploads/cv/20216012/CV_NguyenHoangSon_2024.pdf', 510, DATE_SUB(NOW(), INTERVAL 18 DAY), NOW(), NOW()),
-                                                                                                                (7, 6, 'CV_NguyenVanHien_2024.pdf', '/uploads/cv/20216345/CV_NguyenVanHien_2024.pdf', 520, DATE_SUB(NOW(), INTERVAL 21 DAY), NOW(), NOW()),
-                                                                                                                (8, 7, 'CV_NguyenVanThanh_2024.pdf', '/uploads/cv/20216678/CV_NguyenVanThanh_2024.pdf', 495, DATE_SUB(NOW(), INTERVAL 19 DAY), NOW(), NOW()),
-                                                                                                                (9, 8, 'CV_NguyenThiLam_2024.pdf', '/uploads/cv/20216901/CV_NguyenThiLam_2024.pdf', 502, DATE_SUB(NOW(), INTERVAL 23 DAY), NOW(), NOW());
-
 -- Insert notifications
 INSERT INTO notifications (id, auth_user_id, title, content, type, reference_id, reference_type, created_at, updated_at) VALUES
                                                                                                                              (1, 16, 'Đăng ký thực tập thành công', 'Bạn đã đăng ký thực tập tại FPT Software thành công', 'registration', 1, 'internship', NOW(), NOW()),
