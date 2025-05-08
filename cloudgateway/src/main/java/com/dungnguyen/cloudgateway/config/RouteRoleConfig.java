@@ -12,40 +12,28 @@ public class RouteRoleConfig {
     public Map<String, Set<String>> routeRoles() {
         Map<String, Set<String>> routeRoles = new HashMap<>();
 
-        // Define public routes (no authentication required)
         routeRoles.put("/auth/login", Collections.emptySet());
         routeRoles.put("/auth/register", Collections.emptySet());
         routeRoles.put("/auth/forgot-password", Collections.emptySet());
         routeRoles.put("/auth/verify-otp", Collections.emptySet());
         routeRoles.put("/auth/reset-password", Collections.emptySet());
+        routeRoles.put("/auth/change-password", Set.of("ROLE_ADMIN", "ROLE_TEACHER", "ROLE_COMPANY", "ROLE_STUDENT"));
 
-        // Admin routes
         routeRoles.put("/user/admin/**", Set.of("ROLE_ADMIN"));
-
-        // Routes for teachers
         routeRoles.put("/user/teachers/**", Set.of("ROLE_ADMIN", "ROLE_TEACHER"));
-        routeRoles.put("/evaluation/**", Set.of("ROLE_ADMIN", "ROLE_TEACHER"));
-
-        // Company contact profile - access for both GET and PUT
         routeRoles.put("/user/companies/me", Set.of("ROLE_ADMIN", "ROLE_COMPANY"));
-
-        // Company entity routes - /my for both GET and PUT
         routeRoles.put("/user/companies/my", Set.of("ROLE_ADMIN", "ROLE_COMPANY"));
-
-        // Routes for companies - specific permissions
-        // GET /companies - all can view
         routeRoles.put("GET:/user/companies/all", Set.of("ROLE_ADMIN", "ROLE_COMPANY", "ROLE_STUDENT", "ROLE_TEACHER"));
         routeRoles.put("GET:/user/companies/**", Set.of("ROLE_ADMIN", "ROLE_COMPANY", "ROLE_STUDENT", "ROLE_TEACHER"));
-
-        // PUT /companies/{id} - only admin
         routeRoles.put("PUT:/user/companies/[0-9]+", Set.of("ROLE_ADMIN"));
-
-        // Routes for students
         routeRoles.put("/user/students/**", Set.of("ROLE_ADMIN", "ROLE_TEACHER", "ROLE_STUDENT"));
-        routeRoles.put("/registration/**", Set.of("ROLE_ADMIN", "ROLE_STUDENT", "ROLE_COMPANY", "ROLE_TEACHER"));
 
-        // Default route permissions (accessible by all authenticated users)
-        routeRoles.put("/auth/change-password", Set.of("ROLE_ADMIN", "ROLE_TEACHER", "ROLE_COMPANY", "ROLE_STUDENT"));
+        routeRoles.put("/registration/positions/all", Set.of("ROLE_ADMIN"));
+        routeRoles.put("/registration/periods", Set.of("ROLE_ADMIN"));
+        routeRoles.put("/registration/positions/company/**", Set.of("ROLE_ADMIN", "ROLE_STUDENT", "ROLE_COMPANY", "ROLE_TEACHER"));
+        routeRoles.put("/registration/periods/current", Set.of("ROLE_ADMIN", "ROLE_STUDENT", "ROLE_COMPANY", "ROLE_TEACHER"));
+
+        routeRoles.put("/evaluation/**", Set.of("ROLE_ADMIN", "ROLE_TEACHER"));
 
         return routeRoles;
     }
