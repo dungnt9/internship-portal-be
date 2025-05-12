@@ -49,6 +49,10 @@ public class InternshipPosition {
     @Column(name = "work_type")
     private WorkType workType = WorkType.FULL_TIME;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private Status status = Status.OPEN;
+
     @Column(name = "due_date")
     private LocalDate dueDate;
 
@@ -76,5 +80,10 @@ public class InternshipPosition {
         public String getValue() {
             return value;
         }
+    }
+
+    public enum Status {
+        OPEN,
+        CLOSED
     }
 }

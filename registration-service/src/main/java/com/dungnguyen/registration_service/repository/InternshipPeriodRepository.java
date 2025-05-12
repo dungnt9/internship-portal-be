@@ -16,4 +16,7 @@ public interface InternshipPeriodRepository extends JpaRepository<InternshipPeri
 
     @Query("SELECT p FROM InternshipPeriod p WHERE p.status = 'ACTIVE' AND p.deletedAt IS NULL")
     Optional<InternshipPeriod> findCurrentActivePeriod();
+
+    @Query("SELECT p FROM InternshipPeriod p WHERE p.status = 'ACTIVE' AND p.deletedAt IS NULL")
+    Optional<InternshipPeriod> findActivePeriod();
 }

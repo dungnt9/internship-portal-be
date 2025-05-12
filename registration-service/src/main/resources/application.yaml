@@ -25,6 +25,8 @@ spring:
 services:
   user:
     url: http://localhost:8002  # URL của USER-SERVICE
+  auth:
+    url: http://localhost:8001  # URL của AUTH-SERVICE
 
 eureka:
   client:

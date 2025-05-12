@@ -1,6 +1,9 @@
 package com.dungnguyen.registration_service.controller;
 
+import com.dungnguyen.registration_service.dto.InternshipPositionCreateDTO;
 import com.dungnguyen.registration_service.dto.InternshipPositionDTO;
+import com.dungnguyen.registration_service.dto.InternshipPositionUpdateDTO;
+import com.dungnguyen.registration_service.exception.InternshipPositionNotFoundException;
 import com.dungnguyen.registration_service.response.ApiResponse;
 import com.dungnguyen.registration_service.service.InternshipPositionService;
 import lombok.RequiredArgsConstructor;
@@ -64,17 +67,17 @@ public class InternshipPositionController {
             @PathVariable Integer companyId,
             @RequestHeader(value = "Authorization", required = false) String authHeader) {
         try {
-            log.info("Getting positions for company ID: {} (excluding positions from periods with END status)", companyId);
-            List<InternshipPositionDTO> positions = positionService.getPositionsByCompany(companyId, authHeader);
+            log.info("Getting OPEN positions for company ID: {} in the active period", companyId);
+            List<InternshipPositionDTO> positions = positionService.getOpenPositionsByCompanyForActivePeriod(companyId, authHeader);
 
             return ResponseEntity.ok(ApiResponse.<List<InternshipPositionDTO>>builder()
                     .status(HttpStatus.OK.value())
-                    .message("Positions retrieved successfully")
+                    .message("Open positions retrieved successfully")
                     .data(positions)
                     .build());
 
         } catch (Exception e) {
-            log.error("Error getting positions by company: {}", e.getMessage());
+            log.error("Error getting open positions by company: {}", e.getMessage());
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(ApiResponse.<List<InternshipPositionDTO>>builder()

@@ -33,6 +33,9 @@ public class RouteRoleConfig {
         routeRoles.put("/registration/positions/company/**", Set.of("ROLE_ADMIN", "ROLE_STUDENT", "ROLE_COMPANY", "ROLE_TEACHER"));
         routeRoles.put("/registration/periods/current", Set.of("ROLE_ADMIN", "ROLE_STUDENT", "ROLE_COMPANY", "ROLE_TEACHER"));
 
+        routeRoles.put("/registration/company-positions", Set.of("ROLE_COMPANY"));
+        routeRoles.put("PUT:/registration/company-positions/[0-9]+", Set.of("ROLE_COMPANY"));
+
         routeRoles.put("/evaluation/**", Set.of("ROLE_ADMIN", "ROLE_TEACHER"));
 
         return routeRoles;
