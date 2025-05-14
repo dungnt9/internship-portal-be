@@ -29,6 +29,18 @@ public class GlobalExceptionHandler {
         return createErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
+    @ExceptionHandler(ExternalInternshipNotFoundException.class)
+    public ResponseEntity<ApiResponse<Object>> handleExternalInternshipNotFoundException(ExternalInternshipNotFoundException ex) {
+        log.error("External internship not found: {}", ex.getMessage());
+        return createErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    @ExceptionHandler(DuplicateExternalInternshipException.class)
+    public ResponseEntity<ApiResponse<Object>> handleDuplicateExternalInternshipException(DuplicateExternalInternshipException ex) {
+        log.error("Duplicate external internship: {}", ex.getMessage());
+        return createErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
     @ExceptionHandler(HttpClientErrorException.class)
     public ResponseEntity<ApiResponse<Object>> handleHttpClientErrorException(HttpClientErrorException ex) {
         log.error("HTTP client error: {}", ex.getMessage());
