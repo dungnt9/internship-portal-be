@@ -8,6 +8,7 @@ import com.dungnguyen.registration_service.entity.ExternalInternship;
 import com.dungnguyen.registration_service.entity.InternshipPeriod;
 import com.dungnguyen.registration_service.exception.ExternalInternshipNotFoundException;
 import com.dungnguyen.registration_service.exception.InternshipPeriodNotFoundException;
+import com.dungnguyen.registration_service.exception.UnauthorizedAccessException;
 import com.dungnguyen.registration_service.repository.ExternalInternshipRepository;
 import com.dungnguyen.registration_service.repository.InternshipPeriodRepository;
 import lombok.RequiredArgsConstructor;
@@ -99,6 +100,47 @@ public class ExternalInternshipService {
 
         // Return as DTO
         return convertToDTO(savedExternalInternship);
+    }
+
+    /**
+     * Cancel external internship application
+     * Only PENDING applications can be cancelled
+     * Only the student who created the application can cancel it
+     *
+     * @param id External internship ID
+     * @param token Authorization token
+     * @return Updated ExternalInternshipDTO
+     */
+    @Transactional
+    public ExternalInternshipDTO cancelExternalInternship(Integer id, String token) {
+        // Get current student ID from token
+        Integer studentId = authServiceClient.getUserStudentId(token);
+        if (studentId == null) {
+            throw new RuntimeException("Could not determine student from authorization token");
+        }
+
+        // Get external internship
+        ExternalInternship externalInternship = externalInternshipRepository.findById(id)
+                .orElseThrow(() -> new ExternalInternshipNotFoundException("External internship not found with ID: " + id));
+
+        // Check if student is the owner of the application
+        if (!externalInternship.getStudentId().equals(studentId)) {
+            throw new UnauthorizedAccessException("You are not authorized to cancel this application");
+        }
+
+        // Check if application is in PENDING status
+        if (externalInternship.getStatus() != ExternalInternship.Status.PENDING) {
+            throw new IllegalStateException("Only PENDING applications can be cancelled");
+        }
+
+        // Update status to CANCELLED
+        externalInternship.setStatus(ExternalInternship.Status.CANCELLED);
+
+        // Save to database
+        ExternalInternship updatedExternalInternship = externalInternshipRepository.save(externalInternship);
+
+        // Return as DTO
+        return convertToDTO(updatedExternalInternship);
     }
 
     /**

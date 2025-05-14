@@ -35,6 +35,8 @@ public class RouteRoleConfig {
 
         routeRoles.put("GET:/registration/external-internships/me", Set.of("ROLE_STUDENT"));
         routeRoles.put("POST:/registration/external-internships", Set.of("ROLE_STUDENT"));
+        routeRoles.put("PUT:/registration/external-internships/[0-9]+/cancel", Set.of("ROLE_STUDENT"));
+
 
         routeRoles.put("/registration/company-positions", Set.of("ROLE_COMPANY"));
         routeRoles.put("PUT:/registration/company-positions/[0-9]+", Set.of("ROLE_COMPANY"));
