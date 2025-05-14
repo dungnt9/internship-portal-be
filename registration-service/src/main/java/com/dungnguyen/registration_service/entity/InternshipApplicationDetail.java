@@ -8,31 +8,33 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name = "internship_applications")
+@Table(name = "internship_application_details")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class InternshipApplication {
+public class InternshipApplicationDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "student_id", nullable = false)
-    private Integer studentId;
+    @ManyToOne
+    @JoinColumn(name = "application_id", nullable = false)
+    private InternshipApplication application;
 
     @ManyToOne
-    @JoinColumn(name = "period_id", nullable = false)
-    private InternshipPeriod period;
+    @JoinColumn(name = "position_id", nullable = false)
+    private InternshipPosition position;
 
-    @Column(name = "cv_file_path", length = 255)
-    private String cvFilePath;
+    @Column(name = "preference_order", nullable = false)
+    private Integer preferenceOrder;
 
-    @OneToMany(mappedBy = "application", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<InternshipApplicationDetail> details = new ArrayList<>();
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.PENDING;
+
+    @Column(columnDefinition = "TEXT")
+    private String note;
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
@@ -44,4 +46,8 @@ public class InternshipApplication {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public enum Status {
+        PENDING, APPROVED, REJECTED, CANCELLED
+    }
 }
