@@ -1,12 +1,11 @@
 package com.dungnguyen.registration_service.service;
 
 import com.dungnguyen.registration_service.client.AuthServiceClient;
+import com.dungnguyen.registration_service.client.UserServiceClient;
 import com.dungnguyen.registration_service.dto.ExternalInternshipCreateDTO;
 import com.dungnguyen.registration_service.dto.ExternalInternshipDTO;
-import com.dungnguyen.registration_service.dto.ExternalInternshipUpdateDTO;
 import com.dungnguyen.registration_service.entity.ExternalInternship;
 import com.dungnguyen.registration_service.entity.InternshipPeriod;
-import com.dungnguyen.registration_service.exception.DuplicateExternalInternshipException;
 import com.dungnguyen.registration_service.exception.ExternalInternshipNotFoundException;
 import com.dungnguyen.registration_service.exception.InternshipPeriodNotFoundException;
 import com.dungnguyen.registration_service.repository.ExternalInternshipRepository;
@@ -15,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,136 +27,109 @@ public class ExternalInternshipService {
     private final ExternalInternshipRepository externalInternshipRepository;
     private final InternshipPeriodRepository periodRepository;
     private final AuthServiceClient authServiceClient;
+    private final UserServiceClient userServiceClient;
+    private final FileUploadService fileUploadService;
 
     /**
-     * Get all external internships for the current student
+     * Get all external internships for current student in current period
      *
      * @param token Authorization token
      * @return List of ExternalInternshipDTO
      */
     public List<ExternalInternshipDTO> getMyExternalInternships(String token) {
-        Integer studentId = getCurrentUserAuthId(token);
+        // Get current student ID from token
+        Integer studentId = authServiceClient.getUserStudentId(token);
         if (studentId == null) {
             throw new RuntimeException("Could not determine student from authorization token");
         }
 
-        List<ExternalInternship> externalInternships = externalInternshipRepository.findByStudentId(studentId);
+        // Get current period
+        InternshipPeriod currentPeriod = periodRepository.findCurrentActivePeriod()
+                .orElseThrow(() -> new InternshipPeriodNotFoundException("No active internship period found"));
+
+        // Get all external internships for current student in current period
+        List<ExternalInternship> externalInternships = externalInternshipRepository
+                .findByStudentIdAndPeriodId(studentId, currentPeriod.getId());
+
+        // Convert to DTOs
         return externalInternships.stream()
-                .map(ExternalInternshipDTO::new)
+                .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
     /**
-     * Get a specific external internship for the current student
-     *
-     * @param id    External internship ID
-     * @param token Authorization token
-     * @return ExternalInternshipDTO
-     */
-    public ExternalInternshipDTO getMyExternalInternshipById(Integer id, String token) {
-        Integer studentId = getCurrentUserAuthId(token);
-        if (studentId == null) {
-            throw new RuntimeException("Could not determine student from authorization token");
-        }
-
-        ExternalInternship externalInternship = externalInternshipRepository.findByIdAndStudentId(id, studentId)
-                .orElseThrow(() -> new ExternalInternshipNotFoundException("External internship not found with ID: " + id));
-
-        return new ExternalInternshipDTO(externalInternship);
-    }
-
-    /**
-     * Create a new external internship for the current student
+     * Create new external internship application
      *
      * @param createDTO External internship creation data
-     * @param token     Authorization token
+     * @param confirmationFile CV/Confirmation letter file
+     * @param token Authorization token
      * @return Created ExternalInternshipDTO
      */
     @Transactional
-    public ExternalInternshipDTO createExternalInternship(ExternalInternshipCreateDTO createDTO, String token) {
-        Integer studentId = getCurrentUserAuthId(token);
+    public ExternalInternshipDTO createExternalInternship(
+            ExternalInternshipCreateDTO createDTO,
+            MultipartFile confirmationFile,
+            String token) {
+
+        // Get current student ID from token
+        Integer studentId = authServiceClient.getUserStudentId(token);
         if (studentId == null) {
             throw new RuntimeException("Could not determine student from authorization token");
         }
 
-        // Get the period
+        // Get student code for file path
+        String studentCode = getStudentCode(studentId, token);
+
+        // Get period
         InternshipPeriod period = periodRepository.findById(createDTO.getPeriodId())
                 .orElseThrow(() -> new InternshipPeriodNotFoundException("Internship period not found with ID: " + createDTO.getPeriodId()));
 
-        // Check if student already has an external internship for this period
-        if (externalInternshipRepository.existsByPeriodIdAndStudentId(createDTO.getPeriodId(), studentId)) {
-            throw new DuplicateExternalInternshipException("Student already has an external internship for period: " + createDTO.getPeriodId());
-        }
+        // Upload file
+        String filePath = fileUploadService.uploadFile(confirmationFile, studentCode, "confirmations");
 
         // Create new external internship
         ExternalInternship externalInternship = new ExternalInternship();
         externalInternship.setStudentId(studentId);
         externalInternship.setPeriod(period);
-        externalInternship.setConfirmationFilePath(createDTO.getConfirmationFilePath());
+        externalInternship.setConfirmationFilePath(filePath);
         externalInternship.setStatus(ExternalInternship.Status.PENDING);
-        externalInternship.setDeletedAt(null);
 
-        // Save external internship
+        // Save to database
         ExternalInternship savedExternalInternship = externalInternshipRepository.save(externalInternship);
 
         // Return as DTO
-        return new ExternalInternshipDTO(savedExternalInternship);
+        return convertToDTO(savedExternalInternship);
     }
 
     /**
-     * Update an existing external internship for the current student
+     * Convert ExternalInternship to DTO
      *
-     * @param id        External internship ID
-     * @param updateDTO External internship update data
-     * @param token     Authorization token
-     * @return Updated ExternalInternshipDTO
+     * @param externalInternship ExternalInternship entity
+     * @return ExternalInternshipDTO
      */
-    @Transactional
-    public ExternalInternshipDTO updateExternalInternship(Integer id, ExternalInternshipUpdateDTO updateDTO, String token) {
-        Integer studentId = getCurrentUserAuthId(token);
-        if (studentId == null) {
-            throw new RuntimeException("Could not determine student from authorization token");
-        }
-
-        // Get the external internship, ensuring it belongs to the student
-        ExternalInternship externalInternship = externalInternshipRepository.findByIdAndStudentId(id, studentId)
-                .orElseThrow(() -> new ExternalInternshipNotFoundException("External internship not found with ID: " + id));
-
-        // Only allow updates if status is PENDING or REJECTED
-        if (externalInternship.getStatus() != ExternalInternship.Status.PENDING &&
-                externalInternship.getStatus() != ExternalInternship.Status.REJECTED) {
-            throw new RuntimeException("Cannot update external internship with status: " + externalInternship.getStatus());
-        }
-
-        // Update external internship fields
-        if (updateDTO.getConfirmationFilePath() != null) {
-            externalInternship.setConfirmationFilePath(updateDTO.getConfirmationFilePath());
-        }
-
-        // Allow students to only change status from PENDING to CANCELLED
-        if (updateDTO.getStatus() != null) {
-            if (ExternalInternship.Status.CANCELLED.name().equals(updateDTO.getStatus()) &&
-                    externalInternship.getStatus() == ExternalInternship.Status.PENDING) {
-                externalInternship.setStatus(ExternalInternship.Status.CANCELLED);
-            } else {
-                throw new RuntimeException("Students can only change status from PENDING to CANCELLED");
-            }
-        }
-
-        // Save updated external internship
-        ExternalInternship updatedExternalInternship = externalInternshipRepository.save(externalInternship);
-
-        // Return as DTO
-        return new ExternalInternshipDTO(updatedExternalInternship);
+    private ExternalInternshipDTO convertToDTO(ExternalInternship externalInternship) {
+        ExternalInternshipDTO dto = new ExternalInternshipDTO();
+        dto.setId(externalInternship.getId());
+        dto.setStudentId(externalInternship.getStudentId());
+        dto.setPeriodId(externalInternship.getPeriod().getId());
+        dto.setConfirmationFilePath(externalInternship.getConfirmationFilePath());
+        dto.setStatus(externalInternship.getStatus().name());
+        dto.setCreatedAt(externalInternship.getCreatedAt());
+        dto.setUpdatedAt(externalInternship.getUpdatedAt());
+        return dto;
     }
 
     /**
-     * Get the current user's auth ID from token
+     * Get student code from student ID
      *
+     * @param studentId Student ID
      * @param token Authorization token
-     * @return Auth user ID
+     * @return Student code
      */
-    public Integer getCurrentUserAuthId(String token) {
-        return authServiceClient.getUserIdFromToken(token);
+    private String getStudentCode(Integer studentId, String token) {
+        // This method would call UserServiceClient to get student details
+        // For now, returning a placeholder - you'll need to implement this
+        // based on your UserServiceClient capabilities
+        return "student_" + studentId;
     }
 }
