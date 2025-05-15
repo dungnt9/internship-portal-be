@@ -58,4 +58,9 @@ public class InternshipPeriodService {
     public boolean periodExists(String id) {
         return periodRepository.existsById(id);
     }
+
+    public InternshipPeriod getUpcomingPeriod() {
+        return periodRepository.findCurrentUpcomingPeriod()
+                .orElseThrow(() -> new InternshipPeriodNotFoundException("No upcoming internship period found"));
+    }
 }

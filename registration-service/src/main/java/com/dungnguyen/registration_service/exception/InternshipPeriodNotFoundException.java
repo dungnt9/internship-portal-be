@@ -9,8 +9,4 @@ public class InternshipPeriodNotFoundException extends RuntimeException {
     public InternshipPeriodNotFoundException(String message) {
         super(message);
     }
-
-    public InternshipPeriodNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

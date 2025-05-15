@@ -32,10 +32,16 @@ public class RouteRoleConfig {
         routeRoles.put("/registration/periods", Set.of("ROLE_ADMIN"));
         routeRoles.put("/registration/positions/company/**", Set.of("ROLE_ADMIN", "ROLE_STUDENT", "ROLE_COMPANY", "ROLE_TEACHER"));
         routeRoles.put("/registration/periods/current", Set.of("ROLE_ADMIN", "ROLE_STUDENT", "ROLE_COMPANY", "ROLE_TEACHER"));
+        routeRoles.put("/registration/periods/upcoming", Set.of("ROLE_ADMIN", "ROLE_STUDENT", "ROLE_COMPANY", "ROLE_TEACHER"));
 
         routeRoles.put("GET:/registration/external-internships/me", Set.of("ROLE_STUDENT"));
         routeRoles.put("POST:/registration/external-internships", Set.of("ROLE_STUDENT"));
         routeRoles.put("PUT:/registration/external-internships/[0-9]+/cancel", Set.of("ROLE_STUDENT"));
+
+        routeRoles.put("GET:/registration/applications/me", Set.of("ROLE_STUDENT"));
+        routeRoles.put("POST:/registration/applications/upload-cv", Set.of("ROLE_STUDENT"));
+        routeRoles.put("POST:/registration/applications/register-preferences", Set.of("ROLE_STUDENT"));
+        routeRoles.put("PUT:/registration/applications/[0-9]+/update-preferences", Set.of("ROLE_STUDENT"));
 
 
         routeRoles.put("/registration/company-positions", Set.of("ROLE_COMPANY"));

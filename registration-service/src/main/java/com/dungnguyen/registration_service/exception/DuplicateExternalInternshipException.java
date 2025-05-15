@@ -5,12 +5,4 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class DuplicateExternalInternshipException extends RuntimeException {
-
-    public DuplicateExternalInternshipException(String message) {
-        super(message);
-    }
-
-    public DuplicateExternalInternshipException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

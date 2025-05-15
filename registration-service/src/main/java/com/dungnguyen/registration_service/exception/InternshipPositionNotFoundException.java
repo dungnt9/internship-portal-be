@@ -9,8 +9,4 @@ public class InternshipPositionNotFoundException extends RuntimeException {
     public InternshipPositionNotFoundException(String message) {
         super(message);
     }
-
-    public InternshipPositionNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

@@ -9,8 +9,4 @@ public class ExternalInternshipNotFoundException extends RuntimeException {
     public ExternalInternshipNotFoundException(String message) {
         super(message);
     }
-
-    public ExternalInternshipNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

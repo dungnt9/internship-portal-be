@@ -1,6 +1,7 @@
 package com.dungnguyen.registration_service.controller;
 
 import com.dungnguyen.registration_service.entity.InternshipPeriod;
+import com.dungnguyen.registration_service.exception.InternshipPeriodNotFoundException;
 import com.dungnguyen.registration_service.response.ApiResponse;
 import com.dungnguyen.registration_service.service.InternshipPeriodService;
 import lombok.RequiredArgsConstructor;
@@ -74,6 +75,39 @@ public class InternshipPeriodController {
                     .body(ApiResponse.<InternshipPeriod>builder()
                             .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                             .message("An error occurred while retrieving current internship period")
+                            .data(null)
+                            .build());
+        }
+    }
+
+    @GetMapping("/upcoming")
+    public ResponseEntity<ApiResponse<InternshipPeriod>> getUpcomingPeriod() {
+        try {
+            log.info("Getting upcoming internship period");
+            InternshipPeriod upcomingPeriod = periodService.getUpcomingPeriod();
+
+            return ResponseEntity.ok(ApiResponse.<InternshipPeriod>builder()
+                    .status(HttpStatus.OK.value())
+                    .message("Upcoming internship period retrieved successfully")
+                    .data(upcomingPeriod)
+                    .build());
+
+        } catch (InternshipPeriodNotFoundException e) {
+            log.warn("No upcoming internship period found: {}", e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(ApiResponse.<InternshipPeriod>builder()
+                            .status(HttpStatus.NOT_FOUND.value())
+                            .message(e.getMessage())
+                            .data(null)
+                            .build());
+        } catch (Exception e) {
+            log.error("Error getting upcoming internship period: {}", e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ApiResponse.<InternshipPeriod>builder()
+                            .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                            .message("An error occurred while retrieving upcoming internship period")
                             .data(null)
                             .build());
         }
