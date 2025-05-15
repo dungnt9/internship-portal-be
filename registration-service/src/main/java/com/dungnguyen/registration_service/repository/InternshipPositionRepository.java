@@ -21,8 +21,8 @@ public interface InternshipPositionRepository extends JpaRepository<InternshipPo
     List<InternshipPosition> findActivePositionsByCompanyId(@Param("companyId") Integer companyId);
 
     // Find all positions by company ID with status OPEN, for the ACTIVE period
-    @Query("SELECT p FROM InternshipPosition p WHERE p.companyId = :companyId AND p.status = 'OPEN' AND p.period.status = 'ACTIVE' AND p.deletedAt IS NULL ORDER BY p.createdAt DESC")
-    List<InternshipPosition> findOpenPositionsByCompanyIdForActivePeriod(@Param("companyId") Integer companyId);
+    @Query("SELECT p FROM InternshipPosition p WHERE p.companyId = :companyId AND p.status = 'OPEN' AND p.period.status = 'UPCOMING' AND p.deletedAt IS NULL ORDER BY p.createdAt DESC")
+    List<InternshipPosition> findOpenPositionsByCompanyIdForUpcomingPeriod(@Param("companyId") Integer companyId);
 
     // Find all positions by company ID for a specific period
     @Query("SELECT p FROM InternshipPosition p WHERE p.companyId = :companyId AND p.period.id = :periodId AND p.deletedAt IS NULL ORDER BY p.createdAt DESC")

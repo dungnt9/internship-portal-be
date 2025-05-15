@@ -67,8 +67,8 @@ public class InternshipPositionController {
             @PathVariable Integer companyId,
             @RequestHeader(value = "Authorization", required = false) String authHeader) {
         try {
-            log.info("Getting OPEN positions for company ID: {} in the active period", companyId);
-            List<InternshipPositionDTO> positions = positionService.getOpenPositionsByCompanyForActivePeriod(companyId, authHeader);
+            log.info("Getting OPEN positions for company ID: {} in the upcoming period", companyId);
+            List<InternshipPositionDTO> positions = positionService.getOpenPositionsByCompanyForUpcomingPeriod(companyId, authHeader);
 
             return ResponseEntity.ok(ApiResponse.<List<InternshipPositionDTO>>builder()
                     .status(HttpStatus.OK.value())

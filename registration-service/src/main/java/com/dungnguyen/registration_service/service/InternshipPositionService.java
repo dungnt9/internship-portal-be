@@ -119,16 +119,16 @@ public class InternshipPositionService {
     }
 
     /**
-     * Get open positions by company ID for the current active period
+     * Get open positions by company ID for the current upcoming period
      * This is for all users to view available open positions
      *
      * @param companyId Company ID
      * @param token Authorization token
      * @return List of InternshipPositionDTO with company details
      */
-    public List<InternshipPositionDTO> getOpenPositionsByCompanyForActivePeriod(Integer companyId, String token) {
-        // Get open positions by company ID for active period
-        List<InternshipPosition> positions = positionRepository.findOpenPositionsByCompanyIdForActivePeriod(companyId);
+    public List<InternshipPositionDTO> getOpenPositionsByCompanyForUpcomingPeriod(Integer companyId, String token) {
+        // Get open positions by company ID for upcoming period
+        List<InternshipPosition> positions = positionRepository.findOpenPositionsByCompanyIdForUpcomingPeriod(companyId);
 
         // Return empty list if no positions found
         if (positions.isEmpty()) {
