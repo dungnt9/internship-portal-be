@@ -8,7 +8,7 @@ spring:
     username: user
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver     # được cài dependency ở pom.xml
-  jpa:   # java persistence API
+  jpa:
     hibernate:
       ddl-auto: create-drop     # data definition language: kiểm tra db có đúng với entity không
     show-sql: true       # hiển thị câu SQL ra console khi chạy
@@ -19,7 +19,7 @@ spring:
     defer-datasource-initialization: true  # đảm bảo Spring Boot tải SQL sau khi tạo schema
   sql:
     init:
-      mode: never             # Luôn thực thi SQL scripts
+      mode: never             # Luôn thực thi SQL scripts hay k?
   mail:
     host: smtp.gmail.com
     port: 587
@@ -29,7 +29,6 @@ spring:
         mail.smtp.auth: true
         mail.smtp.starttls.enable: true
 
-# Password reset token expiry time in minutes
 password:
   reset:
     token:
@@ -48,12 +47,10 @@ eureka:
     lease-renewal-interval-in-seconds: 10    # Số giây giữa các lần gia hạn (mặc định là 30)
     lease-expiration-duration-in-seconds: 30 # Thời gian cho phép k
 
-# JWT Configuration
 jwt:
   secret: ${JWT_SECRET:KRXfBGsQEjFAXvMVYyGX8u4APjUm5JgJ7KcEUiVCeX5Sq3tR8NcEHaD2mWf}
   expiration: 604800000 # 7 days in milliseconds
 
-# Logging configuration
 logging:
   level:
     com.dungnguyen.auth_service: INFO

@@ -23,26 +23,20 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        // Initialize roles if they don't exist
         initializeRoles();
-
-        // Initialize users with properly encoded passwords
         initializeUsers();
-
         log.info("Database initialization completed successfully");
     }
 
     private void initializeRoles() {
         if (roleRepository.count() == 0) {
             log.info("Initializing roles...");
-
             List<Role> roles = List.of(
                     new Role(null, "ROLE_ADMIN", "Quản trị viên hệ thống", null, null),
                     new Role(null, "ROLE_TEACHER", "Giảng viên hướng dẫn", null, null),
                     new Role(null, "ROLE_COMPANY", "Doanh nghiệp", null, null),
                     new Role(null, "ROLE_STUDENT", "Sinh viên", null, null)
             );
-
             roleRepository.saveAll(roles);
             log.info("Roles initialized with {} entries", roles.size());
         }

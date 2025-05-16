@@ -32,9 +32,6 @@ public class PasswordChangeController {
     @Value("${jwt.secret:defaultSecretKeyWithAtLeast256BitsLengthForHS256Algorithm}")
     private String secret;
 
-    /**
-     * Extract user ID from JWT token
-     */
     private Integer extractUserIdFromToken(String token) {
         try {
             Key key = Keys.hmacShaKeyFor(secret.getBytes());
@@ -51,9 +48,6 @@ public class PasswordChangeController {
         }
     }
 
-    /**
-     * Validate password change request
-     */
     private Map<String, String> validatePasswordChangeRequest(ChangePasswordRequestDTO request) {
         Map<String, String> errors = new HashMap<>();
 
@@ -95,7 +89,6 @@ public class PasswordChangeController {
 
             String token = authHeader.substring(7);
 
-            // Extract user ID from token
             Integer userId = extractUserIdFromToken(token);
             if (userId == null) {
                 return ResponseEntity
@@ -107,7 +100,6 @@ public class PasswordChangeController {
                                 .build());
             }
 
-            // Validate request
             Map<String, String> validationErrors = validatePasswordChangeRequest(request);
             if (!validationErrors.isEmpty()) {
                 return ResponseEntity
@@ -119,7 +111,6 @@ public class PasswordChangeController {
                                 .build());
             }
 
-            // Change password
             boolean success = passwordChangeService.changePassword(
                     userId,
                     request.getCurrentPassword(),
@@ -133,7 +124,6 @@ public class PasswordChangeController {
                         .data(null)
                         .build());
             } else {
-                // Get the specific error message from the service
                 String errorMessage = passwordChangeService.getLastErrorMessage();
                 return ResponseEntity
                         .status(HttpStatus.BAD_REQUEST)

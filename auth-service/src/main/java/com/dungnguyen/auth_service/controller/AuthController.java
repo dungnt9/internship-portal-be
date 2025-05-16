@@ -40,7 +40,6 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody(required = false) AuthRequestDTO authRequest) {
-        // Validate request payload
         if (authRequest == null) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
@@ -65,7 +64,6 @@ public class AuthController {
         try {
             log.info("Login attempt with identifier: {}", authRequest.getIdentifier());
 
-            // Find user by identifier (email or phone)
             Optional<User> userOptional = authService.findByIdentifier(authRequest.getIdentifier());
 
             if (userOptional.isEmpty()) {

@@ -9,8 +9,4 @@ public class CompanyContactNotFoundException extends RuntimeException {
     public CompanyContactNotFoundException(String message) {
         super(message);
     }
-
-    public CompanyContactNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

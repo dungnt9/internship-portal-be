@@ -13,7 +13,4 @@ public interface ExternalInternshipRepository extends JpaRepository<ExternalInte
 
     @Query("SELECT e FROM ExternalInternship e WHERE e.studentId = :studentId AND e.period.id = :periodId AND e.deletedAt IS NULL")
     List<ExternalInternship> findByStudentIdAndPeriodId(@Param("studentId") Integer studentId, @Param("periodId") String periodId);
-
-    @Query("SELECT e FROM ExternalInternship e WHERE e.studentId = :studentId AND e.deletedAt IS NULL")
-    List<ExternalInternship> findByStudentId(@Param("studentId") Integer studentId);
 }

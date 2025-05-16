@@ -23,12 +23,6 @@ public class JwtUtil {
     @Value("${jwt.expiration:604800000}") // 7 days in milliseconds
     private long jwtExpiration;
 
-    /**
-     * Generate token for user
-     * @param userId User ID
-     * @param role User role
-     * @return JWT token
-     */
     public String generateToken(Integer userId, String role) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", role);
@@ -36,10 +30,6 @@ public class JwtUtil {
     }
 
     /**
-     * Validate token
-     * @param token JWT token
-     * @param userId User ID to validate
-     * @return true if token is valid
      * @throws ExpiredJwtException if token is expired
      * @throws SignatureException if token signature is invalid
      * @throws MalformedJwtException if token is malformed
@@ -61,28 +51,16 @@ public class JwtUtil {
     }
 
     /**
-     * Extract user ID from token
-     * @param token JWT token
      * @return User ID
      */
     public String extractUserId(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
-    /**
-     * Extract role from token
-     * @param token JWT token
-     * @return User role
-     */
     public String extractRole(String token) {
         return (String) extractAllClaims(token).get("role");
     }
 
-    /**
-     * Extract expiration date from token
-     * @param token JWT token
-     * @return Expiration date
-     */
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
@@ -108,18 +86,6 @@ public class JwtUtil {
     }
 
     /**
-     * Check if token is about to expire (within 1 day)
-     * @param token JWT token
-     * @return true if token is about to expire
-     */
-    public Boolean isTokenAboutToExpire(String token) {
-        Date expiration = extractExpiration(token);
-        return expiration.getTime() - System.currentTimeMillis() < 86400000; // 24 hours
-    }
-
-    /**
-     * Extract all claims from token
-     * @param token JWT token
      * @return Claims
      * @throws ExpiredJwtException if token is expired
      * @throws SignatureException if token signature is invalid
@@ -148,20 +114,13 @@ public class JwtUtil {
         }
     }
 
-    /**
-     * Check if token is expired
-     * @param token JWT token
-     * @return true if token is expired
-     */
     private Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
     /**
-     * Create token
      * @param claims Claims to include in token
      * @param subject Subject (user ID)
-     * @return JWT token
      */
     private String createToken(Map<String, Object> claims, String subject) {
         Key key = Keys.hmacShaKeyFor(secret.getBytes());

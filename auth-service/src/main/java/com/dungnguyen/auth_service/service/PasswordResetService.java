@@ -34,18 +34,12 @@ public class PasswordResetService {
     @Value("${spring.mail.username:dung9102003hp@gmail.com}")
     private String mailFrom;
 
-    /**
-     * Generate a 6-digit OTP code
-     */
     private String generateOtp() {
         Random random = new Random();
         int otp = 100000 + random.nextInt(900000); // 6-digit number
         return String.valueOf(otp);
     }
 
-    /**
-     * Send an email with the OTP
-     */
     private void sendOtpEmail(String email, String otp) {
         try {
             // Trong môi trường phát triển, chỉ in OTP ra log
@@ -107,9 +101,6 @@ public class PasswordResetService {
         }
     }
 
-    /**
-     * Verify the OTP provided by the user
-     */
     @Transactional(readOnly = true)
     public boolean verifyOtp(String email, String otp) {
         Optional<PasswordResetToken> tokenOpt = tokenRepository.findByEmailAndOtpAndUsed(email, otp, false);
@@ -124,9 +115,6 @@ public class PasswordResetService {
         return !token.isExpired();
     }
 
-    /**
-     * Reset the password using the provided OTP and new password
-     */
     @Transactional
     public boolean resetPassword(String email, String otp, String newPassword) {
         Optional<PasswordResetToken> tokenOpt = tokenRepository.findByEmailAndOtpAndUsed(email, otp, false);
