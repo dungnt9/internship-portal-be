@@ -20,7 +20,6 @@ public class InternshipPositionDTO {
     private String requirements;
     private String benefits;
     private Integer availableSlots;
-    private Integer registeredCount;
     private String workType;
     private String status;
     private LocalDate dueDate;
@@ -45,7 +44,6 @@ public class InternshipPositionDTO {
         this.requirements = position.getRequirements();
         this.benefits = position.getBenefits();
         this.availableSlots = position.getAvailableSlots();
-        this.registeredCount = position.getRegisteredCount();
         this.workType = position.getWorkType().getValue();
         this.status = position.getStatus().name();
         this.dueDate = position.getDueDate();

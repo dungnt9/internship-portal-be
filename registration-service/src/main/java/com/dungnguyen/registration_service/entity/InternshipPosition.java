@@ -42,9 +42,6 @@ public class InternshipPosition {
     @Column(name = "available_slots", nullable = false)
     private Integer availableSlots = 1;
 
-    @Column(name = "registered_count", nullable = false)
-    private Integer registeredCount = 0;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "work_type")
     private WorkType workType = WorkType.FULL_TIME;

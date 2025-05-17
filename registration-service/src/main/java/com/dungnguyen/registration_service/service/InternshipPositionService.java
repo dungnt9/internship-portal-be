@@ -220,7 +220,6 @@ public class InternshipPositionService {
         position.setRequirements(createDTO.getRequirements());
         position.setBenefits(createDTO.getBenefits());
         position.setAvailableSlots(createDTO.getAvailableSlots());
-        position.setRegisteredCount(0);
 
         // Set work type
         if (createDTO.getWorkType() != null) {
