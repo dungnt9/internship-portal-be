@@ -136,4 +136,38 @@ public class StudentController {
                             .build());
         }
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<StudentDTO>> getStudentById(
+            @PathVariable Integer id,
+            @RequestHeader(value = "Authorization", required = false) String authHeader) {
+        try {
+            StudentDTO studentDTO = studentService.getStudentById(id, authHeader);
+
+            return ResponseEntity.ok(ApiResponse.<StudentDTO>builder()
+                    .status(HttpStatus.OK.value())
+                    .message("Student retrieved successfully")
+                    .data(studentDTO)
+                    .build());
+
+        } catch (StudentNotFoundException e) {
+            log.error("Student not found: {}", e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(ApiResponse.<StudentDTO>builder()
+                            .status(HttpStatus.NOT_FOUND.value())
+                            .message(e.getMessage())
+                            .data(null)
+                            .build());
+        } catch (Exception e) {
+            log.error("Error retrieving student: {}", e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ApiResponse.<StudentDTO>builder()
+                            .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                            .message("An error occurred while retrieving the student")
+                            .data(null)
+                            .build());
+        }
+    }
 }

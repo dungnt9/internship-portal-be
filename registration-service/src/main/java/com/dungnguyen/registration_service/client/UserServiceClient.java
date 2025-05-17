@@ -1,6 +1,7 @@
 package com.dungnguyen.registration_service.client;
 
 import com.dungnguyen.registration_service.dto.CompanyDTO;
+import com.dungnguyen.registration_service.dto.StudentDTO;
 import com.dungnguyen.registration_service.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -77,6 +78,37 @@ public class UserServiceClient {
             }
 
             log.error("Failed to get all companies from User Service. Status: {}", response.getStatusCode());
+            return null;
+        } catch (Exception e) {
+            log.error("Error calling User Service: {}", e.getMessage());
+            return null;
+        }
+    }
+
+    public StudentDTO getStudentById(Integer studentId, String token) {
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            // Forward the authorization token if provided
+            if (token != null && !token.isEmpty()) {
+                headers.set(HttpHeaders.AUTHORIZATION, token);
+            }
+
+            HttpEntity<?> entity = new HttpEntity<>(headers);
+
+            ResponseEntity<ApiResponse<StudentDTO>> response = restTemplate.exchange(
+                    userServiceUrl + "/students/" + studentId,
+                    HttpMethod.GET,
+                    entity,
+                    new ParameterizedTypeReference<ApiResponse<StudentDTO>>() {}
+            );
+
+            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+                return response.getBody().getData();
+            }
+
+            log.error("Failed to get student from User Service. Status: {}", response.getStatusCode());
             return null;
         } catch (Exception e) {
             log.error("Error calling User Service: {}", e.getMessage());

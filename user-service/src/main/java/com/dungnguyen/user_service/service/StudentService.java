@@ -77,4 +77,20 @@ public class StudentService {
         Student updatedStudent = studentRepository.save(student);
         return new StudentDTO(updatedStudent);
     }
+
+    public StudentDTO getStudentById(Integer id, String token) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException("Student not found with ID: " + id));
+
+        StudentDTO studentDTO = new StudentDTO(student);
+
+        // Fetch user details from Auth Service
+        UserResponseDTO userResponse = authServiceClient.getUserById(student.getAuthUserId(), token);
+        if (userResponse != null) {
+            studentDTO.setEmail(userResponse.getEmail());
+            studentDTO.setPhone(userResponse.getPhone());
+        }
+
+        return studentDTO;
+    }
 }
