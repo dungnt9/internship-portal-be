@@ -43,13 +43,8 @@ public class ExternalInternshipService {
             throw new RuntimeException("Could not determine student from authorization token");
         }
 
-        // Get current period
-        InternshipPeriod currentPeriod = periodRepository.findCurrentActivePeriod()
-                .orElseThrow(() -> new InternshipPeriodNotFoundException("No active internship period found"));
-
-        // Get all external internships for current student in current period
         List<ExternalInternship> externalInternships = externalInternshipRepository
-                .findByStudentIdAndPeriodId(studentId, currentPeriod.getId());
+                .findByStudentId(studentId);
 
         // Convert to DTOs
         return externalInternships.stream()
