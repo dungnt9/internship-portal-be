@@ -83,8 +83,8 @@ public class DatabaseInitializer implements CommandLineRunner {
             );
             userRepository.saveAll(companyContactUsers);
 
-            // Student users
-            List<User> studentUsers = List.of(
+            // Student users - Batch 2021
+            List<User> studentUsers2021 = List.of(
                     createUser("dung.nt216805@sis.hust.edu.vn", encodedPassword, "0912876543", studentRole),
                     createUser("dungntelcom@gmail.com", encodedPassword, "0912876544", studentRole),
                     createUser("trang.nt216456@sis.hust.edu.vn", encodedPassword, "0912876545", studentRole),
@@ -94,10 +94,19 @@ public class DatabaseInitializer implements CommandLineRunner {
                     createUser("thanh.nv216678@sis.hust.edu.vn", encodedPassword, "0912876549", studentRole),
                     createUser("lam.nt216901@sis.hust.edu.vn", encodedPassword, "0912876550", studentRole)
             );
-            userRepository.saveAll(studentUsers);
+            userRepository.saveAll(studentUsers2021);
+
+            // Student users - Batch 2022 (3 new records)
+            List<User> studentUsers2022 = List.of(
+                    createUser("linh.nt226701@sis.hust.edu.vn", encodedPassword, "0912876551", studentRole),
+                    createUser("hoang.dt226802@sis.hust.edu.vn", encodedPassword, "0912876552", studentRole),
+                    createUser("thu.nt226903@sis.hust.edu.vn", encodedPassword, "0912876553", studentRole)
+            );
+            userRepository.saveAll(studentUsers2022);
 
             log.info("Users initialized with {} entries",
-                    adminUsers.size() + teacherUsers.size() + companyContactUsers.size() + studentUsers.size());
+                    adminUsers.size() + teacherUsers.size() + companyContactUsers.size() +
+                            studentUsers2021.size() + studentUsers2022.size());
         }
     }
 
