@@ -6,6 +6,7 @@ import com.dungnguyen.registration_service.dto.ExternalInternshipCreateDTO;
 import com.dungnguyen.registration_service.dto.ExternalInternshipDTO;
 import com.dungnguyen.registration_service.entity.ExternalInternship;
 import com.dungnguyen.registration_service.entity.InternshipPeriod;
+import com.dungnguyen.registration_service.exception.DuplicateExternalInternshipException;
 import com.dungnguyen.registration_service.exception.ExternalInternshipNotFoundException;
 import com.dungnguyen.registration_service.exception.InternshipPeriodNotFoundException;
 import com.dungnguyen.registration_service.exception.UnauthorizedAccessException;
@@ -72,7 +73,10 @@ public class ExternalInternshipService {
             throw new RuntimeException("Could not determine student from authorization token");
         }
 
-        // Get student code for file path
+        if (externalInternshipRepository.existsByStudentIdAndPeriodId(studentId, createDTO.getPeriodId())) {
+            throw new DuplicateExternalInternshipException("You have already registered for external internship in this period");
+        }
+
         String studentCode = getStudentCode(studentId, token);
 
         // Get period

@@ -2,6 +2,7 @@ package com.dungnguyen.registration_service.controller;
 
 import com.dungnguyen.registration_service.dto.ExternalInternshipCreateDTO;
 import com.dungnguyen.registration_service.dto.ExternalInternshipDTO;
+import com.dungnguyen.registration_service.exception.DuplicateExternalInternshipException;
 import com.dungnguyen.registration_service.exception.ExternalInternshipNotFoundException;
 import com.dungnguyen.registration_service.exception.InternshipPeriodNotFoundException;
 import com.dungnguyen.registration_service.exception.UnauthorizedAccessException;
@@ -86,6 +87,15 @@ public class ExternalInternshipController {
                             .status(HttpStatus.CREATED.value())
                             .message("Đăng ký thực tập ngoài trường thành công")
                             .data(createdExternalInternship)
+                            .build());
+        } catch (DuplicateExternalInternshipException e) {
+            log.error("Duplicate registration: {}", e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(ApiResponse.<ExternalInternshipDTO>builder()
+                            .status(HttpStatus.BAD_REQUEST.value())
+                            .message("Bạn đã đăng ký thực tập ngoài trường cho kỳ này rồi")
+                            .data(null)
                             .build());
         } catch (InternshipPeriodNotFoundException e) {
             log.error("Period not found: {}", e.getMessage());
