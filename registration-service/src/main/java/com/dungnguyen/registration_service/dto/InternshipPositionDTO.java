@@ -36,18 +36,20 @@ public class InternshipPositionDTO {
 
     // Constructor to convert from entity (without company details)
     public InternshipPositionDTO(InternshipPosition position) {
-        this.id = position.getId();
-        this.companyId = position.getCompanyId();
-        this.periodId = position.getPeriod().getId();
-        this.title = position.getTitle();
-        this.description = position.getDescription();
-        this.requirements = position.getRequirements();
-        this.benefits = position.getBenefits();
-        this.availableSlots = position.getAvailableSlots();
-        this.workType = position.getWorkType().getValue();
-        this.status = position.getStatus().name();
-        this.dueDate = position.getDueDate();
-        this.createdAt = position.getCreatedAt();
-        this.updatedAt = position.getUpdatedAt();
+        if (position != null) {
+            this.id = position.getId();
+            this.companyId = position.getCompanyId();
+            this.periodId = position.getPeriod().getId();
+            this.title = position.getTitle();
+            this.description = position.getDescription();
+            this.requirements = position.getRequirements();
+            this.benefits = position.getBenefits();
+            this.availableSlots = position.getAvailableSlots();
+            this.workType = position.getWorkType().getValue();
+            this.status = position.getStatus().name();
+            this.dueDate = position.getDueDate();
+            this.createdAt = position.getCreatedAt();
+            this.updatedAt = position.getUpdatedAt();
+        }
     }
 }

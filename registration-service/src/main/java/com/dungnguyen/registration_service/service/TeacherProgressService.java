@@ -137,6 +137,18 @@ public class TeacherProgressService {
                 positionDTO.setBusinessType(companyDTO.getBusinessType());
             }
             detailDTO.setPosition(positionDTO);
+        } else if (progress.getIsExternal()) {
+            // For external internships, create a custom CompanyDTO
+            CompanyDTO externalCompanyDTO = new CompanyDTO();
+            externalCompanyDTO.setName(progress.getCompanyName());
+            // Set other fields to default values or null
+            detailDTO.setCompany(externalCompanyDTO);
+
+            // Create a custom position DTO
+            InternshipPositionDTO externalPositionDTO = new InternshipPositionDTO();
+            externalPositionDTO.setTitle(progress.getPositionTitle());
+            externalPositionDTO.setCompanyName(progress.getCompanyName());
+            detailDTO.setPosition(externalPositionDTO);
         }
 
         return detailDTO;

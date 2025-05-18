@@ -21,6 +21,7 @@ public class InternshipProgressDTO {
     private LocalDate endDate;
     private Boolean isExternal;
     private String status;
+    private String companyName;
     private String supervisorName;
     private String supervisorPosition;
     private String supervisorEmail;
@@ -34,7 +35,19 @@ public class InternshipProgressDTO {
         this.studentId = progress.getStudentId();
         this.positionId = progress.getPosition() != null ? progress.getPosition().getId() : null;
         this.periodId = progress.getPeriod().getId();
-        this.positionTitle = progress.getPosition() != null ? progress.getPosition().getTitle() : null;
+
+        if (progress.getIsExternal()) {
+            // For external internships, use the explicitly set positionTitle
+            this.positionTitle = progress.getPositionTitle();
+            // For external internships, use the explicitly set companyName
+            this.companyName = progress.getCompanyName();
+        } else {
+            // For internal internships, get title from position
+            this.positionTitle = progress.getPosition() != null ? progress.getPosition().getTitle() : null;
+            // For internal internships, company name is null in this DTO (it will be populated from position elsewhere)
+            this.companyName = null;
+        }
+
         this.startDate = progress.getStartDate();
         this.endDate = progress.getEndDate();
         this.isExternal = progress.getIsExternal();

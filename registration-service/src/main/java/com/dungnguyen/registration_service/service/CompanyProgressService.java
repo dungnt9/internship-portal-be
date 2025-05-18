@@ -2,6 +2,7 @@ package com.dungnguyen.registration_service.service;
 
 import com.dungnguyen.registration_service.client.AuthServiceClient;
 import com.dungnguyen.registration_service.client.UserServiceClient;
+import com.dungnguyen.registration_service.dto.CompanyDTO;
 import com.dungnguyen.registration_service.dto.InternshipPositionDTO;
 import com.dungnguyen.registration_service.dto.InternshipProgressDTO;
 import com.dungnguyen.registration_service.dto.InternshipProgressDetailDTO;
@@ -67,9 +68,21 @@ public class CompanyProgressService {
                 InternshipPosition position = progress.getPosition();
                 detailDTO.setPosition(new InternshipPositionDTO(position));
 
-                // Company details could be added here if needed
-                // CompanyDTO companyDTO = userServiceClient.getCompanyById(position.getCompanyId(), token);
-                // detailDTO.setCompany(companyDTO);
+                // Get company details
+                CompanyDTO companyDTO = userServiceClient.getCompanyById(position.getCompanyId(), token);
+                detailDTO.setCompany(companyDTO);
+            } else if (progress.getIsExternal()) {
+                // For external internships, create a custom CompanyDTO
+                CompanyDTO externalCompanyDTO = new CompanyDTO();
+                externalCompanyDTO.setName(progress.getCompanyName());
+                // Set other fields to default values or null
+                detailDTO.setCompany(externalCompanyDTO);
+
+                // Create a custom position DTO
+                InternshipPositionDTO externalPositionDTO = new InternshipPositionDTO();
+                externalPositionDTO.setTitle(progress.getPositionTitle());
+                externalPositionDTO.setCompanyName(progress.getCompanyName());
+                detailDTO.setPosition(externalPositionDTO);
             }
 
             // Add to result list
