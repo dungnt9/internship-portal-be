@@ -19,4 +19,6 @@ public interface InternshipPeriodRepository extends JpaRepository<InternshipPeri
 
     @Query("SELECT p FROM InternshipPeriod p WHERE p.status = com.dungnguyen.registration_service.entity.InternshipPeriod.Status.UPCOMING AND p.deletedAt IS NULL")
     Optional<InternshipPeriod> findCurrentUpcomingPeriod();
+
+    Optional<InternshipPeriod> findByStatus(InternshipPeriod.Status status);
 }

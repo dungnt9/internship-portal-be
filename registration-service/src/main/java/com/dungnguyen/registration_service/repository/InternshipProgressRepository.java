@@ -35,4 +35,7 @@ public interface InternshipProgressRepository extends JpaRepository<InternshipPr
     // Find progress record by ID and teacher ID
     @Query("SELECT p FROM InternshipProgress p WHERE p.id = :id AND p.teacherId = :teacherId")
     Optional<InternshipProgress> findByIdAndTeacherId(@Param("id") Integer id, @Param("teacherId") Integer teacherId);
+
+    @Query("SELECT p FROM InternshipProgress p WHERE p.studentId = :studentId AND p.period.id = :periodId")
+    Optional<InternshipProgress> findByStudentIdAndPeriodId(@Param("studentId") Integer studentId, @Param("periodId") String periodId);
 }
