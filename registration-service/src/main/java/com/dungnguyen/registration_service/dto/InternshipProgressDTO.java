@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -29,20 +28,7 @@ public class InternshipProgressDTO {
     private Boolean teacherConfirmed;
     private LocalDateTime teacherConfirmedAt;
 
-    // Student information
-    private String studentCode;
-    private String studentName;
-    private String email;
-    private String phone;
-    private String className;
-    private String major;
-    private String gender;
-    private LocalDate birthday;
-    private BigDecimal cpa;
-    private String englishLevel;
-    private String skills;
-
-    // Constructor to convert from entity (minimal info without student details)
+    // Constructor to convert from entity
     public InternshipProgressDTO(InternshipProgress progress) {
         this.id = progress.getId();
         this.studentId = progress.getStudentId();

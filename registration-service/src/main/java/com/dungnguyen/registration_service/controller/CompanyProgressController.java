@@ -1,7 +1,6 @@
 package com.dungnguyen.registration_service.controller;
 
-import com.dungnguyen.registration_service.dto.InternshipProgressDTO;
-import com.dungnguyen.registration_service.exception.InternshipProgressNotFoundException;
+import com.dungnguyen.registration_service.dto.InternshipProgressDetailDTO;
 import com.dungnguyen.registration_service.exception.UnauthorizedAccessException;
 import com.dungnguyen.registration_service.response.ApiResponse;
 import com.dungnguyen.registration_service.service.CompanyProgressService;
@@ -27,16 +26,16 @@ public class CompanyProgressController {
      *
      * @param periodId Optional period ID filter
      * @param authHeader Authorization header
-     * @return List of InternshipProgressDTO with student details
+     * @return List of InternshipProgressDetailDTO with student details
      */
     @GetMapping
-    public ResponseEntity<ApiResponse<List<InternshipProgressDTO>>> getCompanyProgress(
+    public ResponseEntity<ApiResponse<List<InternshipProgressDetailDTO>>> getCompanyProgress(
             @RequestParam(required = false) String periodId,
             @RequestHeader("Authorization") String authHeader) {
         try {
-            List<InternshipProgressDTO> progressList = progressService.getCompanyProgress(periodId, authHeader);
+            List<InternshipProgressDetailDTO> progressList = progressService.getCompanyProgress(periodId, authHeader);
 
-            return ResponseEntity.ok(ApiResponse.<List<InternshipProgressDTO>>builder()
+            return ResponseEntity.ok(ApiResponse.<List<InternshipProgressDetailDTO>>builder()
                     .status(HttpStatus.OK.value())
                     .message("Internship progress retrieved successfully")
                     .data(progressList)
@@ -46,7 +45,7 @@ public class CompanyProgressController {
             log.error("Unauthorized access: {}", e.getMessage());
             return ResponseEntity
                     .status(HttpStatus.FORBIDDEN)
-                    .body(ApiResponse.<List<InternshipProgressDTO>>builder()
+                    .body(ApiResponse.<List<InternshipProgressDetailDTO>>builder()
                             .status(HttpStatus.FORBIDDEN.value())
                             .message(e.getMessage())
                             .data(null)
@@ -55,7 +54,7 @@ public class CompanyProgressController {
             log.error("Error retrieving internship progress: {}", e.getMessage());
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(ApiResponse.<List<InternshipProgressDTO>>builder()
+                    .body(ApiResponse.<List<InternshipProgressDetailDTO>>builder()
                             .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                             .message("An error occurred while retrieving internship progress")
                             .data(null)

@@ -141,4 +141,45 @@ public class AuthServiceClient {
             return null;
         }
     }
+
+    public Integer getUserTeacherId(String token) {
+        try {
+            Integer userId = getUserIdFromToken(token);
+            if (userId == null) {
+                return null;
+            }
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set(HttpHeaders.AUTHORIZATION, token);
+
+            HttpEntity<?> entity = new HttpEntity<>(headers);
+
+            // Call the user service to get the teacher by auth user ID
+            ResponseEntity<Object> response = restTemplate.exchange(
+                    userServiceUrl + "/teachers/me",
+                    HttpMethod.GET,
+                    entity,
+                    Object.class
+            );
+
+            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+                // Extract teacher ID from response
+                @SuppressWarnings("unchecked")
+                Map<String, Object> responseBody = (Map<String, Object>) response.getBody();
+                @SuppressWarnings("unchecked")
+                Map<String, Object> data = (Map<String, Object>) responseBody.get("data");
+
+                if (data != null && data.containsKey("id")) {
+                    return (Integer) data.get("id");
+                }
+            }
+
+            log.error("Failed to get teacher ID. Status: {}", response.getStatusCode());
+            return null;
+        } catch (Exception e) {
+            log.error("Error getting teacher ID: {}", e.getMessage());
+            return null;
+        }
+    }
 }
