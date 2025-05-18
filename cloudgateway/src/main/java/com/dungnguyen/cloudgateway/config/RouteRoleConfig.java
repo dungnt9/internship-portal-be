@@ -51,6 +51,8 @@ public class RouteRoleConfig {
         routeRoles.put("/registration/company-applications/action", Set.of("ROLE_COMPANY"));
         routeRoles.put("/registration/company-applications/history", Set.of("ROLE_COMPANY"));
 
+        routeRoles.put("/registration/company-progress", Set.of("ROLE_COMPANY"));
+
         routeRoles.put("/evaluation/**", Set.of("ROLE_ADMIN", "ROLE_TEACHER"));
 
         return routeRoles;
