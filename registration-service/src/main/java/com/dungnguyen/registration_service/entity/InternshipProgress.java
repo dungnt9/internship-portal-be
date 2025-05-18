@@ -48,10 +48,10 @@ public class InternshipProgress {
     private ExternalInternship external;
 
     // New fields for external internships
-    @Column(name = "company_name", length = 100)
+    @Column(name = "external_company_name", length = 100)
     private String companyName;
 
-    @Column(name = "position_title", length = 100)
+    @Column(name = "external_position_title", length = 100)
     private String positionTitle;
 
     @Enumerated(EnumType.STRING)

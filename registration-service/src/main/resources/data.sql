@@ -73,7 +73,7 @@ INSERT INTO external_internships (id, student_id, period_id, confirmation_file_p
 (3, 8, '2024.2', '/uploads/confirmations/20216901/confirmation_letter.pdf', 'APPROVED', DATE_SUB(NOW(), INTERVAL 62 DAY), NOW());
 
 -- Internship Progress records for all students
-INSERT INTO internship_progress (id, student_id, position_id, period_id, teacher_id, start_date, end_date, is_external, external_id, status, company_name, position_title, supervisor_name, supervisor_position, supervisor_email, supervisor_phone, teacher_confirmed, teacher_confirmed_at, created_at, updated_at, deleted_at) VALUES
+INSERT INTO internship_progress (id, student_id, position_id, period_id, teacher_id, start_date, end_date, is_external, external_id, status, external_company_name, external_position_title, supervisor_name, supervisor_position, supervisor_email, supervisor_phone, teacher_confirmed, teacher_confirmed_at, created_at, updated_at, deleted_at) VALUES
 -- Regular internships (students 1-5)
 (1, 1, 1, '2024.2', 1, '2025-02-10', '2025-06-08', false, NULL, 'IN_PROGRESS', NULL, NULL, 'Nguyễn Văn Hải', 'Senior Java Developer', 'hai.nv@fpt.com.vn', '0987654321', true, DATE_SUB(NOW(), INTERVAL 50 DAY), DATE_SUB(NOW(), INTERVAL 55 DAY), NOW(), NULL),
 (2, 2, 4, '2024.2', 2, '2025-02-10', '2025-06-08', false, NULL, 'IN_PROGRESS', NULL, NULL, 'Trần Minh Tuấn', 'Project Manager', 'tuan.tm@viettel.com.vn', '0987654322', true, DATE_SUB(NOW(), INTERVAL 50 DAY), DATE_SUB(NOW(), INTERVAL 54 DAY), NOW(), NULL),
