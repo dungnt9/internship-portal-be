@@ -67,6 +67,7 @@ public class RouteRoleConfig {
 
         routeRoles.put("/user/cms/admin/management/**", Set.of("ROLE_ADMIN"));
         routeRoles.put("/auth/cms/users/**", Set.of("ROLE_ADMIN"));
+        routeRoles.put("/user/cms/admin/management/company-contacts/**", Set.of("ROLE_ADMIN"));
 
         return routeRoles;
     }
