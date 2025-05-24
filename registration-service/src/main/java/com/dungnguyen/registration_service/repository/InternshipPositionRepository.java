@@ -34,4 +34,7 @@ public interface InternshipPositionRepository extends JpaRepository<InternshipPo
 
     @Query("SELECT p FROM InternshipPosition p WHERE p.companyId = :companyId AND p.deletedAt IS NULL")
     List<InternshipPosition> findByCompanyId(@Param("companyId") Integer companyId);
+
+    @Query("SELECT p FROM InternshipPosition p WHERE p.period.id = :periodId AND p.deletedAt IS NULL ORDER BY p.createdAt DESC")
+    List<InternshipPosition> findByPeriodId(@Param("periodId") String periodId);
 }

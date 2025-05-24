@@ -95,6 +95,43 @@ public class CMSInternshipApplicationController {
         }
     }
 
+    @PostMapping(value = "/create-with-cv", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ApiResponse<CMSInternshipApplicationDTO>> createApplicationWithCV(
+            @RequestParam("studentId") Integer studentId,
+            @RequestParam("periodId") String periodId,
+            @RequestParam("cvFile") MultipartFile cvFile) {
+        try {
+            // Create DTO from request parameters
+            CMSInternshipApplicationCreateDTO createDTO = new CMSInternshipApplicationCreateDTO();
+            createDTO.setStudentId(studentId);
+            createDTO.setPeriodId(periodId);
+            createDTO.setCvFilePath(""); // Will be set during upload
+
+            CMSInternshipApplicationDTO createdApplication = cmsInternshipApplicationService.createApplicationWithCV(createDTO, cvFile);
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(ApiResponse.success(createdApplication, "Internship application created successfully"));
+        } catch (IllegalArgumentException e) {
+            log.error("Validation error: {}", e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(ApiResponse.<CMSInternshipApplicationDTO>builder()
+                            .status(HttpStatus.BAD_REQUEST.value())
+                            .message(e.getMessage())
+                            .data(null)
+                            .build());
+        } catch (Exception e) {
+            log.error("Error creating internship application: {}", e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(ApiResponse.<CMSInternshipApplicationDTO>builder()
+                            .status(HttpStatus.BAD_REQUEST.value())
+                            .message("Error creating internship application: " + e.getMessage())
+                            .data(null)
+                            .build());
+        }
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<CMSInternshipApplicationDTO>> updateApplication(
             @PathVariable Integer id,
@@ -162,42 +199,7 @@ public class CMSInternshipApplicationController {
         }
     }
 
-    @PostMapping(value = "/create-with-cv", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<ApiResponse<CMSInternshipApplicationDTO>> createApplicationWithCV(
-            @RequestParam("studentId") Integer studentId,
-            @RequestParam("periodId") String periodId,
-            @RequestParam("cvFile") MultipartFile cvFile) {
-        try {
-            // Create DTO from request parameters
-            CMSInternshipApplicationCreateDTO createDTO = new CMSInternshipApplicationCreateDTO();
-            createDTO.setStudentId(studentId);
-            createDTO.setPeriodId(periodId);
-            createDTO.setCvFilePath(""); // Will be set during upload
-
-            CMSInternshipApplicationDTO createdApplication = cmsInternshipApplicationService.createApplicationWithCV(createDTO, cvFile);
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(ApiResponse.success(createdApplication, "Internship application created successfully"));
-        } catch (IllegalArgumentException e) {
-            log.error("Validation error: {}", e.getMessage());
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(ApiResponse.<CMSInternshipApplicationDTO>builder()
-                            .status(HttpStatus.BAD_REQUEST.value())
-                            .message(e.getMessage())
-                            .data(null)
-                            .build());
-        } catch (Exception e) {
-            log.error("Error creating internship application: {}", e.getMessage());
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(ApiResponse.<CMSInternshipApplicationDTO>builder()
-                            .status(HttpStatus.BAD_REQUEST.value())
-                            .message("Error creating internship application: " + e.getMessage())
-                            .data(null)
-                            .build());
-        }
-    }
+    @PostMapping(value = "/{id}/upload-cv", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<CMSInternshipApplicationDTO>> uploadCV(
             @PathVariable Integer id,
             @RequestParam("cvFile") MultipartFile cvFile) {

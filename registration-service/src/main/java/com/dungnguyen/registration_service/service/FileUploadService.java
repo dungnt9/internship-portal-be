@@ -29,17 +29,21 @@ public class FileUploadService {
             Path directory = Paths.get(directoryPath);
             Files.createDirectories(directory);
 
-            // Generate a unique filename with timestamp
-            String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+            // Keep original filename, add suffix only if file exists
             String originalFilename = file.getOriginalFilename();
-            String fileExtension = "";
-            if (originalFilename != null && originalFilename.contains(".")) {
-                fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            String newFilename = originalFilename;
+
+            // Check if file already exists and add timestamp suffix if needed
+            Path filePath = directory.resolve(newFilename);
+            if (Files.exists(filePath)) {
+                String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+                String nameWithoutExt = originalFilename.substring(0, originalFilename.lastIndexOf('.'));
+                String fileExtension = originalFilename.substring(originalFilename.lastIndexOf('.'));
+                newFilename = nameWithoutExt + "_" + timestamp + fileExtension;
             }
-            String newFilename = fileType + "_" + timestamp + fileExtension;
 
             // Save the file
-            Path filePath = directory.resolve(newFilename);
+            filePath = directory.resolve(newFilename);
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
             log.info("File uploaded successfully: {}", filePath);
