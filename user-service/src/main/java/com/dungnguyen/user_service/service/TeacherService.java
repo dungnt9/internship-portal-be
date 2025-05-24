@@ -59,4 +59,27 @@ public class TeacherService {
         Teacher updatedTeacher = teacherRepository.save(teacher);
         return new TeacherDTO(updatedTeacher);
     }
+
+    /**
+     * Get teacher by ID (for other services)
+     *
+     * @param id Teacher ID
+     * @param token Authorization token
+     * @return TeacherDTO
+     */
+    public TeacherDTO getTeacherById(Integer id, String token) {
+        Teacher teacher = teacherRepository.findById(id)
+                .orElseThrow(() -> new TeacherNotFoundException("Teacher not found with ID: " + id));
+
+        TeacherDTO teacherDTO = new TeacherDTO(teacher);
+
+        // Fetch user details from Auth Service
+        UserResponseDTO userResponse = authServiceClient.getUserById(teacher.getAuthUserId(), token);
+        if (userResponse != null) {
+            teacherDTO.setEmail(userResponse.getEmail());
+            teacherDTO.setPhone(userResponse.getPhone());
+        }
+
+        return teacherDTO;
+    }
 }

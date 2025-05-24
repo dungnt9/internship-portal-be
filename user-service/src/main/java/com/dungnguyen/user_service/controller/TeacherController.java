@@ -136,4 +136,45 @@ public class TeacherController {
                             .build());
         }
     }
+
+    /**
+     * Get teacher by ID (for other services)
+     *
+     * @param id Teacher ID
+     * @param authHeader Authorization header
+     * @return TeacherDTO
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<TeacherDTO>> getTeacherById(
+            @PathVariable Integer id,
+            @RequestHeader(value = "Authorization", required = false) String authHeader) {
+        try {
+            TeacherDTO teacherDTO = teacherService.getTeacherById(id, authHeader);
+
+            return ResponseEntity.ok(ApiResponse.<TeacherDTO>builder()
+                    .status(HttpStatus.OK.value())
+                    .message("Teacher retrieved successfully")
+                    .data(teacherDTO)
+                    .build());
+
+        } catch (TeacherNotFoundException e) {
+            log.error("Teacher not found: {}", e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(ApiResponse.<TeacherDTO>builder()
+                            .status(HttpStatus.NOT_FOUND.value())
+                            .message(e.getMessage())
+                            .data(null)
+                            .build());
+        } catch (Exception e) {
+            log.error("Error retrieving teacher: {}", e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ApiResponse.<TeacherDTO>builder()
+                            .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                            .message("An error occurred while retrieving the teacher")
+                            .data(null)
+                            .build());
+        }
+    }
 }
