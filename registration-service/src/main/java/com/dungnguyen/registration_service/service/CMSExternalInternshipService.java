@@ -33,6 +33,7 @@ public class CMSExternalInternshipService {
     private final InternshipProgressRepository progressRepository;
     private final UserServiceClient userServiceClient;
     private final FileUploadService fileUploadService;
+    private final MessagePublisherService messagePublisherService; // Thêm dependency
 
     /**
      * Get all external internships
@@ -212,7 +213,11 @@ public class CMSExternalInternshipService {
                     progress.setEndDate(externalInternship.getPeriod().getEndDate());
                     progress.setStatus(InternshipProgress.Status.IN_PROGRESS);
 
-                    progressRepository.save(progress);
+                    InternshipProgress savedProgress = progressRepository.save(progress);
+
+                    // Publish message to create evaluation records
+                    messagePublisherService.publishInternshipProgressCreated(savedProgress);
+
                     log.info("Created internship progress for approved external internship ID: {}", externalInternship.getId());
                 }
         );

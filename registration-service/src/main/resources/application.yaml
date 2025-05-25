@@ -21,6 +21,12 @@ spring:
     init:
       mode: always             # Luôn thực thi SQL scripts
       data-locations: classpath:data.sql  # Vị trí của file SQL
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: 123456
+    virtual-host: /
 
 file:
   upload:

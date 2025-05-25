@@ -35,6 +35,7 @@ public class CompanyApplicationService {
     private final AuthServiceClient authServiceClient;
     private final UserServiceClient userServiceClient;
     private final InternshipPeriodService periodService;
+    private final MessagePublisherService messagePublisherService; // Thêm dependency
 
     /**
      * Get pending applications for a company where the application is the highest pending preference
@@ -155,7 +156,7 @@ public class CompanyApplicationService {
                 }
             }
 
-            // Create internship_progress record
+            // Create internship_progress record and publish message
             createInternshipProgress(applicationDetail);
         } else if ("REJECT".equals(actionDTO.getAction())) {
             // Update status to REJECTED
@@ -250,7 +251,10 @@ public class CompanyApplicationService {
         progress.setIsExternal(false);
         progress.setStatus(InternshipProgress.Status.IN_PROGRESS);
 
-        progressRepository.save(progress);
+        InternshipProgress savedProgress = progressRepository.save(progress);
+
+        // Publish message to create evaluation records
+        messagePublisherService.publishInternshipProgressCreated(savedProgress);
     }
 
     /**
