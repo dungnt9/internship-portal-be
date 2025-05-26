@@ -60,6 +60,8 @@ public class RouteRoleConfig {
         routeRoles.put("GET:/registration/student-progress/current", Set.of("ROLE_STUDENT"));
         routeRoles.put("PUT:/registration/student-progress/current", Set.of("ROLE_STUDENT"));
 
+        routeRoles.put("/registration/cms/progress/**", Set.of("ROLE_ADMIN"));
+
         routeRoles.put("GET:/evaluation/students/my-report", Set.of("ROLE_STUDENT"));
         routeRoles.put("PUT:/evaluation/students/my-report", Set.of("ROLE_STUDENT"));
         routeRoles.put("GET:/evaluation/students/my-evaluation", Set.of("ROLE_STUDENT"));
@@ -68,7 +70,8 @@ public class RouteRoleConfig {
         routeRoles.put("GET:/evaluation/companies/evaluations/[0-9]+", Set.of("ROLE_COMPANY"));
         routeRoles.put("PUT:/evaluation/companies/evaluations/[0-9]+", Set.of("ROLE_COMPANY"));
 
-
+        routeRoles.put("/evaluation/cms/internship-reports", Set.of("ROLE_ADMIN"));
+        routeRoles.put("/evaluation/cms/internship-reports/**", Set.of("ROLE_ADMIN"));
 
 
         routeRoles.put("/user/cms/admin/management/**", Set.of("ROLE_ADMIN"));
