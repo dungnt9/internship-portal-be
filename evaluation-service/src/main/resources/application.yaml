@@ -28,6 +28,19 @@ spring:
     password: 123456
     virtual-host: /
 
+# Cấu hình đường dẫn upload file báo cáo
+file:
+  upload:
+    dir: D:/Downloads/datn/evaluation_service
+
+services:
+  auth:
+    url: http://localhost:8001  # URL của AUTH-SERVICE
+  user:
+    url: http://localhost:8002  # URL của USER-SERVICE
+  registration:
+    url: http://localhost:8003  # URL của REGISTRATION-SERVICE
+
 eureka:
   client:
     service-url:
