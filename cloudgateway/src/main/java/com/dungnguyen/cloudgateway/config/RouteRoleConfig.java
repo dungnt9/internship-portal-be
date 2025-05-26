@@ -64,6 +64,10 @@ public class RouteRoleConfig {
         routeRoles.put("PUT:/evaluation/students/my-report", Set.of("ROLE_STUDENT"));
         routeRoles.put("GET:/evaluation/students/my-evaluation", Set.of("ROLE_STUDENT"));
 
+        routeRoles.put("/evaluation/companies/internships", Set.of("ROLE_COMPANY"));
+        routeRoles.put("GET:/evaluation/companies/evaluations/[0-9]+", Set.of("ROLE_COMPANY"));
+        routeRoles.put("PUT:/evaluation/companies/evaluations/[0-9]+", Set.of("ROLE_COMPANY"));
+
 
 
 

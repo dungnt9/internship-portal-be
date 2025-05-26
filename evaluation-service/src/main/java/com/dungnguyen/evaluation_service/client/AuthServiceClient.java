@@ -96,4 +96,44 @@ public class AuthServiceClient {
             return null;
         }
     }
+
+    public Integer getUserCompanyId(String token) {
+        try {
+            Integer userId = getUserIdFromToken(token);
+            if (userId == null) {
+                return null;
+            }
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set(HttpHeaders.AUTHORIZATION, token);
+
+            HttpEntity<?> entity = new HttpEntity<>(headers);
+
+            // Call the user service to get the company contact by auth user ID
+            ResponseEntity<Object> response = restTemplate.exchange(
+                    userServiceUrl + "/companies/my",
+                    HttpMethod.GET,
+                    entity,
+                    Object.class
+            );
+
+            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+                @SuppressWarnings("unchecked")
+                Map<String, Object> responseBody = (Map<String, Object>) response.getBody();
+                @SuppressWarnings("unchecked")
+                Map<String, Object> data = (Map<String, Object>) responseBody.get("data");
+
+                if (data != null && data.containsKey("id")) {
+                    return (Integer) data.get("id");
+                }
+            }
+
+            log.error("Failed to get company ID. Status: {}", response.getStatusCode());
+            return null;
+        } catch (Exception e) {
+            log.error("Error getting company ID: {}", e.getMessage());
+            return null;
+        }
+    }
 }
