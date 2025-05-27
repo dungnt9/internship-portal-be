@@ -73,6 +73,9 @@ public class RouteRoleConfig {
         routeRoles.put("/evaluation/cms/internship-reports", Set.of("ROLE_ADMIN"));
         routeRoles.put("/evaluation/cms/internship-reports/**", Set.of("ROLE_ADMIN"));
 
+        routeRoles.put("/evaluation/cms/evaluation-criteria", Set.of("ROLE_ADMIN"));
+        routeRoles.put("/evaluation/cms/evaluation-criteria/**", Set.of("ROLE_ADMIN"));
+
 
         routeRoles.put("/user/cms/admin/management/**", Set.of("ROLE_ADMIN"));
         routeRoles.put("/auth/cms/users/**", Set.of("ROLE_ADMIN"));

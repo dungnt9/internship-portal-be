@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface CompanyEvaluationDetailRepository extends JpaRepository<CompanyEvaluationDetail, Integer> {
     List<CompanyEvaluationDetail> findByEvaluationId(Integer evaluationId);
+    long countByCriteriaIdAndDeletedAtIsNull(Integer criteriaId);
 }
