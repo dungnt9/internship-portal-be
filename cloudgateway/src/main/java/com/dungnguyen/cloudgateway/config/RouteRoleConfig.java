@@ -32,6 +32,12 @@ public class RouteRoleConfig {
         routeRoles.put("/user/companies/contacts", Set.of("ROLE_COMPANY"));
         routeRoles.put("/user/companies/contacts/**", Set.of("ROLE_COMPANY"));
 
+        routeRoles.put("POST:/user/upload/avatar", Set.of("ROLE_ADMIN", "ROLE_TEACHER", "ROLE_COMPANY", "ROLE_STUDENT"));
+        routeRoles.put("/user/upload/avatar", Set.of("ROLE_ADMIN", "ROLE_TEACHER", "ROLE_COMPANY", "ROLE_STUDENT"));
+
+        routeRoles.put("GET:/user/uploads/**", Set.of("ROLE_ADMIN", "ROLE_TEACHER", "ROLE_COMPANY", "ROLE_STUDENT"));
+        routeRoles.put("/user/uploads/**", Set.of("ROLE_ADMIN", "ROLE_TEACHER", "ROLE_COMPANY", "ROLE_STUDENT"));
+
         routeRoles.put("/registration/positions/all", Set.of("ROLE_ADMIN"));
         routeRoles.put("/registration/periods", Set.of("ROLE_ADMIN", "ROLE_COMPANY", "ROLE_TEACHER"));
         routeRoles.put("/registration/positions/company/**", Set.of("ROLE_ADMIN", "ROLE_STUDENT", "ROLE_COMPANY", "ROLE_TEACHER"));

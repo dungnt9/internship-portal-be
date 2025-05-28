@@ -19,6 +19,7 @@ public class AdminService {
 
     private final AdminRepository adminRepository;
     private final AuthServiceClient authServiceClient;
+    private final FileStorageService fileStorageService;
 
     public AdminDTO getAdminByAuthUserId(Integer authUserId, String token) {
         Admin admin = adminRepository.findByAuthUserId(authUserId)
@@ -59,4 +60,19 @@ public class AdminService {
         Admin updatedAdmin = adminRepository.save(admin);
         return new AdminDTO(updatedAdmin);
     }
+
+    @Transactional
+    public void updateAvatarPath(Integer authUserId, String imagePath) {
+        Admin admin = adminRepository.findByAuthUserId(authUserId)
+                .orElseThrow(() -> new AdminNotFoundException("Admin not found with auth user ID: " + authUserId));
+
+        // Delete old avatar if exists
+        if (admin.getImagePath() != null && !admin.getImagePath().isEmpty()) {
+            fileStorageService.deleteFile(admin.getImagePath());
+        }
+
+        admin.setImagePath(imagePath);
+        adminRepository.save(admin);
+    }
+
 }

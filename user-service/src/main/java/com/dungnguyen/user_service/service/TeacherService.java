@@ -19,6 +19,7 @@ public class TeacherService {
 
     private final TeacherRepository teacherRepository;
     private final AuthServiceClient authServiceClient;
+    private final FileStorageService fileStorageService;
 
     public TeacherDTO getTeacherByAuthUserId(Integer authUserId, String token) {
         Teacher teacher = teacherRepository.findByAuthUserId(authUserId)
@@ -81,5 +82,19 @@ public class TeacherService {
         }
 
         return teacherDTO;
+    }
+
+    @Transactional
+    public void updateAvatarPath(Integer authUserId, String imagePath) {
+        Teacher teacher = teacherRepository.findByAuthUserId(authUserId)
+                .orElseThrow(() -> new TeacherNotFoundException("Teacher not found with auth user ID: " + authUserId));
+
+        // Delete old avatar if exists
+        if (teacher.getImagePath() != null && !teacher.getImagePath().isEmpty()) {
+            fileStorageService.deleteFile(teacher.getImagePath());
+        }
+
+        teacher.setImagePath(imagePath);
+        teacherRepository.save(teacher);
     }
 }

@@ -19,6 +19,7 @@ public class CompanyContactService {
 
     private final CompanyContactRepository companyContactRepository;
     private final AuthServiceClient authServiceClient;
+    private final FileStorageService fileStorageService;
 
     public CompanyContactDTO getCompanyContactByAuthUserId(Integer authUserId, String token) {
         CompanyContact companyContact = companyContactRepository.findByAuthUserId(authUserId)
@@ -56,4 +57,19 @@ public class CompanyContactService {
         CompanyContact updatedCompanyContact = companyContactRepository.save(companyContact);
         return new CompanyContactDTO(updatedCompanyContact);
     }
+
+    @Transactional
+    public void updateAvatarPath(Integer authUserId, String imagePath) {
+        CompanyContact contact = companyContactRepository.findByAuthUserId(authUserId)
+                .orElseThrow(() -> new CompanyContactNotFoundException("Company contact not found with auth user ID: " + authUserId));
+
+        // Delete old avatar if exists
+        if (contact.getImagePath() != null && !contact.getImagePath().isEmpty()) {
+            fileStorageService.deleteFile(contact.getImagePath());
+        }
+
+        contact.setImagePath(imagePath);
+        companyContactRepository.save(contact);
+    }
+
 }

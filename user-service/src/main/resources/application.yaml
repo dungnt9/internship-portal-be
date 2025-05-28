@@ -21,6 +21,14 @@ spring:
     init:
       mode: always             # Luôn thực thi SQL scripts
       data-locations: classpath:data.sql  # Vị trí của file SQL
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      enabled: true
+
+file:
+  upload-dir: D:/code/datn/internship-portal-be/uploads
 
 services:
   auth:
