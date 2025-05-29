@@ -95,22 +95,6 @@ public class FileUploadService {
     }
 
     /**
-     * Generic upload method (keeping for backward compatibility)
-     */
-    public String uploadFile(MultipartFile file, String studentCode, String fileType) {
-        if ("cv".equals(fileType)) {
-            // For backward compatibility, use current period or generate a default
-            String defaultPeriod = "current";
-            return uploadCV(file, studentCode, defaultPeriod);
-        } else if ("confirmations".equals(fileType)) {
-            String defaultPeriod = "current";
-            return uploadConfirmationFile(file, studentCode, defaultPeriod);
-        } else {
-            throw new IllegalArgumentException("Unsupported file type: " + fileType);
-        }
-    }
-
-    /**
      * Delete file
      */
     public void deleteFile(String filePath) {
