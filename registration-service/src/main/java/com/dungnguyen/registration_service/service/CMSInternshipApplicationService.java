@@ -121,7 +121,7 @@ public class CMSInternshipApplicationService {
         String studentCode = getStudentCode(createDTO.getStudentId());
 
         // Upload CV file
-        String filePath = fileUploadService.uploadFile(cvFile, studentCode, "cv");
+        String filePath = fileUploadService.uploadCV(cvFile, studentCode, period.getId());
 
         // Create new application
         InternshipApplication application = new InternshipApplication();
@@ -205,7 +205,7 @@ public class CMSInternshipApplicationService {
         String studentCode = getStudentCode(application.getStudentId());
 
         // Upload CV file
-        String filePath = fileUploadService.uploadFile(cvFile, studentCode, "cv");
+        String filePath = fileUploadService.uploadCV(cvFile, studentCode, application.getPeriod().getId());
         application.setCvFilePath(filePath);
 
         InternshipApplication updatedApplication = applicationRepository.save(application);
