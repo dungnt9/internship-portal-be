@@ -45,11 +45,11 @@ public class RouteRoleConfig {
         routeRoles.put("/registration/periods/upcoming", Set.of("ROLE_ADMIN", "ROLE_STUDENT", "ROLE_COMPANY", "ROLE_TEACHER"));
 
         routeRoles.put("GET:/registration/external-internships/me", Set.of("ROLE_STUDENT"));
-        routeRoles.put("POST:/registration/external-internships", Set.of("ROLE_STUDENT"));
+        routeRoles.put("/registration/external-internships", Set.of("ROLE_STUDENT", "ROLE_ADMIN"));
         routeRoles.put("PUT:/registration/external-internships/[0-9]+/cancel", Set.of("ROLE_STUDENT"));
 
         routeRoles.put("GET:/registration/applications/me", Set.of("ROLE_STUDENT"));
-        routeRoles.put("POST:/registration/applications/upload-cv", Set.of("ROLE_STUDENT"));
+        routeRoles.put("/registration/applications/upload-cv", Set.of("ROLE_STUDENT", "ROLE_TEACHER"));
         routeRoles.put("POST:/registration/applications/register-preferences", Set.of("ROLE_STUDENT"));
         routeRoles.put("PUT:/registration/applications/[0-9]+/update-preferences", Set.of("ROLE_STUDENT"));
 
@@ -70,6 +70,11 @@ public class RouteRoleConfig {
         routeRoles.put("PUT:/registration/student-progress/current", Set.of("ROLE_STUDENT"));
 
         routeRoles.put("/registration/cms/progress/**", Set.of("ROLE_ADMIN"));
+
+        routeRoles.put("/registration/files/view", Set.of("ROLE_ADMIN", "ROLE_STUDENT", "ROLE_COMPANY", "ROLE_TEACHER"));
+        routeRoles.put("/registration/files/download", Set.of("ROLE_ADMIN", "ROLE_STUDENT", "ROLE_COMPANY", "ROLE_TEACHER"));
+        routeRoles.put("/registration/files/info", Set.of("ROLE_ADMIN", "ROLE_STUDENT", "ROLE_COMPANY", "ROLE_TEACHER"));
+
 
         routeRoles.put("GET:/evaluation/students/my-report", Set.of("ROLE_STUDENT"));
         routeRoles.put("PUT:/evaluation/students/my-report", Set.of("ROLE_STUDENT"));

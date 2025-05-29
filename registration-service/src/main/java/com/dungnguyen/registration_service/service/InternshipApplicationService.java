@@ -96,7 +96,7 @@ public class InternshipApplicationService {
             InternshipApplication application = existingApplication.get();
 
             // Upload new CV file
-            String filePath = fileUploadService.uploadFile(cvFile, studentCode, "cv");
+            String filePath = fileUploadService.uploadCV(cvFile, studentCode, createDTO.getPeriodId());
             application.setCvFilePath(filePath);
 
             // Save to database
@@ -108,7 +108,7 @@ public class InternshipApplicationService {
             // If new, create a new application
 
             // Upload CV file
-            String filePath = fileUploadService.uploadFile(cvFile, studentCode, "cv");
+            String filePath = fileUploadService.uploadCV(cvFile, studentCode, createDTO.getPeriodId());
 
             // Create new application
             InternshipApplication application = new InternshipApplication();
@@ -302,9 +302,75 @@ public class InternshipApplicationService {
      * @return Student code
      */
     private String getStudentCode(Integer studentId, String token) {
-        // This method would call UserServiceClient to get student details
-        // For now, returning a placeholder - you'll need to implement this
-        // based on your UserServiceClient capabilities
-        return "student_" + studentId;
+        try {
+            StudentDTO student = userServiceClient.getStudentById(studentId, token);
+            return student != null ? student.getStudentCode() : "student_" + studentId;
+        } catch (Exception e) {
+            log.warn("Could not fetch student code for ID: {}", studentId);
+            return "student_" + studentId;
+        }
+    }
+
+    @Transactional
+    public InternshipApplicationDTO createApplicationWithCV(
+            InternshipApplicationCreateDTO createDTO,
+            MultipartFile cvFile,
+            String studentCode,
+            String token) {
+
+        // Get current student ID from token
+        Integer studentId = authServiceClient.getUserStudentId(token);
+        if (studentId == null) {
+            throw new RuntimeException("Could not determine student from authorization token");
+        }
+
+        // Get period
+        InternshipPeriod period = periodRepository.findById(createDTO.getPeriodId())
+                .orElseThrow(() -> new InternshipPeriodNotFoundException("Internship period not found with ID: " + createDTO.getPeriodId()));
+
+        // Validate if registration is currently open
+        validateRegistrationPeriod(period);
+
+        // Check if student already has an application for this period
+        Optional<InternshipApplication> existingApplication =
+                applicationRepository.findByStudentIdAndPeriodId(studentId, createDTO.getPeriodId());
+
+        if (existingApplication.isPresent()) {
+            // If already exists, update the CV file
+            InternshipApplication application = existingApplication.get();
+
+            // Delete old CV file if exists
+            if (application.getCvFilePath() != null) {
+                fileUploadService.deleteFile(application.getCvFilePath());
+            }
+
+            // Upload new CV file
+            String filePath = fileUploadService.uploadCV(cvFile, studentCode, createDTO.getPeriodId());
+            application.setCvFilePath(filePath);
+
+            // Save to database
+            InternshipApplication updatedApplication = applicationRepository.save(application);
+
+            // Return as DTO
+            return convertToDTO(updatedApplication, token);
+        } else {
+            // If new, create a new application
+
+            // Upload CV file
+            String filePath = fileUploadService.uploadCV(cvFile, studentCode, createDTO.getPeriodId());
+
+            // Create new application
+            InternshipApplication application = new InternshipApplication();
+            application.setStudentId(studentId);
+            application.setPeriod(period);
+            application.setCvFilePath(filePath);
+            application.setDetails(new ArrayList<>());
+
+            // Save to database
+            InternshipApplication savedApplication = applicationRepository.save(application);
+
+            // Return as DTO
+            return convertToDTO(savedApplication, token);
+        }
     }
 }

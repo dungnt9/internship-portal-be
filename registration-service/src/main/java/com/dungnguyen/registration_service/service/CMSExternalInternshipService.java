@@ -75,7 +75,7 @@ public class CMSExternalInternshipService {
         }
 
         // Upload file
-        String filePath = fileUploadService.uploadFile(confirmationFile, student.getStudentCode(), "confirmations");
+        String filePath = fileUploadService.uploadConfirmationFile(confirmationFile, student.getStudentCode(), createDTO.getPeriodId());
 
         // Create new external internship
         ExternalInternship externalInternship = new ExternalInternship();
@@ -158,8 +158,7 @@ public class CMSExternalInternshipService {
         }
 
         // Upload new file
-        String filePath = fileUploadService.uploadFile(confirmationFile, student.getStudentCode(), "confirmations");
-
+        String filePath = fileUploadService.uploadConfirmationFile(confirmationFile, student.getStudentCode(), externalInternship.getPeriod().getId());
         // Update file path
         externalInternship.setConfirmationFilePath(filePath);
 

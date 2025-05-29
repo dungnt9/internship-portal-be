@@ -84,7 +84,7 @@ public class ExternalInternshipService {
                 .orElseThrow(() -> new InternshipPeriodNotFoundException("Internship period not found with ID: " + createDTO.getPeriodId()));
 
         // Upload file
-        String filePath = fileUploadService.uploadFile(confirmationFile, studentCode, "confirmations");
+        String filePath = fileUploadService.uploadConfirmationFile(confirmationFile, studentCode, createDTO.getPeriodId());
 
         // Create new external internship
         ExternalInternship externalInternship = new ExternalInternship();
@@ -130,5 +130,43 @@ public class ExternalInternshipService {
         // For now, returning a placeholder - you'll need to implement this
         // based on your UserServiceClient capabilities
         return "student_" + studentId;
+    }
+
+    @Transactional
+    public ExternalInternshipDTO createExternalInternshipWithFile(
+            ExternalInternshipCreateDTO createDTO,
+            MultipartFile confirmationFile,
+            String studentCode,
+            String token) {
+
+        // Get current student ID from token
+        Integer studentId = authServiceClient.getUserStudentId(token);
+        if (studentId == null) {
+            throw new RuntimeException("Could not determine student from authorization token");
+        }
+
+        if (externalInternshipRepository.existsByStudentIdAndPeriodId(studentId, createDTO.getPeriodId())) {
+            throw new DuplicateExternalInternshipException("You have already registered for external internship in this period");
+        }
+
+        // Get period
+        InternshipPeriod period = periodRepository.findById(createDTO.getPeriodId())
+                .orElseThrow(() -> new InternshipPeriodNotFoundException("Internship period not found with ID: " + createDTO.getPeriodId()));
+
+        // Upload file
+        String filePath = fileUploadService.uploadConfirmationFile(confirmationFile, studentCode, createDTO.getPeriodId());
+
+        // Create new external internship
+        ExternalInternship externalInternship = new ExternalInternship();
+        externalInternship.setStudentId(studentId);
+        externalInternship.setPeriod(period);
+        externalInternship.setConfirmationFilePath(filePath);
+        externalInternship.setStatus(ExternalInternship.Status.PENDING);
+
+        // Save to database
+        ExternalInternship savedExternalInternship = externalInternshipRepository.save(externalInternship);
+
+        // Return as DTO
+        return convertToDTO(savedExternalInternship);
     }
 }

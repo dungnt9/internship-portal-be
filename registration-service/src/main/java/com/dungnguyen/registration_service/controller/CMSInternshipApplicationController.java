@@ -226,4 +226,32 @@ public class CMSInternshipApplicationController {
                             .build());
         }
     }
+
+    @PutMapping(value = "/{id}/upload-cv", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ApiResponse<CMSInternshipApplicationDTO>> updateCV(
+            @PathVariable Integer id,
+            @RequestParam("cvFile") MultipartFile cvFile) {
+        try {
+            CMSInternshipApplicationDTO updatedApplication = cmsInternshipApplicationService.updateCV(id, cvFile);
+            return ResponseEntity.ok(ApiResponse.success(updatedApplication, "CV updated successfully"));
+        } catch (InternshipApplicationNotFoundException e) {
+            log.error("Internship application not found: {}", e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(ApiResponse.<CMSInternshipApplicationDTO>builder()
+                            .status(HttpStatus.NOT_FOUND.value())
+                            .message(e.getMessage())
+                            .data(null)
+                            .build());
+        } catch (Exception e) {
+            log.error("Error updating CV: {}", e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ApiResponse.<CMSInternshipApplicationDTO>builder()
+                            .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                            .message("Error updating CV: " + e.getMessage())
+                            .data(null)
+                            .build());
+        }
+    }
 }

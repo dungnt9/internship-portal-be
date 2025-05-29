@@ -1,5 +1,8 @@
 package com.dungnguyen.registration_service.controller;
 
+import com.dungnguyen.registration_service.client.AuthServiceClient;
+import com.dungnguyen.registration_service.client.UserServiceClient;
+import com.dungnguyen.registration_service.dto.StudentDTO;
 import com.dungnguyen.registration_service.dto.ExternalInternshipCreateDTO;
 import com.dungnguyen.registration_service.dto.ExternalInternshipDTO;
 import com.dungnguyen.registration_service.exception.DuplicateExternalInternshipException;
@@ -25,6 +28,8 @@ import java.util.List;
 public class ExternalInternshipController {
 
     private final ExternalInternshipService externalInternshipService;
+    private final AuthServiceClient authServiceClient;
+    private final UserServiceClient userServiceClient;
 
     /**
      * Get all external internships for current student in current period
@@ -78,33 +83,30 @@ public class ExternalInternshipController {
             @RequestParam("confirmationFile") MultipartFile confirmationFile,
             @RequestHeader("Authorization") String authHeader) {
         try {
+            // Get current student
+            Integer studentId = authServiceClient.getUserStudentId(authHeader);
+            if (studentId == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(ApiResponse.<ExternalInternshipDTO>builder()
+                                .status(HttpStatus.UNAUTHORIZED.value())
+                                .message("Could not determine student from authorization token")
+                                .data(null)
+                                .build());
+            }
+
+            // Get student code
+            StudentDTO student = userServiceClient.getStudentById(studentId, authHeader);
+            String studentCode = student != null ? student.getStudentCode() : "student_" + studentId;
+
             ExternalInternshipCreateDTO createDTO = new ExternalInternshipCreateDTO(periodId);
             ExternalInternshipDTO createdExternalInternship =
-                    externalInternshipService.createExternalInternship(createDTO, confirmationFile, authHeader);
+                    externalInternshipService.createExternalInternshipWithFile(createDTO, confirmationFile, studentCode, authHeader);
 
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(ApiResponse.<ExternalInternshipDTO>builder()
                             .status(HttpStatus.CREATED.value())
                             .message("Đăng ký thực tập ngoài trường thành công")
                             .data(createdExternalInternship)
-                            .build());
-        } catch (DuplicateExternalInternshipException e) {
-            log.error("Duplicate registration: {}", e.getMessage());
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(ApiResponse.<ExternalInternshipDTO>builder()
-                            .status(HttpStatus.BAD_REQUEST.value())
-                            .message("Bạn đã đăng ký thực tập ngoài trường cho kỳ này rồi")
-                            .data(null)
-                            .build());
-        } catch (InternshipPeriodNotFoundException e) {
-            log.error("Period not found: {}", e.getMessage());
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(ApiResponse.<ExternalInternshipDTO>builder()
-                            .status(HttpStatus.NOT_FOUND.value())
-                            .message(e.getMessage())
-                            .data(null)
                             .build());
         } catch (Exception e) {
             log.error("Error creating external internship: {}", e.getMessage());

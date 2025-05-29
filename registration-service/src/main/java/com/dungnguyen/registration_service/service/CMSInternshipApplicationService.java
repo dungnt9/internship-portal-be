@@ -295,4 +295,29 @@ public class CMSInternshipApplicationService {
             return "student_" + studentId;
         }
     }
+
+    @Transactional
+    public CMSInternshipApplicationDTO updateCV(Integer applicationId, MultipartFile cvFile) {
+        InternshipApplication application = applicationRepository.findById(applicationId)
+                .orElseThrow(() -> new InternshipApplicationNotFoundException("Internship application not found with ID: " + applicationId));
+
+        if (application.getDeletedAt() != null) {
+            throw new InternshipApplicationNotFoundException("Internship application not found with ID: " + applicationId);
+        }
+
+        // Get student code for file path
+        String studentCode = getStudentCode(application.getStudentId());
+
+        // Delete old CV file if exists
+        if (application.getCvFilePath() != null) {
+            fileUploadService.deleteFile(application.getCvFilePath());
+        }
+
+        // Upload new CV file
+        String filePath = fileUploadService.uploadCV(cvFile, studentCode, application.getPeriod().getId());
+        application.setCvFilePath(filePath);
+
+        InternshipApplication updatedApplication = applicationRepository.save(application);
+        return convertToDTO(updatedApplication);
+    }
 }

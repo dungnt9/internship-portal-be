@@ -1,5 +1,8 @@
 package com.dungnguyen.registration_service.controller;
 
+import com.dungnguyen.registration_service.client.AuthServiceClient;
+import com.dungnguyen.registration_service.client.UserServiceClient;
+import com.dungnguyen.registration_service.dto.StudentDTO;
 import com.dungnguyen.registration_service.dto.InternshipApplicationCreateDTO;
 import com.dungnguyen.registration_service.dto.InternshipApplicationDTO;
 import com.dungnguyen.registration_service.dto.InternshipPreferencesRegisterDTO;
@@ -26,6 +29,8 @@ import java.util.List;
 public class InternshipApplicationController {
 
     private final InternshipApplicationService internshipApplicationService;
+    private final AuthServiceClient authServiceClient;
+    private final UserServiceClient userServiceClient;
 
     /**
      * Get current student's internship applications
@@ -70,24 +75,30 @@ public class InternshipApplicationController {
             @RequestParam("cvFile") MultipartFile cvFile,
             @RequestHeader("Authorization") String authHeader) {
         try {
+            // Get current student
+            Integer studentId = authServiceClient.getUserStudentId(authHeader);
+            if (studentId == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(ApiResponse.<InternshipApplicationDTO>builder()
+                                .status(HttpStatus.UNAUTHORIZED.value())
+                                .message("Could not determine student from authorization token")
+                                .data(null)
+                                .build());
+            }
+
+            // Get student code
+            StudentDTO student = userServiceClient.getStudentById(studentId, authHeader);
+            String studentCode = student != null ? student.getStudentCode() : "student_" + studentId;
+
             InternshipApplicationCreateDTO createDTO = new InternshipApplicationCreateDTO(periodId);
             InternshipApplicationDTO createdApplication =
-                    internshipApplicationService.createApplication(createDTO, cvFile, authHeader);
+                    internshipApplicationService.createApplicationWithCV(createDTO, cvFile, studentCode, authHeader);
 
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(ApiResponse.<InternshipApplicationDTO>builder()
                             .status(HttpStatus.CREATED.value())
                             .message("Tải lên CV thành công")
                             .data(createdApplication)
-                            .build());
-        } catch (InternshipPeriodNotFoundException e) {
-            log.error("Period not found: {}", e.getMessage());
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(ApiResponse.<InternshipApplicationDTO>builder()
-                            .status(HttpStatus.NOT_FOUND.value())
-                            .message(e.getMessage())
-                            .data(null)
                             .build());
         } catch (Exception e) {
             log.error("Error uploading CV: {}", e.getMessage());
