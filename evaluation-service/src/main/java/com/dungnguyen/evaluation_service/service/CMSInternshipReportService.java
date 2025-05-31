@@ -7,7 +7,6 @@ import com.dungnguyen.evaluation_service.repository.InternshipReportRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,12 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -33,14 +27,10 @@ public class CMSInternshipReportService {
     private final InternshipReportRepository reportRepository;
     private final RestTemplate restTemplate;
 
-    @Value("${file.upload.dir:uploads}")
-    private String uploadDir;
-
     @Value("${services.registration.url:http://localhost:8003}")
     private String registrationServiceUrl;
 
-    @Value("${services.user.url:http://localhost:8002}")
-    private String userServiceUrl;
+    private final FileUploadService fileUploadService;
 
     /**
      * Get all internship reports with filtering
@@ -174,6 +164,11 @@ public class CMSInternshipReportService {
                 .orElseThrow(() -> new InternshipReportNotFoundException("Report not found with ID: " + id));
 
         try {
+            // Delete old file if exists
+            if (report.getFilePath() != null) {
+                fileUploadService.deleteFile(report.getFilePath());
+            }
+
             String filePath = saveReportFile(file, report.getProgressId());
             report.setFilePath(filePath);
 
@@ -202,30 +197,21 @@ public class CMSInternshipReportService {
      * Helper method to save uploaded file
      */
     private String saveReportFile(MultipartFile file, Integer progressId) throws IOException {
-        // Create directory structure
-        String reportDir = "cms/reports/progress_" + progressId;
-        Path uploadPath = Paths.get(uploadDir, reportDir);
-
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
+        // Get student and period info from progress
+        Map<String, Object> progressData = getProgressDetail(progressId);
+        if (progressData == null) {
+            throw new RuntimeException("Cannot get progress details");
         }
 
-        // Generate unique filename
-        String originalFilename = file.getOriginalFilename();
-        String extension = "";
-        if (originalFilename != null && originalFilename.contains(".")) {
-            extension = originalFilename.substring(originalFilename.lastIndexOf("."));
-        }
+        @SuppressWarnings("unchecked")
+        Map<String, Object> progress = (Map<String, Object>) progressData.get("progress");
+        @SuppressWarnings("unchecked")
+        Map<String, Object> student = (Map<String, Object>) progressData.get("student");
 
-        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
-        String filename = "report_" + timestamp + extension;
-        Path filePath = uploadPath.resolve(filename);
+        String studentCode = (String) student.get("studentCode");
+        String periodId = (String) progress.get("periodId");
 
-        // Save file
-        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-        // Return relative path for storage in database
-        return reportDir + "/" + filename;
+        return fileUploadService.uploadReportFile(file, studentCode, periodId);
     }
 
     /**

@@ -1,4 +1,3 @@
-// Backend: Cập nhật StudentEvaluationService.java
 package com.dungnguyen.evaluation_service.service;
 
 import com.dungnguyen.evaluation_service.client.AuthServiceClient;
@@ -16,14 +15,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.http.*;
+import org.springframework.web.client.RestTemplate;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -35,9 +33,11 @@ public class StudentEvaluationService {
     private final CompanyEvaluationDetailRepository evaluationDetailRepository;
     private final AuthServiceClient authServiceClient;
     private final RegistrationServiceClient registrationServiceClient;
+    private final FileUploadService fileUploadService;
+    private final RestTemplate restTemplate;
 
-    @Value("${file.upload.dir:uploads}")
-    private String uploadDir;
+    @Value("${services.registration.url:http://localhost:8003}")
+    private String registrationServiceUrl;
 
     /**
      * Get internship report for current student
@@ -94,12 +94,21 @@ public class StudentEvaluationService {
             report.setContent(updateDTO.getContent().trim());
         }
 
+        String periodId = getProgressPeriodId(progressId);
+
         // Handle file upload if provided
         if (file != null && !file.isEmpty()) {
             try {
-                String filePath = saveReportFile(file, studentId, progressId);
+                // Delete old file if exists
+                if (report.getFilePath() != null) {
+                    fileUploadService.deleteFile(report.getFilePath());
+                }
+
+                String studentCode = getStudentCodeFromProgress(progressId);
+
+                String filePath = fileUploadService.uploadReportFile(file, studentCode, periodId);
                 report.setFilePath(filePath);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 log.error("Error saving report file: {}", e.getMessage());
                 throw new RuntimeException("Failed to save report file", e);
             }
@@ -176,32 +185,65 @@ public class StudentEvaluationService {
                 report.getContent() != null && !report.getContent().trim().isEmpty();
     }
 
-    /**
-     * Helper method to save uploaded report file
-     */
-    private String saveReportFile(MultipartFile file, Integer studentId, Integer progressId) throws IOException {
-        // Create directory structure
-        String studentDir = "reports/student_" + studentId;
-        Path uploadPath = Paths.get(uploadDir, studentDir);
+    private String getProgressPeriodId(Integer progressId) {
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<?> entity = new HttpEntity<>(headers);
 
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
+            ResponseEntity<Object> response = restTemplate.exchange(
+                    registrationServiceUrl + "/cms/progress/" + progressId,
+                    HttpMethod.GET,
+                    entity,
+                    Object.class
+            );
+
+            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+                @SuppressWarnings("unchecked")
+                Map<String, Object> responseBody = (Map<String, Object>) response.getBody();
+                @SuppressWarnings("unchecked")
+                Map<String, Object> data = (Map<String, Object>) responseBody.get("data");
+                @SuppressWarnings("unchecked")
+                Map<String, Object> progress = (Map<String, Object>) data.get("progress");
+
+                return (String) progress.get("periodId");
+            }
+
+            return "unknown";
+        } catch (Exception e) {
+            log.error("Error getting progress period: {}", e.getMessage());
+            return "unknown";
         }
+    }
 
-        // Generate unique filename
-        String originalFilename = file.getOriginalFilename();
-        String extension = "";
-        if (originalFilename != null && originalFilename.contains(".")) {
-            extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+    private String getStudentCodeFromProgress(Integer progressId) {
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<?> entity = new HttpEntity<>(headers);
+
+            ResponseEntity<Object> response = restTemplate.exchange(
+                    registrationServiceUrl + "/cms/progress/" + progressId,
+                    HttpMethod.GET,
+                    entity,
+                    Object.class
+            );
+
+            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+                @SuppressWarnings("unchecked")
+                Map<String, Object> responseBody = (Map<String, Object>) response.getBody();
+                @SuppressWarnings("unchecked")
+                Map<String, Object> data = (Map<String, Object>) responseBody.get("data");
+                @SuppressWarnings("unchecked")
+                Map<String, Object> student = (Map<String, Object>) data.get("student");
+
+                return (String) student.get("studentCode");
+            }
+
+            return "unknown";
+        } catch (Exception e) {
+            log.error("Error getting student code: {}", e.getMessage());
+            return "unknown";
         }
-
-        String filename = "report_progress_" + progressId + "_" + System.currentTimeMillis() + extension;
-        Path filePath = uploadPath.resolve(filename);
-
-        // Save file
-        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-        // Return relative path for storage in database
-        return studentDir + "/" + filename;
     }
 }

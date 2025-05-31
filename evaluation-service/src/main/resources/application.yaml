@@ -27,11 +27,16 @@ spring:
     username: admin
     password: 123456
     virtual-host: /
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      enabled: true
 
 # Cấu hình đường dẫn upload file báo cáo
 file:
   upload:
-    dir: D:/Downloads/datn/evaluation_service
+    dir: D:/code/datn/internship-portal-be/uploads
 
 services:
   auth:

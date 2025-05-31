@@ -9,6 +9,7 @@ import com.dungnguyen.evaluation_service.service.StudentEvaluationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -70,7 +71,7 @@ public class StudentEvaluationController {
      * Update internship report for current student
      * UPDATED: Handle ReportAlreadySubmittedException
      */
-    @PutMapping("/my-report")
+    @PutMapping(value = "/my-report", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<InternshipReportDTO>> updateMyReport(
             @RequestHeader("Authorization") String authHeader,
             @RequestPart(value = "data", required = false) InternshipReportUpdateDTO updateDTO,

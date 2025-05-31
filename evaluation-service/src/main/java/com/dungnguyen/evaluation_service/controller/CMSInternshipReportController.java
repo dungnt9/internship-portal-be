@@ -7,6 +7,7 @@ import com.dungnguyen.evaluation_service.service.CMSInternshipReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -89,7 +90,7 @@ public class CMSInternshipReportController {
     /**
      * Create new internship report
      */
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<CMSInternshipReportDetailDTO>> createReport(
             @RequestPart("data") CMSInternshipReportCreateDTO createDTO,
             @RequestPart(value = "file", required = false) MultipartFile file) {
@@ -174,7 +175,7 @@ public class CMSInternshipReportController {
     /**
      * Upload file for existing report
      */
-    @PutMapping("/{id}/upload-file")
+    @PutMapping(value = "/{id}/upload-file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<CMSInternshipReportDetailDTO>> uploadFile(
             @PathVariable Integer id,
             @RequestPart("file") MultipartFile file) {
