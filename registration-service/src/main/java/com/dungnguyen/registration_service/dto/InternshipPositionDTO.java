@@ -22,7 +22,6 @@ public class InternshipPositionDTO {
     private Integer availableSlots;
     private String workType;
     private String status;
-    private LocalDate dueDate;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -47,7 +46,6 @@ public class InternshipPositionDTO {
             this.availableSlots = position.getAvailableSlots();
             this.workType = position.getWorkType().getValue();
             this.status = position.getStatus().name();
-            this.dueDate = position.getDueDate();
             this.createdAt = position.getCreatedAt();
             this.updatedAt = position.getUpdatedAt();
         }

@@ -50,9 +50,6 @@ public class InternshipPosition {
     @Column(name = "status", nullable = false)
     private Status status = Status.OPEN;
 
-    @Column(name = "due_date")
-    private LocalDate dueDate;
-
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 

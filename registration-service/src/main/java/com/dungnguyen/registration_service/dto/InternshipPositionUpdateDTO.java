@@ -17,5 +17,4 @@ public class InternshipPositionUpdateDTO {
     private Integer availableSlots;
     private String workType;
     private String status;
-    private LocalDate dueDate;
 }

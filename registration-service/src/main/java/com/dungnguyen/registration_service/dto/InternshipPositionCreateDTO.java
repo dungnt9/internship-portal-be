@@ -17,5 +17,4 @@ public class InternshipPositionCreateDTO {
     private String benefits;
     private Integer availableSlots;
     private String workType;
-    private LocalDate dueDate;
 }

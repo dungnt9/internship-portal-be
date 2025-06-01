@@ -229,7 +229,6 @@ public class InternshipPositionService {
         // Set status to OPEN by default for new positions
         position.setStatus(InternshipPosition.Status.OPEN);
 
-        position.setDueDate(createDTO.getDueDate());
         position.setDeletedAt(null);
 
         // Save position
@@ -274,9 +273,6 @@ public class InternshipPositionService {
         }
         if (updateDTO.getStatus() != null) {
             position.setStatus(InternshipPosition.Status.valueOf(updateDTO.getStatus()));
-        }
-        if (updateDTO.getDueDate() != null) {
-            position.setDueDate(updateDTO.getDueDate());
         }
 
         // Save updated position
