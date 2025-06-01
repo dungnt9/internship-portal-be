@@ -24,6 +24,7 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
     private final CompanyContactRepository companyContactRepository;
     private final AuthServiceClient authServiceClient;
+    private final FileStorageService fileStorageService;
 
     public CompanyDTO getCompanyById(Integer id) {
         Company company = companyRepository.findById(id)
@@ -109,5 +110,21 @@ public class CompanyService {
         if (updateDTO.getCapital() != null) {
             company.setCapital(updateDTO.getCapital());
         }
+    }
+
+    @Transactional
+    public void updateCompanyLogo(Integer authUserId, String logoPath) {
+        CompanyContact contact = companyContactRepository.findByAuthUserId(authUserId)
+                .orElseThrow(() -> new IllegalArgumentException("You are not a company contact"));
+
+        Company company = contact.getCompany();
+
+        // Delete old logo if exists
+        if (company.getLogoPath() != null && !company.getLogoPath().isEmpty()) {
+            fileStorageService.deleteFile(company.getLogoPath());
+        }
+
+        company.setLogoPath(logoPath);
+        companyRepository.save(company);
     }
 }

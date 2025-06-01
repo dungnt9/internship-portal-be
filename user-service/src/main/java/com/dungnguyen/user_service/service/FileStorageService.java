@@ -36,8 +36,14 @@ public class FileStorageService {
                 throw new RuntimeException("Only image files are allowed");
             }
 
-            // Create directory structure: uploads/avatars/{userType}/
-            String subDir = "avatars/" + userType.toLowerCase();
+            // Create directory structure based on userType
+            String subDir;
+            if ("logo".equals(userType)) {
+                subDir = "company"; // Logo của company nằm ở folder company
+            } else {
+                subDir = "avatars/" + userType.toLowerCase(); // Avatar nằm ở folder avatars/{userType}
+            }
+
             Path uploadPath = Paths.get(uploadDir, subDir);
 
             if (!Files.exists(uploadPath)) {

@@ -20,6 +20,7 @@ public class ImageUploadController {
     private final TeacherService teacherService;
     private final CompanyContactService companyContactService;
     private final AdminService adminService;
+    private final CompanyService companyService;
 
     @PostMapping("/avatar")
     public ResponseEntity<ApiResponse<String>> uploadAvatar(
@@ -90,7 +91,7 @@ public class ImageUploadController {
             } catch (Exception e2) {
                 try {
                     companyContactService.getCompanyContactByAuthUserId(authUserId, authHeader);
-                    return "company";
+                    return "company-contact";
                 } catch (Exception e3) {
                     try {
                         adminService.getAdminByAuthUserId(authUserId, authHeader);
@@ -111,7 +112,7 @@ public class ImageUploadController {
             case "teacher":
                 teacherService.updateAvatarPath(authUserId, imagePath);
                 break;
-            case "company":
+            case "company-contact":
                 companyContactService.updateAvatarPath(authUserId, imagePath);
                 break;
             case "admin":
@@ -119,6 +120,67 @@ public class ImageUploadController {
                 break;
             default:
                 throw new RuntimeException("Invalid user type");
+        }
+    }
+
+    @PostMapping("/logo")
+    public ResponseEntity<ApiResponse<String>> uploadLogo(
+            @RequestParam("file") MultipartFile file,
+            @RequestHeader("Authorization") String authHeader) {
+
+        try {
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(ApiResponse.<String>builder()
+                                .status(HttpStatus.UNAUTHORIZED.value())
+                                .message("Authorization header is missing or invalid")
+                                .data(null)
+                                .build());
+            }
+
+            // Get current user info
+            Integer authUserId = getCurrentUserAuthId(authHeader);
+            if (authUserId == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(ApiResponse.<String>builder()
+                                .status(HttpStatus.UNAUTHORIZED.value())
+                                .message("Invalid or expired token")
+                                .data(null)
+                                .build());
+            }
+
+            // Verify user is company contact
+            try {
+                companyContactService.getCompanyContactByAuthUserId(authUserId, authHeader);
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body(ApiResponse.<String>builder()
+                                .status(HttpStatus.FORBIDDEN.value())
+                                .message("Only company contacts can upload company logos")
+                                .data(null)
+                                .build());
+            }
+
+            // Store logo file
+            String logoPath = fileStorageService.storeFile(file, "logo", authUserId);
+
+            // Update logo path in company
+            companyService.updateCompanyLogo(authUserId, logoPath);
+
+            return ResponseEntity.ok(ApiResponse.<String>builder()
+                    .status(HttpStatus.OK.value())
+                    .message("Logo uploaded successfully")
+                    .data(logoPath)
+                    .build());
+
+        } catch (Exception e) {
+            log.error("Error uploading logo: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ApiResponse.<String>builder()
+                            .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                            .message("Error uploading logo: " + e.getMessage())
+                            .data(null)
+                            .build());
         }
     }
 }
