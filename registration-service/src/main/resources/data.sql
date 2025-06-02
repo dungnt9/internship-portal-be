@@ -33,11 +33,11 @@ INSERT INTO internship_positions (id, company_id, period_id, title, description,
 
 -- Internship Applications for 2024.2 period with 3 preferences per student
 INSERT INTO internship_applications (id, student_id, period_id, cv_file_path, created_at, updated_at, deleted_at) VALUES
-(1, 1, '2024.2', '/uploads/cv/20216805/CV_NguyenTienDung_2025.pdf', DATE_SUB(NOW(), INTERVAL 60 DAY), NOW(), NULL),
-(2, 2, '2024.2', '/uploads/cv/20216123/CV_Dungntelcom_2025.pdf', DATE_SUB(NOW(), INTERVAL 58 DAY), NOW(), NULL),
-(3, 3, '2024.2', '/uploads/cv/20216456/CV_NguyenThiTrang_2025.pdf', DATE_SUB(NOW(), INTERVAL 55 DAY), NOW(), NULL),
-(4, 4, '2024.2', '/uploads/cv/20216789/CV_VuQuangMinh_2025.pdf', DATE_SUB(NOW(), INTERVAL 57 DAY), NOW(), NULL),
-(5, 5, '2024.2', '/uploads/cv/20216012/CV_NguyenHoangSon_2025.pdf', DATE_SUB(NOW(), INTERVAL 56 DAY), NOW(), NULL);
+(1, 1, '2024.2', '/uploads/cv/20216805/2024.2/CV_20216805_2024.2_20250602_215250.pdf', DATE_SUB(NOW(), INTERVAL 60 DAY), NOW(), NULL),
+(2, 2, '2024.2', '/uploads/cv/20216123/2024.2/CV_20216123_2024.2_20250602_215317.pdf', DATE_SUB(NOW(), INTERVAL 58 DAY), NOW(), NULL),
+(3, 3, '2024.2', '/uploads/cv/20216456/2024.2/CV_20216456_2024.2_20250602_215538.pdf', DATE_SUB(NOW(), INTERVAL 55 DAY), NOW(), NULL),
+(4, 4, '2024.2', '/uploads/cv/20216789/2024.2/CV_20216789_2024.2_20250602_215618.pdf', DATE_SUB(NOW(), INTERVAL 57 DAY), NOW(), NULL),
+(5, 5, '2024.2', '/uploads/cv/20216012/2024.2/CV_20216012_2024.2_20250602_215653.pdf', DATE_SUB(NOW(), INTERVAL 56 DAY), NOW(), NULL);
 
 -- Internship Application Details with 3 preferences per student
 INSERT INTO internship_application_details (id, application_id, position_id, preference_order, status, note, created_at, updated_at, deleted_at) VALUES
@@ -46,7 +46,7 @@ INSERT INTO internship_application_details (id, application_id, position_id, pre
 (2, 1, 2, 2, 'CANCELLED', 'Em cũng quan tâm đến vị trí Frontend Developer', DATE_SUB(NOW(), INTERVAL 60 DAY), NOW(), NULL),
 (3, 1, 11, 3, 'PENDING', 'Em mong muốn học hỏi về Cloud Computing', DATE_SUB(NOW(), INTERVAL 60 DAY), NOW(), NULL),
 
--- Student 2 (Dungntelcom) preferences
+-- Student 2 (Nguyễn Tuấn Dũng) preferences
 (4, 2, 4, 1, 'APPROVED', 'Em mong muốn được thực tập tại Viettel để học hỏi thêm về phát triển phần mềm trong môi trường doanh nghiệp lớn', DATE_SUB(NOW(), INTERVAL 58 DAY), NOW(), NULL),
 (5, 2, 5, 2, 'CANCELLED', 'Em có kinh nghiệm với phát triển ứng dụng di động', DATE_SUB(NOW(), INTERVAL 58 DAY), NOW(), NULL),
 (6, 2, 1, 3, 'PENDING', 'Em cũng có kinh nghiệm với Java Spring Boot', DATE_SUB(NOW(), INTERVAL 58 DAY), NOW(), NULL),
@@ -68,9 +68,9 @@ INSERT INTO internship_application_details (id, application_id, position_id, pre
 
 -- External Internships for students who do internships at non-partner companies
 INSERT INTO external_internships (id, student_id, period_id, confirmation_file_path, status, created_at, updated_at) VALUES
-(1, 6, '2024.2', '/uploads/confirmations/20216345/confirmation_letter.pdf', 'APPROVED', DATE_SUB(NOW(), INTERVAL 65 DAY), NOW()),
-(2, 7, '2024.2', '/uploads/confirmations/20216678/confirmation_letter.pdf', 'APPROVED', DATE_SUB(NOW(), INTERVAL 63 DAY), NOW()),
-(3, 8, '2024.2', '/uploads/confirmations/20216901/confirmation_letter.pdf', 'APPROVED', DATE_SUB(NOW(), INTERVAL 62 DAY), NOW());
+(1, 6, '2024.2', '/uploads/confirmations/20216345/2024.2/Confirmation_20216345_2024.2_20250602_220543.pdf', 'APPROVED', DATE_SUB(NOW(), INTERVAL 65 DAY), NOW()),
+(2, 7, '2024.2', '/uploads/confirmations/20216678/2024.2/Confirmation_20216678_2024.2_20250602_220615.pdf', 'APPROVED', DATE_SUB(NOW(), INTERVAL 63 DAY), NOW()),
+(3, 8, '2024.2', '/uploads/confirmations/20216901/2024.2/Confirmation_20216901_2024.2_20250602_220637.pdf', 'APPROVED', DATE_SUB(NOW(), INTERVAL 62 DAY), NOW());
 
 -- Internship Progress records for all students
 INSERT INTO internship_progress (id, student_id, position_id, period_id, teacher_id, start_date, end_date, is_external, external_id, status, external_company_name, external_position_title, supervisor_name, supervisor_position, supervisor_email, supervisor_phone, teacher_confirmed, teacher_confirmed_at, created_at, updated_at, deleted_at) VALUES
