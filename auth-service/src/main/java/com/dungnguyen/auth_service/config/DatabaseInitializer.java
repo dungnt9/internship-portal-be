@@ -62,7 +62,7 @@ public class DatabaseInitializer implements CommandLineRunner {
 
             // Teacher users
             List<User> teacherUsers = List.of(
-                    createUser("nam.vt@hust.edu.vn", encodedPassword, "0312345678", teacherRole),
+                    createUser("minh.vt@hust.edu.vn", encodedPassword, "0312345678", teacherRole),
                     createUser("hoang.nt@hust.edu.vn", encodedPassword, "0312345679", teacherRole),
                     createUser("hung.ld@hust.edu.vn", encodedPassword, "0312345680", teacherRole),
                     createUser("cuong.pv@hust.edu.vn", encodedPassword, "0312345681", teacherRole)
@@ -86,7 +86,7 @@ public class DatabaseInitializer implements CommandLineRunner {
             // Student users - Batch 2021
             List<User> studentUsers2021 = List.of(
                     createUser("dung.nt216805@sis.hust.edu.vn", encodedPassword, "0912876543", studentRole),
-                    createUser("dungntelcom@gmail.com", encodedPassword, "0912876544", studentRole),
+                    createUser("dung.nt216809@gmail.com", encodedPassword, "0912876544", studentRole),
                     createUser("trang.nt216456@sis.hust.edu.vn", encodedPassword, "0912876545", studentRole),
                     createUser("minh.vq216789@sis.hust.edu.vn", encodedPassword, "0912876546", studentRole),
                     createUser("son.nh216012@sis.hust.edu.vn", encodedPassword, "0912876547", studentRole),

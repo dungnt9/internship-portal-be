@@ -5,7 +5,7 @@ INSERT INTO admins (id, auth_user_id, name, department, position, image_path, cr
 
 -- Insert teacher records with auth_user_id 3-6
 INSERT INTO teachers (id, auth_user_id, name, department, position, image_path, created_at, updated_at) VALUES
-                                                                                                            (1, 3, 'TS. Vũ Thành Nam', 'Khoa Toán - Tin học', 'Giảng viên', '/images/avatars/default-teacher.png', NOW(), NOW()),
+                                                                                                            (1, 3, 'TS. Vũ Thành Minh', 'Khoa Toán - Tin học', 'Giảng viên', '/images/avatars/default-teacher.png', NOW(), NOW()),
                                                                                                             (2, 4, 'TS. Nguyễn Trung Hoàng', 'Khoa Toán - Tin học', 'Giảng viên', '/images/avatars/default-teacher.png', NOW(), NOW()),
                                                                                                             (3, 5, 'PGS.TS. Lê Đình Hưng', 'Khoa Toán - Tin học', 'Phó Trưởng khoa', '/images/avatars/default-teacher.png', NOW(), NOW()),
                                                                                                             (4, 6, 'ThS. Phạm Văn Cường', 'Khoa Toán - Tin học', 'Giảng viên', '/images/avatars/default-teacher.png', NOW(), NOW());
