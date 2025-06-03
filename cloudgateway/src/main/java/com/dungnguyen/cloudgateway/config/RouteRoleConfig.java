@@ -40,6 +40,8 @@ public class RouteRoleConfig {
 
         routeRoles.put("/user/upload/logo", Set.of("ROLE_COMPANY"));
 
+        routeRoles.put("/user/companies/register", Collections.emptySet());
+
         routeRoles.put("/registration/positions/all", Set.of("ROLE_ADMIN"));
         routeRoles.put("/registration/periods", Set.of("ROLE_ADMIN", "ROLE_COMPANY", "ROLE_TEACHER"));
         routeRoles.put("/registration/positions/company/**", Set.of("ROLE_ADMIN", "ROLE_STUDENT", "ROLE_COMPANY", "ROLE_TEACHER"));
