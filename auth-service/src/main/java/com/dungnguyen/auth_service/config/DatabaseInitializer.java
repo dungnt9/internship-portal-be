@@ -86,7 +86,7 @@ public class DatabaseInitializer implements CommandLineRunner {
             // Student users - Batch 2021
             List<User> studentUsers2021 = List.of(
                     createUser("dung.nt216805@sis.hust.edu.vn", encodedPassword, "0912876543", studentRole),
-                    createUser("dung.nt216809@gmail.com", encodedPassword, "0912876544", studentRole),
+                    createUser("dung.nt216809@sis.hust.edu.vn", encodedPassword, "0912876544", studentRole),
                     createUser("trang.nt216456@sis.hust.edu.vn", encodedPassword, "0912876545", studentRole),
                     createUser("minh.vq216789@sis.hust.edu.vn", encodedPassword, "0912876546", studentRole),
                     createUser("son.nh216012@sis.hust.edu.vn", encodedPassword, "0912876547", studentRole),
