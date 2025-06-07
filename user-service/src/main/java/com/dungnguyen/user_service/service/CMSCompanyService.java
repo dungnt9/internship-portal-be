@@ -127,10 +127,6 @@ public class CMSCompanyService {
             company.setVerificationDate(updateDTO.getVerificationDate());
         }
 
-        if (updateDTO.getRejectionReason() != null) {
-            company.setRejectionReason(updateDTO.getRejectionReason());
-        }
-
         if (updateDTO.getIsLinked() != null) {
             company.setIsLinked(updateDTO.getIsLinked());
         }
@@ -152,7 +148,6 @@ public class CMSCompanyService {
         company.setEmployeeCount(dto.getEmployeeCount());
         company.setCapital(dto.getCapital());
         company.setIsVerified(dto.getIsVerified());
-        company.setRejectionReason(dto.getRejectionReason());
         company.setIsLinked(dto.getIsLinked());
     }
 }

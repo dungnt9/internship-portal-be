@@ -11,12 +11,7 @@ INSERT INTO company_evaluations (id, progress_id, evaluation_date, score, commen
 (2, 2, DATE_SUB(NOW(), INTERVAL 14 DAY), 8.0, 'Nguyễn Tuấn Dũng làm việc chăm chỉ, có kiến thức nền tảng vững và khả năng làm việc nhóm tốt. Cần cải thiện thêm về kỹ năng giao tiếp và quản lý thời gian. Đã hoàn thành được 80% các nhiệm vụ được giao và có đóng góp tích cực vào dự án.', NOW(), NOW()),
 (3, 3, DATE_SUB(NOW(), INTERVAL 13 DAY), 7.5, 'Nguyễn Thị Trang có thái độ làm việc tốt, chịu khó học hỏi. Cần phát triển thêm về khả năng giải quyết vấn đề và tư duy phản biện. Đã hoàn thành các nhiệm vụ cơ bản và có tiến bộ trong quá trình thực tập.', NOW(), NOW()),
 (4, 4, DATE_SUB(NOW(), INTERVAL 12 DAY), 8.7, 'Vũ Quang Minh có kiến thức tốt về kiểm thử phần mềm, có khả năng tìm ra lỗi và viết báo cáo chi tiết. Có tư duy phản biện tốt và đóng góp nhiều ý tưởng hữu ích cho dự án. Làm việc chuyên nghiệp và có tinh thần trách nhiệm cao.', NOW(), NOW()),
-(5, 5, DATE_SUB(NOW(), INTERVAL 11 DAY), 9.0, 'Nguyễn Hoàng Sơn thể hiện xuất sắc trong lĩnh vực Cloud Computing. Có khả năng nắm bắt nhanh các khái niệm và kỹ thuật mới. Làm việc độc lập tốt, chủ động và có trách nhiệm cao. Đã đóng góp vào việc tối ưu hóa hạ tầng đám mây của dự án.', NOW(), NOW()),
-
--- External internships (students 6-8)
-(6, 6, DATE_SUB(NOW(), INTERVAL 10 DAY), 8.2, 'Nguyễn Văn Hiền có kiến thức tốt về lập trình web, đặc biệt là React và Node.js. Có thái độ làm việc tích cực và khả năng làm việc nhóm tốt. Đã hoàn thành các nhiệm vụ được giao đúng thời hạn và chất lượng cao.', NOW(), NOW()),
-(7, 7, DATE_SUB(NOW(), INTERVAL 9 DAY), 7.8, 'Nguyễn Văn Thành có kiến thức cơ bản tốt, nhưng cần phát triển thêm về kỹ năng thực hành. Có tinh thần học hỏi tốt và thái độ làm việc nghiêm túc. Đã hoàn thành các nhiệm vụ được giao nhưng đôi khi chậm tiến độ.', NOW(), NOW()),
-(8, 8, DATE_SUB(NOW(), INTERVAL 8 DAY), 8.8, 'Nguyễn Thị Lam thể hiện xuất sắc trong lĩnh vực phát triển phần mềm. Có kiến thức sâu về Java và .NET. Làm việc độc lập tốt, có tư duy phản biện và khả năng giải quyết vấn đề. Đã đóng góp nhiều ý tưởng sáng tạo cho dự án.', NOW(), NOW());
+(5, 5, DATE_SUB(NOW(), INTERVAL 11 DAY), 9.0, 'Nguyễn Hoàng Sơn thể hiện xuất sắc trong lĩnh vực Cloud Computing. Có khả năng nắm bắt nhanh các khái niệm và kỹ thuật mới. Làm việc độc lập tốt, chủ động và có trách nhiệm cao. Đã đóng góp vào việc tối ưu hóa hạ tầng đám mây của dự án.', NOW(), NOW());
 
 -- Company evaluation details
 INSERT INTO company_evaluation_details (id, evaluation_id, criteria_id, comments, created_at, updated_at) VALUES
@@ -42,22 +37,7 @@ INSERT INTO company_evaluation_details (id, evaluation_id, criteria_id, comments
 -- Student 5 (Nguyễn Hoàng Sơn)
 (13, 5, 1, 'Có kiến thức sâu về Cloud Computing, hiểu biết về Azure và các dịch vụ liên quan. Có kỹ năng tốt trong việc triển khai và quản lý hạ tầng đám mây. Tư duy hệ thống tốt.', NOW(), NOW()),
 (14, 5, 2, 'Làm việc độc lập tốt, chủ động và có trách nhiệm cao. Giao tiếp hiệu quả, trình bày ý tưởng rõ ràng và thuyết phục. Quản lý thời gian tốt và luôn hoàn thành công việc đúng hạn.', NOW(), NOW()),
-(15, 5, 3, 'Hoàn thành xuất sắc các nhiệm vụ được giao, đảm bảo chất lượng và tiến độ. Đã đóng góp vào việc tối ưu hóa hạ tầng đám mây của dự án, giúp giảm chi phí vận hành.', NOW(), NOW()),
-
--- Student 6 (Nguyễn Văn Hiền - External)
-(16, 6, 1, 'Có kiến thức tốt về phát triển web frontend và backend. Thành thạo React, Node.js và MongoDB. Có khả năng xây dựng ứng dụng web đầy đủ từ giao diện đến cơ sở dữ liệu.', NOW(), NOW()),
-(17, 6, 2, 'Thái độ làm việc tích cực, chủ động và có trách nhiệm. Làm việc nhóm tốt, biết lắng nghe và đóng góp ý kiến. Giao tiếp hiệu quả và có khả năng thuyết trình tốt.', NOW(), NOW()),
-(18, 6, 3, 'Hoàn thành tốt các nhiệm vụ được giao, đảm bảo chất lượng và tiến độ. Đã xây dựng được các thành phần quan trọng của dự án và đóng góp vào việc cải thiện trải nghiệm người dùng.', NOW(), NOW()),
-
--- Student 7 (Nguyễn Văn Thành - External)
-(19, 7, 1, 'Có kiến thức cơ bản tốt về lập trình và cơ sở dữ liệu. Hiểu biết về các ngôn ngữ lập trình như Java và Python. Cần phát triển thêm về kỹ năng thực hành và giải quyết vấn đề.', NOW(), NOW()),
-(20, 7, 2, 'Có tinh thần học hỏi tốt và thái độ làm việc nghiêm túc. Làm việc nhóm khá, biết lắng nghe và tuân thủ quy trình. Quản lý thời gian chưa tốt, đôi khi chậm tiến độ.', NOW(), NOW()),
-(21, 7, 3, 'Hoàn thành các nhiệm vụ được giao nhưng đôi khi chậm tiến độ. Chất lượng công việc đạt yêu cầu cơ bản. Có tiến bộ trong quá trình thực tập và nỗ lực học hỏi.', NOW(), NOW()),
-
--- Student 8 (Nguyễn Thị Lam - External)
-(22, 8, 1, 'Có kiến thức sâu về phát triển phần mềm, thành thạo Java và .NET. Có kỹ năng tốt trong việc thiết kế và triển khai các giải pháp phần mềm. Tư duy logic và phân tích tốt.', NOW(), NOW()),
-(23, 8, 2, 'Làm việc độc lập tốt, có tư duy phản biện và khả năng giải quyết vấn đề. Giao tiếp hiệu quả, trình bày ý tưởng rõ ràng và thuyết phục. Quản lý thời gian tốt và có tinh thần trách nhiệm cao.', NOW(), NOW()),
-(24, 8, 3, 'Hoàn thành xuất sắc các nhiệm vụ được giao, vượt tiến độ và đảm bảo chất lượng. Đã đóng góp nhiều ý tưởng sáng tạo cho dự án và xây dựng được các thành phần quan trọng của hệ thống.', NOW(), NOW());
+(15, 5, 3, 'Hoàn thành xuất sắc các nhiệm vụ được giao, đảm bảo chất lượng và tiến độ. Đã đóng góp vào việc tối ưu hóa hạ tầng đám mây của dự án, giúp giảm chi phí vận hành.', NOW(), NOW());
 
 -- Internship Reports (1 comprehensive report per student)
 INSERT INTO internship_reports (id, progress_id, title, content, file_path, submission_date, created_at, updated_at) VALUES

@@ -62,9 +62,6 @@ public class Company {
     @Column(name = "verification_date")
     private LocalDateTime verificationDate;
 
-    @Column(name = "rejection_reason", columnDefinition = "TEXT")
-    private String rejectionReason;
-
     @Column(name = "is_linked")
     private Boolean isLinked = false;
 

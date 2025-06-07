@@ -27,7 +27,6 @@ public class CMSCompanyDTO {
     private String logoPath;
     private Boolean isVerified;
     private LocalDateTime verificationDate;
-    private String rejectionReason;
     private Boolean isLinked;
 
     // Constructor to convert from entity
@@ -47,7 +46,6 @@ public class CMSCompanyDTO {
         this.logoPath = company.getLogoPath();
         this.isVerified = company.getIsVerified();
         this.verificationDate = company.getVerificationDate();
-        this.rejectionReason = company.getRejectionReason();
         this.isLinked = company.getIsLinked();
     }
 }

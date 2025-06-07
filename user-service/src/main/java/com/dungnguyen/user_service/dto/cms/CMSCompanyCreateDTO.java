@@ -22,6 +22,5 @@ public class CMSCompanyCreateDTO {
     private Integer employeeCount;
     private BigDecimal capital;
     private Boolean isVerified;
-    private String rejectionReason;
     private Boolean isLinked;
 }

@@ -24,6 +24,5 @@ public class CMSCompanyUpdateDTO {
     private BigDecimal capital;
     private Boolean isVerified;
     private LocalDateTime verificationDate;
-    private String rejectionReason;
     private Boolean isLinked;
 }

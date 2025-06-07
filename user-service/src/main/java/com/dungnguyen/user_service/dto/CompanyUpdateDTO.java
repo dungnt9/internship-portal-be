@@ -21,7 +21,4 @@ public class CompanyUpdateDTO {
     private Integer foundingYear;
     private Integer employeeCount;
     private BigDecimal capital;
-    // Note: logoPath is typically handled separately through file upload endpoints
-    // Note: The remaining fields (isVerified, verificationDate, rejectionReason, isLinked)
-    //       are typically handled by admin operations only
 }
