@@ -29,12 +29,15 @@ Hệ thống quản lý thực tập doanh nghiệp cho trường đại học, 
 **Kết nối MySQL:**
 ```bash
 mysql -u root -p
+```
 
 ### 3. Chạy ứng dụng
 
 ```bash
 mvn clean install
+```
 
 Chạy từng service
 ```bash
 mvn spring-boot:run
+```
