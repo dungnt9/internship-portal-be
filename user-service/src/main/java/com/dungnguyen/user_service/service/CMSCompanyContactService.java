@@ -10,6 +10,7 @@ import com.dungnguyen.user_service.entity.Company;
 import com.dungnguyen.user_service.entity.CompanyContact;
 import com.dungnguyen.user_service.exception.CompanyContactNotFoundException;
 import com.dungnguyen.user_service.exception.CompanyNotFoundException;
+import com.dungnguyen.user_service.repository.CMSCompanyRepository;
 import com.dungnguyen.user_service.repository.CompanyContactRepository;
 import com.dungnguyen.user_service.repository.CompanyRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ public class CMSCompanyContactService {
     private final CompanyContactRepository companyContactRepository;
     private final CompanyRepository companyRepository;
     private final CMSAuthServiceClient authServiceClient;
+    private final CMSCompanyRepository cmsCompanyRepository;
 
     public List<CMSCompanyContactDTO> getAllCompanyContacts() {
         // Get all company contacts from the repository
@@ -108,7 +110,7 @@ public class CMSCompanyContactService {
     @Transactional
     public CMSCompanyContactDTO createCompanyContact(CMSCompanyContactCreateDTO createDTO) {
         // Validate company exists
-        Company company = companyRepository.findById(createDTO.getCompanyId())
+        Company company = cmsCompanyRepository.findById(createDTO.getCompanyId())
                 .orElseThrow(() -> new CompanyNotFoundException("Company not found with ID: " + createDTO.getCompanyId()));
 
         // First, create the user in auth service
@@ -168,7 +170,7 @@ public class CMSCompanyContactService {
 
         // Update company if provided
         if (updateDTO.getCompanyId() != null && !updateDTO.getCompanyId().equals(contact.getCompany().getId())) {
-            Company newCompany = companyRepository.findById(updateDTO.getCompanyId())
+            Company newCompany = cmsCompanyRepository.findById(updateDTO.getCompanyId())
                     .orElseThrow(() -> new CompanyNotFoundException("Company not found with ID: " + updateDTO.getCompanyId()));
             contact.setCompany(newCompany);
         }

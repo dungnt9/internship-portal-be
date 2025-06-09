@@ -5,7 +5,7 @@ import com.dungnguyen.user_service.dto.cms.CMSCompanyDTO;
 import com.dungnguyen.user_service.dto.cms.CMSCompanyUpdateDTO;
 import com.dungnguyen.user_service.entity.Company;
 import com.dungnguyen.user_service.exception.CompanyNotFoundException;
-import com.dungnguyen.user_service.repository.CompanyRepository;
+import com.dungnguyen.user_service.repository.CMSCompanyRepository ;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,16 +20,16 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CMSCompanyService {
 
-    private final CompanyRepository companyRepository;
+    private final CMSCompanyRepository cmsCompanyRepository;
 
     public List<CMSCompanyDTO> getAllCompanies() {
-        return companyRepository.findAll().stream()
+        return cmsCompanyRepository.findAll().stream()
                 .map(CMSCompanyDTO::new)
                 .collect(Collectors.toList());
     }
 
     public CMSCompanyDTO getCompanyById(Integer id) {
-        Company company = companyRepository.findById(id)
+        Company company = cmsCompanyRepository.findById(id)
                 .orElseThrow(() -> new CompanyNotFoundException("Company not found with ID: " + id));
 
         return new CMSCompanyDTO(company);
@@ -56,13 +56,13 @@ public class CMSCompanyService {
             company.setVerificationDate(LocalDateTime.now());
         }
 
-        Company savedCompany = companyRepository.save(company);
+        Company savedCompany = cmsCompanyRepository.save(company);
         return new CMSCompanyDTO(savedCompany);
     }
 
     @Transactional
     public CMSCompanyDTO updateCompany(Integer id, CMSCompanyUpdateDTO updateDTO) {
-        Company company = companyRepository.findById(id)
+        Company company = cmsCompanyRepository.findById(id)
                 .orElseThrow(() -> new CompanyNotFoundException("Company not found with ID: " + id));
 
         // Update company properties from DTO
@@ -131,7 +131,7 @@ public class CMSCompanyService {
             company.setIsLinked(updateDTO.getIsLinked());
         }
 
-        Company updatedCompany = companyRepository.save(company);
+        Company updatedCompany = cmsCompanyRepository.save(company);
         return new CMSCompanyDTO(updatedCompany);
     }
 
