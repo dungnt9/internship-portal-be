@@ -9,18 +9,18 @@ import com.dungnguyen.auth_service.service.AuthService;
 import com.dungnguyen.auth_service.utils.JwtUtil;
 import com.dungnguyen.auth_service.utils.RequestValidator;
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.MalformedJwtException;    // token bị biến dạng
+import io.jsonwebtoken.SignatureException;    // chữ ký của JWT token không hợp lệ
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity;  // đối tượng phản hồi HTTP (response) trong Spring
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.authentication.BadCredentialsException; // Spring Security sẽ ném thông tin đăng nhập không hợp lệ
+import org.springframework.security.authentication.DisabledException;  //Spring Security sẽ ném ngoại lệ nếu tài khoản người dùng bị vô hiệu hóa
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken; // đối tượng chứa thông tin đăng nhập của người dùng
+import org.springframework.security.core.Authentication;  //  interface đại diện cho thông tin xác thực của người dùng đã đăng nhập
+import org.springframework.security.core.AuthenticationException; // Spring Security sẽ ném ngoại lệ nếu có lỗi xảy ra trong quá trình xác thực
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;

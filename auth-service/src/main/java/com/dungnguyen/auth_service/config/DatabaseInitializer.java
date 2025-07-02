@@ -1,5 +1,5 @@
 package com.dungnguyen.auth_service.config;
-
+// lombok giúp tự động sinh getter, setter, constructor… giảm code boilerplate
 import com.dungnguyen.auth_service.entity.Role;
 import com.dungnguyen.auth_service.entity.User;
 import com.dungnguyen.auth_service.repository.RoleRepository;
@@ -15,6 +15,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 @Slf4j
+//CommandLineRunner là Interface chạy một đoạn code sau khi Spring Boot khởi động xong
 public class DatabaseInitializer implements CommandLineRunner {
 
     private final RoleRepository roleRepository;

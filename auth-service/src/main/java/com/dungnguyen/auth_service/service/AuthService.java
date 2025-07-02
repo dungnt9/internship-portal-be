@@ -58,7 +58,7 @@ public class AuthService implements UserDetailsService {
      */
     public Optional<User> findByIdentifier(String identifier) {
         Optional<User> user = userRepository.findByEmail(identifier);
-        if (user.isPresent()) {
+        if (user.isPresent()) {   //Trả về true nếu Optional đang chứa giá trị (khác null)
             return user;
         }
 
