@@ -151,7 +151,7 @@ public class CompanyApplicationService {
                 if (!detail.getId().equals(applicationDetail.getId()) &&
                         detail.getStatus() == InternshipApplicationDetail.Status.PENDING) {
                     detail.setStatus(InternshipApplicationDetail.Status.CANCELLED);
-                    detail.setNote(detail.getNote() + "\n[Tự động hủy: Đã được duyệt vào vị trí khác]");
+//                    detail.setNote(detail.getNote() + "\n[Tự động hủy: Đã được duyệt vào vị trí khác]");
                     applicationDetailRepository.save(detail);
                 }
             }
