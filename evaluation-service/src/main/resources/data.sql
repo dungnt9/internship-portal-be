@@ -9,9 +9,8 @@ INSERT INTO company_evaluations (id, progress_id, evaluation_date, score, commen
 -- Regular internships (students 1-5)
 (1, 1, DATE_SUB(NOW(), INTERVAL 15 DAY), 8.5, 'Nguyễn Tiến Dũng có năng lực tốt, nhanh nhẹn và có khả năng học hỏi nhanh. Đã hoàn thành tốt các nhiệm vụ được giao và đóng góp tích cực vào dự án phát triển ứng dụng web. Có kỹ năng lập trình Java Spring Boot tốt và hiểu biết về kiến trúc MVC.', NOW(), NOW()),
 (2, 2, DATE_SUB(NOW(), INTERVAL 14 DAY), 8.0, 'Nguyễn Tuấn Dũng làm việc chăm chỉ, có kiến thức nền tảng vững và khả năng làm việc nhóm tốt. Cần cải thiện thêm về kỹ năng giao tiếp và quản lý thời gian. Đã hoàn thành được 80% các nhiệm vụ được giao và có đóng góp tích cực vào dự án.', NOW(), NOW()),
-(3, 3, DATE_SUB(NOW(), INTERVAL 13 DAY), 7.5, 'Nguyễn Thị Trang có thái độ làm việc tốt, chịu khó học hỏi. Cần phát triển thêm về khả năng giải quyết vấn đề và tư duy phản biện. Đã hoàn thành các nhiệm vụ cơ bản và có tiến bộ trong quá trình thực tập.', NOW(), NOW()),
-(4, 4, DATE_SUB(NOW(), INTERVAL 12 DAY), 8.7, 'Vũ Quang Minh có kiến thức tốt về kiểm thử phần mềm, có khả năng tìm ra lỗi và viết báo cáo chi tiết. Có tư duy phản biện tốt và đóng góp nhiều ý tưởng hữu ích cho dự án. Làm việc chuyên nghiệp và có tinh thần trách nhiệm cao.', NOW(), NOW()),
-(5, 5, DATE_SUB(NOW(), INTERVAL 11 DAY), 9.0, 'Nguyễn Hoàng Sơn thể hiện xuất sắc trong lĩnh vực Cloud Computing. Có khả năng nắm bắt nhanh các khái niệm và kỹ thuật mới. Làm việc độc lập tốt, chủ động và có trách nhiệm cao. Đã đóng góp vào việc tối ưu hóa hạ tầng đám mây của dự án.', NOW(), NOW());
+(3, 3, DATE_SUB(NOW(), INTERVAL 13 DAY), 7.5, 'Nguyễn Thị Trang có thái độ làm việc tốt, chịu khó học hỏi. Cần phát triển thêm về khả năng giải quyết vấn đề và tư duy phản biện. Đã hoàn thành các nhiệm vụ cơ bản và có tiến bộ trong quá trình thực tập.', NOW(), NOW());
+
 
 -- Company evaluation details
 INSERT INTO company_evaluation_details (id, evaluation_id, criteria_id, comments, created_at, updated_at) VALUES
@@ -27,17 +26,7 @@ INSERT INTO company_evaluation_details (id, evaluation_id, criteria_id, comments
 -- Student 3 (Nguyễn Thị Trang)
 (7, 3, 1, 'Kiến thức về mạng máy tính khá tốt, hiểu biết về TCP/IP. Kỹ năng thao tác với thiết bị mạng tốt, hiểu về cấu hình cơ bản. Cần phát triển thêm về tư duy phân tích và giải quyết vấn đề.', NOW(), NOW()),
 (8, 3, 2, 'Thái độ làm việc tốt, cẩn thận và tỉ mỉ. Khả năng làm việc nhóm còn hạn chế, cần cải thiện về giao tiếp. Quản lý thời gian chưa tốt, đôi khi không hoàn thành đúng hạn.', NOW(), NOW()),
-(9, 3, 3, 'Hoàn thành các nhiệm vụ cơ bản được giao. Chất lượng công việc đạt yêu cầu nhưng chưa có nhiều đột phá. Có tiến bộ trong quá trình thực tập và có tinh thần học hỏi tốt.', NOW(), NOW()),
-
--- Student 4 (Vũ Quang Minh)
-(10, 4, 1, 'Có kiến thức tốt về kiểm thử phần mềm, hiểu biết về các phương pháp kiểm thử và công cụ. Có khả năng viết kịch bản kiểm thử chi tiết và báo cáo lỗi rõ ràng. Tư duy phân tích tốt.', NOW(), NOW()),
-(11, 4, 2, 'Giao tiếp tốt, trình bày ý tưởng rõ ràng và mạch lạc. Làm việc nhóm hiệu quả, biết lắng nghe và đóng góp ý kiến. Quản lý thời gian tốt và có tinh thần trách nhiệm cao.', NOW(), NOW()),
-(12, 4, 3, 'Hoàn thành xuất sắc các nhiệm vụ được giao, vượt tiến độ và đảm bảo chất lượng. Phát hiện và báo cáo nhiều lỗi quan trọng, góp phần nâng cao chất lượng sản phẩm.', NOW(), NOW()),
-
--- Student 5 (Nguyễn Hoàng Sơn)
-(13, 5, 1, 'Có kiến thức sâu về Cloud Computing, hiểu biết về Azure và các dịch vụ liên quan. Có kỹ năng tốt trong việc triển khai và quản lý hạ tầng đám mây. Tư duy hệ thống tốt.', NOW(), NOW()),
-(14, 5, 2, 'Làm việc độc lập tốt, chủ động và có trách nhiệm cao. Giao tiếp hiệu quả, trình bày ý tưởng rõ ràng và thuyết phục. Quản lý thời gian tốt và luôn hoàn thành công việc đúng hạn.', NOW(), NOW()),
-(15, 5, 3, 'Hoàn thành xuất sắc các nhiệm vụ được giao, đảm bảo chất lượng và tiến độ. Đã đóng góp vào việc tối ưu hóa hạ tầng đám mây của dự án, giúp giảm chi phí vận hành.', NOW(), NOW());
+(9, 3, 3, 'Hoàn thành các nhiệm vụ cơ bản được giao. Chất lượng công việc đạt yêu cầu nhưng chưa có nhiều đột phá. Có tiến bộ trong quá trình thực tập và có tinh thần học hỏi tốt.', NOW(), NOW());
 
 -- Internship Reports (1 comprehensive report per student)
 INSERT INTO internship_reports (id, progress_id, title, content, file_path, submission_date, created_at, updated_at) VALUES
@@ -47,10 +36,6 @@ INSERT INTO internship_reports (id, progress_id, title, content, file_path, subm
 (2, 2, 'Báo cáo thực tập tại Viettel - Phát triển phần mềm trong lĩnh vực viễn thông', 'Báo cáo về quá trình thực tập tại Viettel, tập trung vào việc phát triển phần mềm trong lĩnh vực viễn thông. Báo cáo mô tả chi tiết về các dự án đã tham gia, các công nghệ và công cụ được sử dụng, và các kiến thức và kỹ năng đã học được.\n\nPhần chính của báo cáo tập trung vào việc phát triển một module quản lý thuê bao di động, bao gồm các chức năng như đăng ký thuê bao mới, cập nhật thông tin thuê bao, và quản lý dịch vụ. Báo cáo cũng mô tả về các thách thức đã gặp phải trong quá trình phát triển và các giải pháp đã áp dụng.', '/uploads/reports/20216123/2024.2/Report_20216123_2024.2_20250602_220823.pdf', DATE_SUB(NOW(), INTERVAL 6 DAY), NOW(), NOW()),
 
 (3, 3, 'Báo cáo thực tập tại VNPT - Vận hành và phát triển hệ thống mạng', 'Báo cáo chi tiết về quá trình thực tập tại VNPT, tập trung vào lĩnh vực vận hành và phát triển hệ thống mạng. Báo cáo mô tả chi tiết về cấu trúc hệ thống mạng của VNPT, các công nghệ và thiết bị được sử dụng, và các quy trình vận hành và bảo trì.\n\nPhần chính của báo cáo tập trung vào việc thiết kế và triển khai một hệ thống giám sát mạng sử dụng các công cụ như Nagios và Grafana. Báo cáo cũng mô tả về các vấn đề và sự cố đã gặp phải trong quá trình vận hành và các giải pháp đã áp dụng.', '/uploads/reports/20216456/2024.2/Report_20216456_2024.2_20250602_220851.pdf', DATE_SUB(NOW(), INTERVAL 7 DAY), NOW(), NOW()),
-
-(4, 4, 'Báo cáo thực tập tại MISA - Kiểm thử phần mềm kế toán', 'Báo cáo về quá trình thực tập tại MISA, tập trung vào lĩnh vực kiểm thử phần mềm kế toán. Báo cáo mô tả chi tiết về quy trình kiểm thử tại MISA, các công cụ và kỹ thuật kiểm thử được sử dụng, và các kiến thức và kỹ năng đã học được.\n\nPhần chính của báo cáo tập trung vào việc kiểm thử một phần mềm kế toán doanh nghiệp, bao gồm các loại kiểm thử khác nhau như kiểm thử chức năng, kiểm thử giao diện, và kiểm thử hiệu năng. Báo cáo cũng mô tả về các lỗi đã phát hiện, cách báo cáo và theo dõi lỗi, và đánh giá về chất lượng phần mềm.', '/uploads/reports/20216789/2024.2/Report_20216789_2024.2_20250602_220938.pdf', DATE_SUB(NOW(), INTERVAL 8 DAY), NOW(), NOW()),
-
-(5, 5, 'Báo cáo thực tập tại Microsoft Vietnam - Triển khai và quản lý dịch vụ đám mây', 'Báo cáo chi tiết về quá trình thực tập tại Microsoft Vietnam, tập trung vào lĩnh vực triển khai và quản lý dịch vụ đám mây. Báo cáo mô tả chi tiết về nền tảng Microsoft Azure, các dịch vụ và công cụ liên quan, và các kiến thức và kỹ năng đã học được.\n\nPhần chính của báo cáo tập trung vào việc thiết kế và triển khai một hạ tầng đám mây cho một ứng dụng web, bao gồm các dịch vụ như Virtual Machines, App Service, SQL Database, và Storage. Báo cáo cũng mô tả về các chiến lược tối ưu hóa chi phí và hiệu năng, các vấn đề bảo mật và tuân thủ, và các thực hành DevOps được áp dụng.', '/uploads/reports/20216012/2024.2/Report_20216012_2024.2_20250602_221000.pdf', DATE_SUB(NOW(), INTERVAL 9 DAY), NOW(), NOW()),
 
 -- External internships (students 6-8)
 (6, 6, 'Báo cáo thực tập tại NAB - Phát triển ứng dụng web với React và Node.js', 'Báo cáo chi tiết về quá trình thực tập tại Ngân hàng NAB, tập trung vào lĩnh vực phát triển ứng dụng web. Báo cáo mô tả chi tiết về dự án đã tham gia, các công nghệ và công cụ được sử dụng, và các kiến thức và kỹ năng đã học được.\n\nPhần chính của báo cáo tập trung vào việc phát triển một ứng dụng web ngân hàng sử dụng React cho frontend và Node.js cho backend. Ứng dụng này cung cấp các chức năng như xem thông tin tài khoản, chuyển khoản, và quản lý các giao dịch. Báo cáo cũng mô tả về các thách thức đã gặp phải trong quá trình phát triển và các giải pháp đã áp dụng.', '/uploads/reports/20216345/2024.2/Report_20216345_2024.2_20250602_221040.pdf', DATE_SUB(NOW(), INTERVAL 10 DAY), NOW(), NOW()),

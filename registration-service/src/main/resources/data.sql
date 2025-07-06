@@ -44,27 +44,27 @@ INSERT INTO internship_application_details (id, application_id, position_id, pre
 -- Student 1 (Nguyễn Tiến Dũng) preferences
 (1, 1, 1, 1, 'APPROVED', 'Em rất mong muốn được thực tập tại FPT Software để phát triển kỹ năng lập trình Java', DATE_SUB(NOW(), INTERVAL 60 DAY), NOW(), NULL),
 (2, 1, 2, 2, 'CANCELLED', 'Em cũng quan tâm đến vị trí Frontend Developer', DATE_SUB(NOW(), INTERVAL 60 DAY), NOW(), NULL),
-(3, 1, 11, 3, 'PENDING', 'Em mong muốn học hỏi về Cloud Computing', DATE_SUB(NOW(), INTERVAL 60 DAY), NOW(), NULL),
+(3, 1, 11, 3, 'CANCELLED', 'Em mong muốn học hỏi về Cloud Computing', DATE_SUB(NOW(), INTERVAL 60 DAY), NOW(), NULL),
 
 -- Student 2 (Nguyễn Tuấn Dũng) preferences
 (4, 2, 4, 1, 'APPROVED', 'Em mong muốn được thực tập tại Viettel để học hỏi thêm về phát triển phần mềm trong môi trường doanh nghiệp lớn', DATE_SUB(NOW(), INTERVAL 58 DAY), NOW(), NULL),
 (5, 2, 5, 2, 'CANCELLED', 'Em có kinh nghiệm với phát triển ứng dụng di động', DATE_SUB(NOW(), INTERVAL 58 DAY), NOW(), NULL),
-(6, 2, 1, 3, 'PENDING', 'Em cũng có kinh nghiệm với Java Spring Boot', DATE_SUB(NOW(), INTERVAL 58 DAY), NOW(), NULL),
+(6, 2, 1, 3, 'CANCELLED', 'Em cũng có kinh nghiệm với Java Spring Boot', DATE_SUB(NOW(), INTERVAL 58 DAY), NOW(), NULL),
 
 -- Student 3 (Nguyễn Thị Trang) preferences
 (7, 3, 6, 1, 'APPROVED', 'Em quan tâm đến lĩnh vực mạng và muốn được thực tập tại VNPT', DATE_SUB(NOW(), INTERVAL 55 DAY), NOW(), NULL),
 (8, 3, 7, 2, 'CANCELLED', 'Em thích công việc kiểm thử phần mềm', DATE_SUB(NOW(), INTERVAL 55 DAY), NOW(), NULL),
-(9, 3, 8, 3, 'PENDING', 'Em cũng quan tâm đến DevOps', DATE_SUB(NOW(), INTERVAL 55 DAY), NOW(), NULL),
+(9, 3, 8, 3, 'CANCELLED', 'Em cũng quan tâm đến DevOps', DATE_SUB(NOW(), INTERVAL 55 DAY), NOW(), NULL),
 
 -- Student 4 (Vũ Quang Minh) preferences
 (10, 4, 7, 1, 'APPROVED', 'Em mong muốn được thực tập tại MISA để học hỏi về quy trình kiểm thử chuyên nghiệp', DATE_SUB(NOW(), INTERVAL 57 DAY), NOW(), NULL),
 (11, 4, 8, 2, 'CANCELLED', 'Em quan tâm đến DevOps và CI/CD', DATE_SUB(NOW(), INTERVAL 57 DAY), NOW(), NULL),
-(12, 4, 10, 3, 'PENDING', 'Em cũng thích phân tích nghiệp vụ', DATE_SUB(NOW(), INTERVAL 57 DAY), NOW(), NULL),
+(12, 4, 10, 3, 'CANCELLED', 'Em cũng thích phân tích nghiệp vụ', DATE_SUB(NOW(), INTERVAL 57 DAY), NOW(), NULL),
 
 -- Student 5 (Nguyễn Hoàng Sơn) preferences
 (13, 5, 11, 1, 'APPROVED', 'Em mong muốn được thực tập về Cloud Computing tại Microsoft', DATE_SUB(NOW(), INTERVAL 56 DAY), NOW(), NULL),
 (14, 5, 12, 2, 'CANCELLED', 'Em quan tâm đến Machine Learning', DATE_SUB(NOW(), INTERVAL 56 DAY), NOW(), NULL),
-(15, 5, 1, 3, 'PENDING', 'Em cũng có kinh nghiệm với Java', DATE_SUB(NOW(), INTERVAL 56 DAY), NOW(), NULL);
+(15, 5, 1, 3, 'CANCELLED', 'Em cũng có kinh nghiệm với Java', DATE_SUB(NOW(), INTERVAL 56 DAY), NOW(), NULL);
 
 -- External Internships for students who do internships at non-partner companies
 INSERT INTO external_internships (id, student_id, period_id, confirmation_file_path, status, created_at, updated_at) VALUES
